@@ -11,10 +11,13 @@ import {
   useVelocity,
   type MotionValue,
 } from 'motion/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import arbol from '../assets/logo-arbol.webp'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { marcarVisto, yaSeHaVisto } from '../utils/vistoEnLaVisita'
 import { Nube, Pajaro } from './Decoracion'
+
+const CLAVE_VISTO = 'arbol-hero-visto'
 
 // Base del tronco dentro de la imagen del árbol (x = 290/600 ≈ 48 %, y = 690/805 ≈ 86 %).
 // Es el punto que no se mueve: el árbol se dobla desde ahí y la copa es lo que más se desplaza.
@@ -114,8 +117,16 @@ export function ArbolHero({ progreso, className }: ArbolHeroProps) {
   // página) se sacude como si acabara de "aterrizar": oscila y se va apagando en ~1,4 s.
   // Empieza cuando la página ha terminado de cargar y el navegador está libre (trasCargarYLibre): si arrancaba a la
   // vez que la carga, competía con ella y la web tardaba más en responder (medido con Lighthouse).
+  // La PRIMERA vez en la visita, no (Antonio, 2026-11-17): al abrir la web el árbol aparece quieto, como una foto, y
+  // la página carga sin esa animación encima. Se mueve si lo tocan y con el scroll; la sacudida al llegar, desde la
+  // segunda vez que se entra en Inicio. Se decide al montar y se recuerda en sessionStorage (vistoEnLaVisita.ts).
+  const [primeraVez] = useState(() => !yaSeHaVisto(CLAVE_VISTO))
   const sacudida = useMotionValue(0)
   useEffect(() => {
+    if (primeraVez) {
+      marcarVisto(CLAVE_VISTO)
+      return
+    }
     if (reducido) return
     let control: ReturnType<typeof animate> | undefined
     const cancelar = trasCargarYLibre(() => {
@@ -125,7 +136,7 @@ export function ArbolHero({ progreso, className }: ArbolHeroProps) {
       cancelar()
       control?.stop() // si se sale de la página a medias, se para
     }
-  }, [reducido, sacudida])
+  }, [primeraVez, reducido, sacudida])
 
   // Sacudida SUAVE al pasar el ratón por el árbol o al tocarlo con el dedo (máx. 1,6°, ~1 s).
   const sacudirSuave = () => {
@@ -136,7 +147,10 @@ export function ArbolHero({ progreso, className }: ArbolHeroProps) {
   const empuje = useTransform(
     [inclinacion, progreso, progresoIda, velocidad, sacudida],
     ([grados, avance, ida, vel, llegada]: number[]) => {
-      if (ida >= 1 || avance < ida - 0.002) return llegada
+      // Quieto si: ya terminó el efecto, se va por detrás de lo ya recorrido (subiendo), NO se está bajando (vel ≤ 0) o
+      // se está arriba del todo (avance 0). Las dos últimas (2026-11-17): arriba del todo el efecto se rearma (ida = 0)
+      // y el final de la subida, o el rebote del iPhone al llegar arriba, contaban como "bajar": el árbol temblaba ~1 s.
+      if (ida >= 1 || avance <= 0 || vel <= 0 || avance < ida - 0.002) return llegada
       const moviendose = Math.min(1, Math.abs(vel) / 300)
       return grados + temblorEn(avance) * moviendose + llegada
     },

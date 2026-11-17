@@ -16,21 +16,23 @@ const formas = [
   'rounded-[3rem_4rem_2.5rem_3.5rem/3.5rem_3rem_3.5rem_2.5rem]',
 ] as const
 
-// Hueco de cada foto en la rejilla (el "encaje" de fotos.ts). Con las filas de alto fijo (ver la rejilla) y las 8
+// Hueco de cada foto en la rejilla (el "encaje" de fotos.ts). Con las filas de alto fijo (ver la rejilla) y las 7
 // fotos de ahora, sin huecos:
 //   escritorio (3 columnas)      tablet (2 columnas)
 //   [ grande ][ · ]              [ grande ]
 //   [ grande ][ · ]              [ grande ]
 //   [ · ][ · ][alta]             [ · ][ · ]
-//   [ · ][ · ][alta]             [ · ][ · ]
-//                                [alta][ · ]
-//                                [alta][ · ]
-// En móvil, una debajo de otra con su forma real.
+//   [ ancha  ][alta]             [ · ][alta]
+//                                [ · ][alta]
+//                                [ ancha  ]
+// La alta (el baño), siempre en la última columna (Antonio: a la derecha del todo). La rejilla va en modo "dense"
+// (grid-flow-row-dense): la última foto normal sube a rellenar el hueco que deja la ancha junto a la alta, sin
+// cambiar el orden de la lista (que es el del visor). En móvil, una debajo de otra con su forma real.
 const huecos = {
   normal: '',
   grande: 'sm:col-span-2 sm:row-span-2',
-  alta: 'sm:row-span-2',
-  ancha: 'lg:col-span-2',
+  alta: 'sm:col-start-2 sm:row-span-2 lg:col-start-3',
+  ancha: 'sm:col-span-2',
 } as const
 
 export function GaleriaEscuela() {
@@ -43,7 +45,7 @@ export function GaleriaEscuela() {
           el @container): cada hueco normal sale 4:3, como las fotos, y los grandes, altos y anchos encajan justos.
           Si el alto dependiera de cada foto, la vertical (el baño) estiraría su fila. */}
       <div className="@container">
-        <ul className="grid gap-4 sm:auto-rows-[calc((100cqw-1rem)*3/8)] sm:grid-cols-2 lg:auto-rows-[calc((100cqw-2rem)/4)] lg:grid-cols-3">
+        <ul className="grid gap-4 sm:grid-flow-row-dense sm:auto-rows-[calc((100cqw-1rem)*3/8)] sm:grid-cols-2 lg:auto-rows-[calc((100cqw-2rem)/4)] lg:grid-cols-3">
           {fotosEscuela.map((foto, i) => (
             <li key={foto.src} className={huecos[foto.encaje ?? 'normal']}>
               {/* Un botón que abre el visor; su nombre accesible es el alt. La forma y el recorte van en el botón (y no
@@ -57,9 +59,9 @@ export function GaleriaEscuela() {
                 <img
                   src={foto.src}
                   srcSet={srcSet(foto)}
-                  // Lo que ocupa: la grande, dos columnas (unos 730 px en escritorio); las demás, una (unos 360).
+                  // Lo que ocupa: la grande y la ancha, dos columnas (unos 730 px en escritorio); las demás, una (unos 360).
                   sizes={
-                    foto.encaje === 'grande'
+                    foto.encaje === 'grande' || foto.encaje === 'ancha'
                       ? '(min-width: 1024px) 731px, calc(100vw - 3rem)'
                       : '(min-width: 1024px) 360px, (min-width: 640px) calc(50vw - 2rem), calc(100vw - 2rem)'
                   }

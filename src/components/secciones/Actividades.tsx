@@ -7,7 +7,7 @@ import { VisorFotos } from '../VisorFotos'
 const t = textos.secciones.actividades
 
 // "Algunas actividades" (Familias): fotos de actividades pinchadas en un tablón de corcho, como en las aulas (idea de
-// Antonio). Cada foto, impresa con borde blanco, un poco girada, con su chincheta y el título escrito a mano debajo.
+// Antonio). Cada foto, impresa con borde blanco, un poco girada, con su chincheta y la franja blanca debajo, sin título.
 // Al pulsarla se amplía en el visor (VisorFotos.tsx). Mientras no haya fotos, no se pinta.
 
 // Giro y pequeño desnivel de cada foto (escritos enteros para que Tailwind los encuentre). Con ratón, al pasar por
@@ -51,7 +51,7 @@ export function Actividades() {
         <ul className="flex flex-wrap justify-center gap-x-6 gap-y-12 lg:gap-x-12 lg:gap-y-14">
           {fotosActividades.map((foto, i) => (
             <li key={foto.src} className="w-full max-w-sm sm:w-[calc((100%-3rem)/3)] lg:w-[calc((100%-6rem)/3)]">
-              {/* Un botón que abre el visor: su nombre accesible es el alt de la imagen más el título escrito. */}
+              {/* Un botón que abre el visor: su nombre accesible es el alt de la imagen. */}
               <button
                 type="button"
                 aria-haspopup="dialog"
@@ -70,7 +70,9 @@ export function Actividades() {
                   decoding="async"
                   className="block aspect-4/3 w-full object-cover"
                 />
-                <span className="mt-1.5 block text-center font-tiza text-xl text-tinta">{foto.titulo}</span>
+                {/* La franja blanca de abajo de la foto impresa, sin título (Antonio, 2026-11-17): el mismo alto que
+                    tenía con el texto (h-7, la línea de text-xl). El título sigue en el visor. */}
+                <span aria-hidden="true" className="mt-1.5 block h-7" />
                 <Chincheta color={chinchetas[i % chinchetas.length]} />
               </button>
             </li>

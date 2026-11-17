@@ -19,6 +19,7 @@ import {
 import { colorTiza, conTiempo, despues, duracionTexto } from './utilidadesTiza'
 
 import { ID_MENU } from './idMenu'
+import { marcarVisto, yaSeHaVisto } from '../utils/vistoEnLaVisita'
 
 // Tizas de colores: el color intenso del árbol aclarado con blanco (colorTiza, en utilidadesTiza.ts).
 const TIZA_VERDE = colorTiza('var(--color-arbol-verde-intenso)')
@@ -91,23 +92,8 @@ const DURACION_BASE = Math.max(
 // cambiar de página, y acelerado se ve atropellado. Sale ya pintado con un fundido de solo 0,12 s (Antonio,
 // 2026-11-17: de golpe, el paso del crema a la pizarra oscura se notaba brusco).
 const DURACION_PRIMERA_VEZ = 3000
-// sessionStorage: dura lo que la pestaña y no sale del navegador (no es una cookie). En modo privado puede
-// fallar: entonces se trata como primera vez.
+// Se recuerda en sessionStorage (src/utils/vistoEnLaVisita.ts, compartido con la pizarra del cierre).
 const CLAVE_VISTO = 'menu-pizarra-visto'
-function yaSeHaVisto(): boolean {
-  try {
-    return sessionStorage.getItem(CLAVE_VISTO) === '1'
-  } catch {
-    return false
-  }
-}
-function marcarVisto() {
-  try {
-    sessionStorage.setItem(CLAVE_VISTO, '1')
-  } catch {
-    // Sin almacenamiento, la próxima vez vuelve a ir entero: no pasa nada.
-  }
-}
 
 // Decoración de la esquina (en vez de las rayas y estrellas de la referencia), anclada a una fila corta:
 // así va siempre a su lado, mida lo que mida la pantalla, y no choca con "Horario y calendario", la más larga
@@ -137,7 +123,7 @@ type MenuPizarraProps = {
 export function MenuPizarra({ alCerrar, botonMenu }: MenuPizarraProps) {
   const panel = useRef<HTMLElement>(null)
   // useState con función: se decide una vez, al abrir, y no cambia mientras el menú está abierto.
-  const [primeraVez] = useState(() => !yaSeHaVisto())
+  const [primeraVez] = useState(() => !yaSeHaVisto(CLAVE_VISTO))
   const escala = primeraVez ? DURACION_PRIMERA_VEZ / DURACION_BASE : 0
   const estiloPanel: EstiloConVariables = { '--escala-tiza': String(escala) }
   // Al cerrar CON EL TECLADO (Escape, o la X con Enter o espacio) el foco vuelve al botón del menú, para
@@ -172,7 +158,7 @@ export function MenuPizarra({ alCerrar, botonMenu }: MenuPizarraProps) {
     // 1) La web de detrás queda "inerte": ni el tabulador ni un lector de pantalla pueden llegar a ella.
     const raiz = document.getElementById('root')
     raiz?.setAttribute('inert', '')
-    marcarVisto()
+    marcarVisto(CLAVE_VISTO)
     // 2) Sin scroll de fondo.
     document.body.style.overflow = 'hidden'
     // 3) Barras del navegador del color de la pizarra (theme-color), para que no corten el efecto.

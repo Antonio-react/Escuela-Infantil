@@ -9,6 +9,11 @@ const posiciones = {
 
 type Tema = keyof typeof posiciones
 
+// ¿Este testimonio ya sale en su sección? Entonces no se repite en Inicio (Antonio, 2026-11-17: en el móvil, tantas
+// reseñas seguidas aburren; el de la adaptación se queda solo en Familias).
+const reservadas: ReadonlySet<number> = new Set(Object.values(posiciones))
+export const estaEnUnaSeccion = (posicion: number) => reservadas.has(posicion)
+
 export function testimonioDe(tema: Tema) {
   const testimonio = testimonios[posiciones[tema]]
   return testimonio.permiso ? testimonio : null

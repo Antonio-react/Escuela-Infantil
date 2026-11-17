@@ -1,5 +1,6 @@
 import { useInView } from 'motion/react'
 import { useRef, type CSSProperties } from 'react'
+import { estaEnUnaSeccion } from '../../data/destacados'
 import { site } from '../../data/site'
 import { testimonios } from '../../data/testimonios'
 import { textos } from '../../data/textos'
@@ -28,7 +29,8 @@ const RETRASO_ENTRE_TARJETAS = 140 // ms
 
 export function Testimonios() {
   const t = textos.secciones.testimonios
-  const visibles = testimonios.filter((testimonio) => testimonio.permiso)
+  // Los que no salen ya en otra sección (destacados.ts): así no se ve el mismo dos veces.
+  const visibles = testimonios.filter((testimonio, i) => testimonio.permiso && !estaEnUnaSeccion(i))
   const pila = useRef<HTMLUListElement>(null)
   const visto = useInView(pila, { once: true, amount: 0.15 })
   if (visibles.length === 0) return null

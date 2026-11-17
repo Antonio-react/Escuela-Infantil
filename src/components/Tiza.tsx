@@ -6,7 +6,7 @@ import { conTiempo } from './utilidadesTiza'
 // Piezas "dibujadas a tiza" para la pizarra (menú de móvil y, más adelante, la 404).
 //
 // Cómo se dibujan (clases de src/index.css):
-//   .tiza          filtro SVG #filtro-tiza: bordes irregulares y huecos, como la tiza de verdad.
+//   .tiza          máscara con la textura de tiza (huecos y grano), como la tiza de verdad.
 //   .tiza-traza    el trazo se dibuja de principio a fin (stroke-dashoffset). Los <path> llevan pathLength={1}:
 //                  así el recorrido mide siempre 1, sea cual sea la forma, y la animación sirve para todos.
 //   .tiza-aparece  puntos (ojos, picos...): aparecen con un fundido.
@@ -15,27 +15,6 @@ import { conTiempo } from './utilidadesTiza'
 
 // CSSProperties no admite variables CSS propias (--retraso...): este tipo lo amplía sin recurrir a "any".
 export type EstiloConVariables = CSSProperties & Record<`--${string}`, string>
-
-// Filtro de tiza compartido. Se pinta una sola vez en toda la web (Layout.tsx); las piezas lo usan por su id.
-export function FiltrosTiza() {
-  return (
-    <svg width="0" height="0" className="absolute" aria-hidden="true" focusable="false">
-      <defs>
-        {/* 1) Ondula un poco los bordes (feDisplacementMap). 2) Abre huecos con un ruido fino: donde el ruido
-            es claro, la tiza "no ha pintado" (feColorMatrix convierte el ruido en transparencia).
-            Probado y descartado (2026-11-17): el ruido ya hecho en una imagen (feImage + feTile). En Safari del
-            iPhone, el texto con ese filtro desaparecía (solo se veían los dibujos SVG). */}
-        <filter id="filtro-tiza" x="-5%" y="-10%" width="110%" height="120%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="3" result="ruido" />
-          <feDisplacementMap in="SourceGraphic" in2="ruido" scale="2" result="ondulado" />
-          <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="1" seed="7" result="grano" />
-          <feColorMatrix in="grano" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.6 1.9" result="huecos" />
-          <feComposite in="ondulado" in2="huecos" operator="in" />
-        </filter>
-      </defs>
-    </svg>
-  )
-}
 
 type TrazoProps = SVGProps<SVGPathElement>
 

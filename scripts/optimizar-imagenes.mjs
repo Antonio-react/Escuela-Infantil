@@ -128,6 +128,27 @@ async function granoPizarra() {
     .toFile(`${DESTINO}/pizarra-grano.webp`)
 }
 
+// Textura de la tiza (2026-11-17): los huecos y el grano de las letras y dibujos de tiza, ya hechos, para usarlos como
+// máscara (.tiza en index.css). Antes los fabricaba un filtro SVG (feTurbulence) al pintar: en el iPhone, Safari lo
+// calcula con el procesador y el menú se paraba casi 0,2 s al abrirse (en Android lo hace la tarjeta gráfica).
+// Es EL MISMO ruido que tenía el filtro (frecuencia 1.3, 1 octava, semilla 7, y los huecos donde el ruido es claro:
+// alfa = 1.9 − 2.6 × ruido), y lo dibuja sharp con ese mismo filtro SVG. stitchTiles: la baldosa se repite sin
+// costuras. 128 px de la web a ×3 (384 px), como la ve el iPhone. Calidad 60: es ruido, no se nota y pesa la mitad.
+async function texturaTiza() {
+  const lado = 128
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${lado}" height="${lado}">
+    <filter id="f" x="0" y="0" width="${lado}" height="${lado}" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="1.3" numOctaves="1" seed="7" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 -2.6 1.9" />
+    </filter>
+    <rect width="${lado}" height="${lado}" filter="url(#f)" />
+  </svg>`
+  // density: puntos por pulgada al dibujar el SVG; 72 = 1 px por px, así que 72 × 3 = a ×3.
+  return sharp(Buffer.from(svg), { density: 72 * 3 })
+    .webp({ quality: 60, alphaQuality: 60, effort: 6 })
+    .toFile(`${DESTINO}/textura-tiza.webp`)
+}
+
 // Corcho del tablón de las actividades (Familias): gránulos de corcho de tres tonos (base, oscuro y claro) en una
 // baldosa que se repite. Opaco: el color lo da la propia imagen. Con semilla, como el grano de la pizarra.
 async function corcho() {
@@ -163,7 +184,7 @@ async function corcho() {
 }
 
 // El orden importa: la imagen para compartir usa las imágenes del logo ya generadas.
-const tareas = { arbol, rotuloEscuela, rotuloNubes, favicon32, favicon192, iconoApple, imagenCompartir, granoPizarra, corcho }
+const tareas = { arbol, rotuloEscuela, rotuloNubes, favicon32, favicon192, iconoApple, imagenCompartir, granoPizarra, texturaTiza, corcho }
 for (const [nombre, tarea] of Object.entries(tareas)) {
   const r = await tarea()
   console.log(`${nombre}: ${r.width}x${r.height}, ${Math.round(r.size / 1024)} KB`)

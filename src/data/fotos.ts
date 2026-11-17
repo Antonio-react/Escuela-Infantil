@@ -41,7 +41,8 @@ export type Foto = {
   encaje?: 'grande' | 'alta' | 'ancha'
 }
 
-// La entrada: va en la galería y, además, arriba de La escuela (fotoCabeceraEscuela).
+// La entrada: solo arriba de La escuela (fotoCabeceraEscuela). Ya no va en la galería (Antonio, 2026-11-17: se veía
+// dos veces en la misma página).
 const entrada: Foto = {
   ...archivos('entrada'),
   titulo: 'La entrada',
@@ -54,7 +55,8 @@ const entrada: Foto = {
 // (Antonio, 2026-11-17; antes, juguetes sobre una nube como hueco provisional). Con null, no se pinta.
 export const fotoCabeceraEscuela: Foto | null = entrada
 
-// "Así es la escuela", en el orden de Antonio.
+// "Así es la escuela", en el orden de Antonio (es el del visor; en la rejilla, el patio de arena rellena el hueco
+// junto al baño: ver GaleriaEscuela.tsx).
 export const fotosEscuela: readonly Foto[] = [
   {
     ...archivos('psicomotricidad'),
@@ -64,7 +66,6 @@ export const fotosEscuela: readonly Foto[] = [
     alto: 1050,
     encaje: 'grande',
   },
-  entrada,
   {
     ...archivos('bebes'),
     titulo: 'Aula de bebés',
@@ -100,6 +101,7 @@ export const fotosEscuela: readonly Foto[] = [
     alt: 'Patio con césped artificial, toboganes, balancines y triciclos',
     ancho: 1400,
     alto: 1050,
+    encaje: 'ancha',
   },
   {
     ...archivos('patio-exterior'),

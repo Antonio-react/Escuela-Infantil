@@ -17,6 +17,10 @@ const VECES = 3
 
 export function useMarcaReposo() {
   useEffect(() => {
+    // En pantallas táctiles (móvil y tablet), nada: las nubes se quedan fijas (Antonio, 2026-11-17). Así también se
+    // ahorra poner y quitar la marca en <html> al empezar y parar cada scroll, que hace recalcular los estilos de toda
+    // la página (en el iPhone se notaba como algún salto). Con ratón, como antes.
+    if (window.matchMedia('(hover: none)').matches) return
     const raiz = document.documentElement
     let veces = 0
     let temporizador = 0

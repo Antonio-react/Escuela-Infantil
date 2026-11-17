@@ -20,18 +20,22 @@ export function Inicio() {
       </div>
       {/* Lo de más abajo se monta justo después del primer dibujado, cada bloque en su turno (Diferido.tsx):
           la página aparece antes y no se queda bloqueada. */}
-      <Diferido altoMinimo="60svh">
-        <Presentacion />
-      </Diferido>
-      <Diferido>
-        <ResumenPaginas />
-      </Diferido>
-      <Diferido>
-        <Testimonios />
-      </Diferido>
-      <Diferido>
-        <Cierre />
-      </Diferido>
+      {/* relative z-20: por delante del árbol de fondo. En las demás páginas lo hace el <main>; en Inicio, no, para que el
+          hero anclado no tiemble en el iPhone (Layout.tsx). */}
+      <div className="relative z-20">
+        <Diferido altoMinimo="60svh">
+          <Presentacion />
+        </Diferido>
+        <Diferido>
+          <ResumenPaginas />
+        </Diferido>
+        <Diferido>
+          <Testimonios />
+        </Diferido>
+        <Diferido>
+          <Cierre />
+        </Diferido>
+      </div>
     </>
   )
 }

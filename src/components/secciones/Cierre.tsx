@@ -1,5 +1,5 @@
 import { useInView } from 'motion/react'
-import { useId, useRef } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { enlaceMapa } from '../../data/mapa'
 import { rutaSolicitarVisita } from '../../data/paginas'
@@ -11,11 +11,14 @@ import { IconoEmail, IconoTelefono } from '../Iconos'
 import { MarcoPizarra } from '../MarcoPizarra'
 import { JugueteTiza, NubeTiza, PajaroTiza, SubrayadoTiza, TextoTiza } from '../Tiza'
 import { conTiempo, despues, duracionPalabras, duracionTexto, tizas } from '../utilidadesTiza'
+import { marcarVisto, yaSeHaVisto } from '../../utils/vistoEnLaVisita'
+
+const CLAVE_VISTO = 'cierre-pizarra-visto'
 
 // Cierre de las páginas, justo antes del footer: quien llega al final ya está convencido, así que se le da
 // el siguiente paso. Una pizarra de aula (como la 404) escrita a tiza: la invitación, la matrícula abierta,
 // dónde estamos (con "Cómo llegar"), la acción principal (la nube "Solicitar visita") y dos alternativas
-// (email y llamar). Se escribe UNA vez, cuando aparece en pantalla (antes espera en pausa). Con movimiento
+// (email y llamar). Se escribe UNA vez en la visita, cuando aparece en pantalla (antes espera en pausa). Con movimiento
 // reducido, ya escrita. En todas las páginas menos Contacto (ya tiene el formulario), las legales y la 404.
 
 const t = textos.secciones.cierre
@@ -45,11 +48,18 @@ export function Cierre() {
   // Se escribe cuando ya se ve buena parte de la pizarra, y solo la primera vez.
   const visto = useInView(ref, { once: true, amount: 0.35 })
   const reducido = usePrefersReducedMotion()
+  // Solo se escribe la primera vez que se ve en la visita (Antonio, 2026-11-17); en las demás páginas sale ya
+  // pintada (--escala-tiza a 0, como el menú). Se decide al montar y se recuerda al empezar a escribirse.
+  const [primeraVez] = useState(() => !yaSeHaVisto(CLAVE_VISTO))
+  useEffect(() => {
+    if (visto && primeraVez) marcarVisto(CLAVE_VISTO)
+  }, [visto, primeraVez])
+  const claseMarco = !primeraVez ? '[--escala-tiza:0]' : visto || reducido ? '' : 'pizarra-pausada'
 
   return (
     <section ref={ref} aria-labelledby={idTitulo} className="mx-auto max-w-6xl px-4 py-[clamp(2.5rem,7svh,5rem)] sm:px-6">
       <MarcoPizarra
-        claseMarco={visto || reducido ? '' : 'pizarra-pausada'}
+        claseMarco={claseMarco}
         clasePizarra="px-6 py-[clamp(2.5rem,6svh,4rem)] sm:px-12 lg:px-16"
       >
         <div className="relative grid items-center gap-8 lg:grid-cols-[2.6fr_1fr]">

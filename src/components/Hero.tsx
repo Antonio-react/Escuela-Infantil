@@ -32,7 +32,9 @@ export function Hero() {
     <div ref={zonaRef} data-zona-hero className={reducido ? '' : 'h-[calc(160svh-4.5rem)]'}>
     <section
       ref={seccionRef}
-      className="sticky top-18 isolate flex min-h-[calc(100svh-4.5rem)] flex-col items-center justify-center overflow-hidden px-4 pt-6 pb-10 text-center"
+      // overflow-clip, no overflow-hidden (2026-11-17): recorta igual lo que asoma (nubes, pájaros), pero con hidden Safari
+      // del iPhone trataba el hero anclado como una caja con scroll propio y lo movía a tirones al subir (temblaba).
+      className="sticky top-18 isolate flex min-h-[calc(100svh-4.5rem)] flex-col items-center justify-center overflow-clip px-4 pt-6 pb-10 text-center"
     >
       {/* Nubes grandes del cielo: no se mueven con el scroll (lo que se mueve es el árbol, ArbolHero). En reposo, cada
           una se mece un poco a los lados (.balancea, con su distancia y su ritmo: balanceo.ts). */}

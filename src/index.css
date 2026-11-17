@@ -813,6 +813,12 @@
   html:has(.visor[open]) {
     overflow: hidden;
   }
+  /* Inicio (la única página con el hero anclado, [data-zona-hero] en Hero.tsx): sin el rebote del iPhone al llegar
+     arriba o abajo del todo. Durante el rebote, Safari recolocaba el hero anclado (sticky) a tirones y temblaba de
+     arriba a abajo ~1 s (2026-11-17; con movimiento reducido no hay anclaje y no pasaba). Las demás páginas, igual. */
+  html:has([data-zona-hero]) {
+    overscroll-behavior-y: none;
+  }
 
   /* Tablón de corcho de las actividades (Actividades.tsx), como los de las aulas de antes: el corcho (baldosa generada
      con npm run imagenes), un marco fino de madera con algo de volumen y una sombra por dentro, como si el corcho
@@ -934,15 +940,17 @@
     );
     box-shadow: 0 1px 1.5px rgb(0 0 0 / 0.45);
   }
-  /* Borrador: mango de madera con vetas arriba y, abajo, la parte que borra, del color de la pizarra y con
-     polvo de tiza (como un borrador usado). */
+  /* Borrador: mango rojo arriba y, abajo, la parte que borra, del color de la pizarra y con polvo de tiza (como
+     un borrador usado). */
   .borrador {
     border-radius: 0.25rem 0.25rem 0.15rem 0.15rem;
-    /* Mango más oscuro que el pollete (si no, se confunde con él), con un canto de luz arriba y vetas. */
+    /* Mango de plástico rojo apagado (Antonio, 2026-11-17: de madera, sobre el pollete de madera, mucha gente ni lo
+       veía; el rojo vivo del logo llamaba demasiado la atención): el coral de la marca tirando a la madera oscura, con
+       un canto de luz arriba y algo más oscuro abajo, para que tenga volumen. */
+    --borrador-mango: color-mix(in oklab, var(--color-coral) 80%, var(--color-madera-oscura));
     background:
-      linear-gradient(180deg, rgb(255 255 255 / 0.3) 0 1.5px, transparent 1.5px),
-      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.08) 0 1px, transparent 1px 5px),
-      linear-gradient(180deg, var(--color-madera-oscura), color-mix(in oklab, var(--color-madera-oscura) 70%, black));
+      linear-gradient(180deg, rgb(255 255 255 / 0.25) 0 1.5px, transparent 1.5px),
+      linear-gradient(180deg, var(--borrador-mango), color-mix(in oklab, var(--borrador-mango) 75%, black));
     box-shadow:
       0 3px 4px rgb(0 0 0 / 0.45),
       inset 0 0 0 1px rgb(0 0 0 / 0.25);
@@ -968,9 +976,13 @@
     outline-color: var(--color-tiza);
   }
 
-  /* Aspecto de tiza: bordes irregulares y huecos (filtro SVG #filtro-tiza, en Tiza.tsx). */
+  /* Aspecto de tiza: los huecos y el grano, con una máscara ya hecha (textura-tiza.webp, la genera npm run imagenes).
+     Antes era un filtro SVG (feTurbulence) que el iPhone calculaba con el procesador cada vez que se pintaba: el menú
+     se paraba casi 0,2 s al abrirse (2026-11-17). Mismo ruido y mismo aspecto; solo se pierde la ondulación de 2 px
+     del borde, que a tamaño real no se distingue (comparado con capturas a ×3). La baldosa mide 128 px y se repite. */
   .tiza {
-    filter: url(#filtro-tiza);
+    mask-image: url('./assets/textura-tiza.webp');
+    mask-size: 128px 128px;
   }
 
   /* Escritura a tiza. Cada pieza dice cuándo empieza y cuánto dura (--retraso y --duracion, en su style).
@@ -1193,3 +1205,6 @@
     animation: none !important;
   }
 }
+
+
+
