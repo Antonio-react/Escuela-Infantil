@@ -1,0 +1,715 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T13:21:33.966Z",
+  "title": "Design System: Escuela Infantil Árbol de Nubes",
+  "extensions": {
+    "colorMeta": {
+      "verde": {
+        "role": "primary",
+        "displayName": "Verde Árbol",
+        "tonalRamp": [
+          "#001002",
+          "#002d11",
+          "#194e2a",
+          "#3d714a",
+          "#60956c",
+          "#8bb894",
+          "#b9d7be",
+          "#e7f2e9"
+        ]
+      },
+      "ciruela": {
+        "role": "secondary",
+        "displayName": "Ciruela",
+        "tonalRamp": [
+          "#1a0016",
+          "#3e0a37",
+          "#65255b",
+          "#8a477e",
+          "#b06aa3",
+          "#d193c4",
+          "#e9bfdf",
+          "#f9e9f5"
+        ]
+      },
+      "coral": {
+        "role": "secondary",
+        "displayName": "Coral",
+        "tonalRamp": [
+          "#240001",
+          "#500009",
+          "#7e0721",
+          "#a73641",
+          "#d05b63",
+          "#ef898c",
+          "#ffb8b9",
+          "#ffe7e6"
+        ]
+      },
+      "mostaza": {
+        "role": "tertiary",
+        "displayName": "Mostaza (solo fondo)",
+        "tonalRamp": [
+          "#190500",
+          "#3d1a00",
+          "#633700",
+          "#875900",
+          "#ad7c24",
+          "#cda360",
+          "#e6c99e",
+          "#f8eddd"
+        ]
+      },
+      "salvia": {
+        "role": "tertiary",
+        "displayName": "Salvia (solo fondo)",
+        "tonalRamp": [
+          "#0b0d00",
+          "#232703",
+          "#41471a",
+          "#61683b",
+          "#848b5d",
+          "#a9b088",
+          "#ccd1b6",
+          "#eef0e6"
+        ]
+      },
+      "azul": {
+        "role": "tertiary",
+        "displayName": "Azul gris (solo fondo)",
+        "tonalRamp": [
+          "#030c14",
+          "#132634",
+          "#2e4557",
+          "#4e6779",
+          "#708a9e",
+          "#98aec0",
+          "#c1d0dc",
+          "#eaeff4"
+        ]
+      },
+      "logo-morado": {
+        "role": "secondary",
+        "displayName": "Morado del rótulo",
+        "tonalRamp": [
+          "#180023",
+          "#3b004d",
+          "#611a79",
+          "#85409e",
+          "#aa64c5",
+          "#cc90e3",
+          "#e5bcf5",
+          "#f7e8fe"
+        ]
+      },
+      "verde-hoja": {
+        "role": "tertiary",
+        "displayName": "Verde hoja (texto grande)",
+        "tonalRamp": [
+          "#011000",
+          "#0a2e00",
+          "#235000",
+          "#447200",
+          "#66972f",
+          "#8fbb67",
+          "#bbd9a2",
+          "#e7f3de"
+        ]
+      },
+      "nube": {
+        "role": "tertiary",
+        "displayName": "Azul Nube",
+        "tonalRamp": [
+          "#000e18",
+          "#00293a",
+          "#024a5f",
+          "#2f6c82",
+          "#548fa7",
+          "#81b3c8",
+          "#b3d4e2",
+          "#e5f1f6"
+        ]
+      },
+      "arbol-naranja": {
+        "role": "tertiary",
+        "displayName": "Árbol naranja 35 %",
+        "tonalRamp": [
+          "#130900",
+          "#322000",
+          "#553e11",
+          "#775f34",
+          "#9b8256",
+          "#bda882",
+          "#dbccb2",
+          "#f3eee4"
+        ]
+      },
+      "arbol-verde": {
+        "role": "tertiary",
+        "displayName": "Árbol verde 35 %",
+        "tonalRamp": [
+          "#090d00",
+          "#212800",
+          "#3e480e",
+          "#5e6a32",
+          "#818d55",
+          "#a6b181",
+          "#cad2b2",
+          "#edf0e4"
+        ]
+      },
+      "arbol-rojo": {
+        "role": "tertiary",
+        "displayName": "Árbol rojo 35 %",
+        "tonalRamp": [
+          "#1d0104",
+          "#430e15",
+          "#6c292f",
+          "#924b4f",
+          "#b96e71",
+          "#d99698",
+          "#efc0c1",
+          "#fce9e9"
+        ]
+      },
+      "arbol-morado": {
+        "role": "tertiary",
+        "displayName": "Árbol morado 35 %",
+        "tonalRamp": [
+          "#150511",
+          "#35182e",
+          "#583450",
+          "#7c5572",
+          "#a07795",
+          "#c29eb8",
+          "#dec5d7",
+          "#f5ebf2"
+        ]
+      },
+      "arbol-azul": {
+        "role": "tertiary",
+        "displayName": "Árbol azul 35 %",
+        "tonalRamp": [
+          "#000e14",
+          "#082833",
+          "#224855",
+          "#436a78",
+          "#658d9c",
+          "#8fb1be",
+          "#bbd2db",
+          "#e8f0f3"
+        ]
+      },
+      "arbol-naranja-intenso": {
+        "role": "tertiary",
+        "displayName": "Naranja del árbol",
+        "tonalRamp": [
+          "#1e0200",
+          "#451100",
+          "#6e2e00",
+          "#935100",
+          "#ba7600",
+          "#da9e3c",
+          "#efc78d",
+          "#fbecd7"
+        ]
+      },
+      "arbol-verde-intenso": {
+        "role": "tertiary",
+        "displayName": "Verde del árbol",
+        "tonalRamp": [
+          "#031000",
+          "#132d00",
+          "#2c4f00",
+          "#4c7200",
+          "#6d9700",
+          "#94bb43",
+          "#beda90",
+          "#e8f3d8"
+        ]
+      },
+      "arbol-rojo-intenso": {
+        "role": "tertiary",
+        "displayName": "Rojo del árbol",
+        "tonalRamp": [
+          "#300000",
+          "#650000",
+          "#9b0000",
+          "#c70000",
+          "#f32826",
+          "#ff6e60",
+          "#ffab9d",
+          "#ffe3dc"
+        ]
+      },
+      "arbol-morado-intenso": {
+        "role": "tertiary",
+        "displayName": "Morado del árbol",
+        "tonalRamp": [
+          "#21001b",
+          "#4c003f",
+          "#780066",
+          "#9f288a",
+          "#c850b0",
+          "#e881d0",
+          "#fab4e8",
+          "#ffe5f9"
+        ]
+      },
+      "arbol-azul-intenso": {
+        "role": "tertiary",
+        "displayName": "Azul cielo del árbol",
+        "tonalRamp": [
+          "#000d24",
+          "#002850",
+          "#004a7b",
+          "#006da1",
+          "#0092c8",
+          "#5ab7e5",
+          "#9dd7f6",
+          "#ddf2fe"
+        ]
+      },
+      "arbol-naranja-texto": {
+        "role": "tertiary",
+        "displayName": "Naranja para texto",
+        "tonalRamp": [
+          "#1c0300",
+          "#411500",
+          "#693100",
+          "#8e5300",
+          "#b47733",
+          "#d59e69",
+          "#ebc6a3",
+          "#faecde"
+        ]
+      },
+      "arbol-azul-texto": {
+        "role": "tertiary",
+        "displayName": "Azul para texto",
+        "tonalRamp": [
+          "#000d1e",
+          "#002845",
+          "#00496e",
+          "#196b92",
+          "#448fb8",
+          "#76b4d7",
+          "#acd4ed",
+          "#e2f1fa"
+        ]
+      },
+      "mostaza-texto": {
+        "role": "tertiary",
+        "displayName": "Mostaza para texto",
+        "tonalRamp": [
+          "#160800",
+          "#371e00",
+          "#5b3c00",
+          "#7e5e00",
+          "#a28129",
+          "#c4a863",
+          "#dfcca0",
+          "#f5eedd"
+        ]
+      },
+      "patito": {
+        "role": "tertiary",
+        "displayName": "Patito de goma",
+        "tonalRamp": [
+          "#1a0500",
+          "#3e1a00",
+          "#643800",
+          "#875a00",
+          "#ad7f00",
+          "#cda624",
+          "#e5cc85",
+          "#f7eed4"
+        ]
+      },
+      "crema": {
+        "role": "neutral",
+        "displayName": "Crema",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262421",
+          "#44423e",
+          "#65635f",
+          "#888681",
+          "#adaaa6",
+          "#cfcdcb",
+          "#efeeed"
+        ]
+      },
+      "verde-suave": {
+        "role": "neutral",
+        "displayName": "Verde suave",
+        "tonalRamp": [
+          "#080c09",
+          "#1f2620",
+          "#3c453d",
+          "#5c665e",
+          "#7f8980",
+          "#a4aea6",
+          "#c9d0ca",
+          "#edefed"
+        ]
+      },
+      "azul-suave": {
+        "role": "neutral",
+        "displayName": "Azul suave",
+        "tonalRamp": [
+          "#090b0d",
+          "#212527",
+          "#3e4346",
+          "#5f6467",
+          "#82878b",
+          "#a7acaf",
+          "#cbced0",
+          "#edefef"
+        ]
+      },
+      "coral-suave": {
+        "role": "neutral",
+        "displayName": "Coral suave",
+        "tonalRamp": [
+          "#0f090a",
+          "#2c2122",
+          "#4c3e3f",
+          "#6e5f60",
+          "#928283",
+          "#b5a7a8",
+          "#d5cbcb",
+          "#f1eded"
+        ]
+      },
+      "mostaza-suave": {
+        "role": "neutral",
+        "displayName": "Mostaza suave",
+        "tonalRamp": [
+          "#100a04",
+          "#2c2214",
+          "#4c402e",
+          "#6e614e",
+          "#928470",
+          "#b5a997",
+          "#d5ccc0",
+          "#f1eee9"
+        ]
+      },
+      "ciruela-suave": {
+        "role": "neutral",
+        "displayName": "Ciruela suave",
+        "tonalRamp": [
+          "#0d0a0c",
+          "#272325",
+          "#464044",
+          "#676165",
+          "#8a8488",
+          "#aea9ac",
+          "#d0cccf",
+          "#efeeef"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "tonalRamp": [
+          "#0c0a0e",
+          "#252329",
+          "#444149",
+          "#65616b",
+          "#88848e",
+          "#aca9b2",
+          "#cfccd2",
+          "#efeef0"
+        ]
+      },
+      "pizarra": {
+        "role": "neutral",
+        "displayName": "Pizarra",
+        "tonalRamp": [
+          "#0a0c0b",
+          "#222523",
+          "#404341",
+          "#616462",
+          "#838785",
+          "#a8aca9",
+          "#cccecd",
+          "#eeefee"
+        ]
+      },
+      "tiza": {
+        "role": "neutral",
+        "displayName": "Tiza",
+        "tonalRamp": [
+          "#0c0b08",
+          "#26241f",
+          "#45423c",
+          "#66635c",
+          "#89867f",
+          "#adaba4",
+          "#cfcec9",
+          "#efeeed"
+        ]
+      },
+      "madera": {
+        "role": "neutral",
+        "displayName": "Madera",
+        "tonalRamp": [
+          "#190500",
+          "#3c1a00",
+          "#623606",
+          "#86572d",
+          "#ab7a50",
+          "#cca17d",
+          "#e5c7af",
+          "#f8ece3"
+        ]
+      },
+      "madera-oscura": {
+        "role": "neutral",
+        "displayName": "Madera oscura",
+        "tonalRamp": [
+          "#170600",
+          "#391b00",
+          "#5e3816",
+          "#825938",
+          "#a77c5a",
+          "#c8a285",
+          "#e2c8b4",
+          "#f7ece5"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "Blanco",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#424242",
+          "#636363",
+          "#868686",
+          "#ababab",
+          "#cecece",
+          "#eeeeee"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "h1 y h2 desde 640 px."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "h1 y h2 en móvil; cifras de arranque."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Títulos dentro de secciones."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto de lectura."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Entradillas y descripción de página."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Botones."
+      },
+      "tiza": {
+        "displayName": "Tiza",
+        "purpose": "Solo lo escrito en las pizarras."
+      }
+    },
+    "shadows": [
+      {
+        "name": "papel",
+        "value": "0 0 0 1px rgb(43 40 48 / 0.06), 0 0.25rem 0.75rem rgb(43 40 48 / 0.08)",
+        "purpose": "Folio del calendario."
+      },
+      {
+        "name": "cuaderno",
+        "value": "0 0 0 1px rgb(43 40 48 / 0.05), 0 1rem 2.5rem rgb(43 40 48 / 0.1)",
+        "purpose": "Hoja del formulario."
+      },
+      {
+        "name": "esquina-levantada",
+        "value": "0.55rem 0.9rem 1rem rgb(43 40 48 / 0.3)",
+        "purpose": "Bajo la esquina del folio (caja girada 4°)."
+      },
+      {
+        "name": "corcho",
+        "value": "inset 0 2px 10px rgb(70 40 10 / 0.45), 0 0 0 1px #8a5a2b, 0 10px 24px -8px rgb(70 40 10 / 0.4)",
+        "purpose": "Tablón de corcho de Familias."
+      },
+      {
+        "name": "google",
+        "value": "0 1px 2px rgb(60 64 67 / 0.3), 0 1px 3px 1px rgb(60 64 67 / 0.15)",
+        "purpose": "Botón \"Ver reseñas en Google\"."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-salida",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entradas y respuesta a la interacción."
+      },
+      {
+        "name": "ease-movimiento",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Algo que se desplaza por la pantalla."
+      },
+      {
+        "name": "pulsar",
+        "value": "transform 160ms ease-salida, scale(0.97)",
+        "purpose": "Botones al pulsar."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "menu",
+        "value": "992px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "3xl",
+        "value": "1800px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal de una sección: verde con letra blanca.",
+      "html": "<button class=\"ds-btn-principal\">Ver la escuela</button>",
+      "css": ".ds-btn-principal{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:0 1.5rem;border-radius:9999px;font-family:\"Fredoka Variable\",ui-rounded,sans-serif;font-weight:600;font-size:1.0625rem;border:none;cursor:pointer;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 200ms ease;background:#356943;color:#fff;}.ds-btn-principal:hover{background:#2c5638;}.ds-btn-principal:active{transform:scale(.97);}.ds-btn-principal:focus-visible{outline:3px solid #79386e;outline-offset:3px;}"
+    },
+    {
+      "name": "Botón secundario",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acción secundaria: blanco con contorno verde.",
+      "html": "<button class=\"ds-btn-secundario\">Ver PDF</button>",
+      "css": ".ds-btn-secundario{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:0 1.5rem;border-radius:9999px;font-family:\"Fredoka Variable\",ui-rounded,sans-serif;font-weight:600;font-size:1.0625rem;border:none;cursor:pointer;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 200ms ease;background:#fff;color:#356943;box-shadow:inset 0 0 0 2px #356943;}.ds-btn-secundario:hover{background:#e0ece2;}.ds-btn-secundario:active{transform:scale(.97);}.ds-btn-secundario:focus-visible{outline:3px solid #79386e;outline-offset:3px;}"
+    },
+    {
+      "name": "Nube Solicitar visita",
+      "kind": "button",
+      "refersTo": "button-visita",
+      "description": "La acción principal de la web, con la única silueta de nube del sistema.",
+      "html": "<button class=\"ds-btn-visita\">Solicitar visita</button>",
+      "css": ".ds-btn-visita{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:0 1.5rem;border-radius:9999px;font-family:\"Fredoka Variable\",ui-rounded,sans-serif;font-weight:600;font-size:1.0625rem;border:none;cursor:pointer;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 200ms ease;position:relative;isolation:isolate;min-height:3.875rem;padding:1.125rem 2.5rem .625rem;background:none;color:#2b2830;}.ds-btn-visita::before{content:'';position:absolute;inset:0;z-index:-1;background:#94d1ea;mask:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='8 0 228 108' preserveAspectRatio='none'%3E%3Cpath d='M22 66C10 52 22 36 40 42C44 24 66 16 82 28C90 6 126 0 142 22C152 10 178 12 188 32C210 28 232 46 222 64C236 76 224 98 204 92C196 104 168 106 156 96C144 106 112 106 102 96C90 104 62 104 56 92C34 98 12 84 22 66Z'/%3E%3C/svg%3E\") 0 0 / 100% 100% no-repeat;}.ds-btn-visita:hover{transform:translateY(-2px);}.ds-btn-visita:active{transform:scale(.97);}.ds-btn-visita:focus-visible{outline:3px solid #79386e;outline-offset:3px;}"
+    },
+    {
+      "name": "Botón de tiza",
+      "kind": "button",
+      "refersTo": "button-tiza",
+      "description": "Botón dibujado a tiza, solo sobre la pizarra.",
+      "html": "<div class=\"ds-pizarra\"><a class=\"ds-btn-tiza\" href=\"#\">Escríbenos</a></div>",
+      "css": ".ds-pizarra{background:#252826;color:#f1eee6;padding:1.5rem;border-radius:1rem;border:.8rem solid #9a6a40;}.ds-btn-tiza{display:inline-flex;align-items:center;min-height:3rem;padding:0 1.2rem;border:2px solid currentColor;border-radius:9999px;font-family:\"Patrick Hand\",cursive;font-size:1.3rem;color:inherit;text-decoration:none;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 200ms ease;}.ds-btn-tiza:hover{background:rgb(255 255 255/.08);}.ds-btn-tiza:active{transform:scale(.97);}.ds-btn-tiza:focus-visible{outline:3px solid #79386e;outline-offset:3px;}"
+    },
+    {
+      "name": "Hoja de cuaderno",
+      "kind": "input",
+      "refersTo": "cuaderno",
+      "description": "El formulario como carta: hueco sobre la raya, sin caja.",
+      "html": "<div class=\"ds-cuaderno\"><p>Hola, me llamo <input class=\"ds-hueco\" aria-label=\"Nombre\" placeholder=\"tu nombre\"></p></div>",
+      "css": ".ds-cuaderno{--c:1.25rem;--m:4rem;--l:rgb(45 170 225/.16);position:relative;padding:1.25rem 1.5rem 1.25rem 5rem;font-family:\"Nunito Variable\",sans-serif;font-size:1.25rem;line-height:2.5rem;color:#2b2830;background:linear-gradient(90deg,transparent calc(var(--m) - 1px),rgb(185 71 80/.6) calc(var(--m) - 1px) calc(var(--m) + 1px),transparent calc(var(--m) + 1px)),linear-gradient(var(--l) 1px,transparent 1px) 0 0/var(--c) var(--c),linear-gradient(90deg,var(--l) 1px,transparent 1px) 0 0/var(--c) var(--c),#fff;box-shadow:0 0 0 1px rgb(43 40 48/.05),0 1rem 2.5rem rgb(43 40 48/.1);}.ds-cuaderno p{margin:0;}.ds-hueco{appearance:none;border:none;border-bottom:2px solid rgb(43 40 48/.35);background:transparent;font:inherit;color:#79386e;width:12rem;}.ds-hueco:focus-visible{outline:3px solid #79386e;outline-offset:3px;}"
+    },
+    {
+      "name": "Folio de papel",
+      "kind": "card",
+      "refersTo": "folio",
+      "description": "Papel blanco de esquinas rectas con la de abajo a la derecha levantada (calendario).",
+      "html": "<div class=\"ds-folio\"><strong>Calendario escolar</strong><p>Septiembre a junio</p></div>",
+      "css": ".ds-folio{position:relative;max-width:18rem;padding:1.5rem;background:#fff;color:#2b2830;font-family:\"Nunito Variable\",sans-serif;border-radius:2px 2px 3.5rem 2px/2px 2px .9rem 2px;box-shadow:0 0 0 1px rgb(43 40 48/.06),0 .25rem .75rem rgb(43 40 48/.08);}.ds-folio strong{font-family:\"Fredoka Variable\",sans-serif;color:#356943;font-size:1.25rem;}.ds-folio::after{content:'';position:absolute;right:0;bottom:0;width:30%;height:14%;background:radial-gradient(ellipse at 100% 100%,rgb(43 40 48/.12),transparent 70%);}"
+    },
+    {
+      "name": "Navegación de escritorio",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Enlaces en Fredoka; la página activa con el pastel de su color.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-activa\" href=\"#\">Inicio</a><a href=\"#\">La escuela</a><a href=\"#\">Horario y calendario</a><a href=\"#\">Familias</a><a href=\"#\">Contacto</a></nav>",
+      "css": ".ds-nav{display:flex;gap:.25rem;font-family:\"Fredoka Variable\",sans-serif;font-weight:600;}.ds-nav a{padding:.5rem 1rem;border-radius:9999px;color:#2b2830;text-decoration:none;transition:background-color 200ms ease;}.ds-nav a:hover{background:#f6e7d1;}.ds-nav .ds-activa{background:#fbe0b1;}.ds-nav a:focus-visible{outline:3px solid #79386e;outline-offset:3px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "El aula de juguete",
+    "overview": "La web es un aula de verdad, contada con sus objetos: la pizarra de tiza, la hoja de cuaderno, el corcho con fotos pinchadas, el folio del calendario, los cubos de letras y los juguetes en el suelo de cada sección. Encima de todo, el árbol del logo: crece al fondo con el scroll, suelta pájaros y nubes desde el hero y echa raíces en el footer. Cada pieza es un dibujo propio en SVG o en CSS, nunca de librería ni una foto de banco.\n\nEl tono es cálido, hecho a mano y sereno: luminoso y pastel sobre crema, con mucho aire y letra redonda. El juego está en los detalles (un osito que asoma, un camión que sale con el formulario), no en el ruido. El movimiento es corto, suave y siempre con motivo; con movimiento reducido, todo queda fijo.\n\nLo que nunca debe parecer: una plantilla genérica, con tarjetas redondeadas iguales, iconos de librería y secciones intercambiables con las de cualquier otra web de empresa. Si un elemento podría estar en otra web sin cambiarle nada, no está terminado.",
+    "keyCharacteristics": [
+      "Cada superficie es un objeto del aula (pizarra, cuaderno, corcho, folio, cubo, pieza de puzzle), no una caja.",
+      "Paleta sacada del logo: tres colores de marca para texto, pastel para fondos y los colores puros del árbol solo como acento.",
+      "Fredoka redonda para títulos y botones, Nunito para leer y Patrick Hand solo en la tiza.",
+      "Formas orgánicas: la nube de las pizarras como única silueta de nube, salientes de puzzle, esquinas de papel.",
+      "Movimiento con motivo (llegar, aterrizar, escribir a tiza, caer como un dado), de ~1 s, y nada que se mueva solo sin parar."
+    ],
+    "rules": [
+      {
+        "name": "La regla del texto que se lee",
+        "body": "Sobre crema, solo verde, ciruela, coral, tinta y las variantes *-texto van como texto. Mostaza, salvia, azul y los colores puros del árbol son fondo o decoración, nunca letra.",
+        "section": "colors"
+      },
+      {
+        "name": "La regla de la paleta cerrada",
+        "body": "--color-*: initial borra la paleta de Tailwind: si un color no está en @theme, no existe. El único de fuera es el azul de Facebook en su icono.",
+        "section": "colors"
+      },
+      {
+        "name": "La regla del título de la página",
+        "body": "El h1 de cada página va en el color de su página (La escuela verde, Horario y calendario azul, Familias coral, Contacto ciruela; colorTitulo en paginas.ts) y un escalón por encima de los títulos de sección (3rem, 3,75rem desde 640 px).",
+        "section": "typography"
+      },
+      {
+        "name": "La regla de los títulos que se turnan",
+        "body": "El color de cada título de sección (verde, ciruela, coral, azul o naranja oscuro) es distinto del título de la sección anterior, del h1 de su página y de su palabra destacada.",
+        "section": "typography"
+      },
+      {
+        "name": "La regla de la palabra subrayada",
+        "body": "Cada h2 destaca una sola palabra con un garabato de cera dibujado a mano (subrayado ondulado, círculo o chispas) en un color distinto por sección. No se repite la misma forma con el mismo color en una página.",
+        "section": "typography"
+      },
+      {
+        "name": "La regla del objeto que descansa",
+        "body": "Una sombra solo existe si el objeto tiene un motivo físico para proyectarla. Si es una caja sin objeto, no lleva sombra: necesita otra forma.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do convertir cada bloque nuevo en un objeto del aula con sentido (papel, pizarra, juguete, cartel) antes que en una tarjeta.",
+      "Do sacar cada color de @theme y respetar la regla del texto que se lee (4,5:1 en texto normal y 3:1 solo en texto grande).",
+      "Do reutilizar CONTORNO_NUBE para cualquier nube y los juguetes de Juguetes.tsx para cualquier dibujo nuevo.",
+      "Do animar solo transform y opacity (en la pizarra, también stroke-dashoffset y clip-path), en torno a 1 s, y dejarlo todo fijo con prefers-reduced-motion.",
+      "Do dar a cada sombra un motivo físico y a cada foto, tamaño explícito."
+    ],
+    "donts": [
+      "Don't parecer una plantilla genérica: nada de filas de tarjetas redondeadas iguales con icono, título y texto, ni iconos de librería en lugar de dibujos propios.",
+      "Don't usar mostaza, salvia, azul ni los colores puros del árbol como color de texto sobre crema.",
+      "Don't usar los colores de Tailwind (red-500, sky-100…) ni degradados decorativos fuera de los ya aprobados.",
+      "Don't dibujar personas en avatares ni en testimonios.",
+      "Don't hacer que algo se mueva solo más de 5 s seguidos ni poner animaciones en bucle.",
+      "Don't crear una segunda forma de nube ni un segundo estilo de tiza."
+    ]
+  }
+}

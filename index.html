@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Favicon: la copa del árbol del logo (generado con npm run imagenes). -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- Copia de paginas.inicio (src/data/paginas.ts): la leen los que no ejecutan JavaScript, como las vistas previas de WhatsApp. Si cambia allí, cambiar aquí. -->
+    <title>Escuela Infantil Árbol de Nubes · Carranque (Toledo)</title>
+    <meta name="description" content="Escuela infantil de 0 a 3 años en Carranque (Toledo), pequeña y familiar: un aula para cada edad, comida casera hecha cada día y abierta de 7:00 a 17:00. Matrícula abierta todo el año." />
+    <meta name="theme-color" content="#fbf8f3" />
+    <!-- Vista previa al compartir el enlace (WhatsApp, Facebook, etc.): el hero sin el menú ni el sello. -->
+    <!-- TODO: cuando haya dominio, poner la dirección completa en og:image (https://dominio/imagen-compartir.jpg): WhatsApp y Facebook no aceptan rutas relativas. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Escuela Infantil Árbol de Nubes" />
+    <meta property="og:title" content="Escuela Infantil Árbol de Nubes · Carranque (Toledo)" />
+    <meta property="og:description" content="Escuela infantil de 0 a 3 años en Carranque (Toledo), pequeña y familiar: un aula para cada edad, comida casera hecha cada día y abierta de 7:00 a 17:00. Matrícula abierta todo el año." />
+    <meta property="og:image" content="/imagen-compartir.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Logo de la Escuela Infantil Árbol de Nubes: un árbol de colores entre nubes" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      Formulario "fantasma" para Netlify Forms. Netlify busca los formularios en el HTML al publicar; el de verdad
+      (src/components/secciones/FormularioVisita.tsx) lo pinta React en el navegador y Netlify no lo vería. Este,
+      oculto, le dice el nombre del formulario y sus campos. Si se añade o cambia un campo allí, cambiarlo aquí.
+      netlify-honeypot: bot-field es el campo trampa para los robots de spam.
+    -->
+    <form name="solicitar-visita" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="solicitar-visita" />
+      <input name="bot-field" />
+      <input name="nombre" />
+      <input type="radio" name="nacido" value="Ya ha nacido" />
+      <input type="date" name="nacimiento" />
+      <input name="contacto" />
+      <textarea name="mensaje"></textarea>
+      <input type="checkbox" name="consentimiento" />
+    </form>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+# Cabeceras de seguridad de Netlify (fase 4, 2026-11-16). Netlify las envía con cada respuesta. Este archivo NO lo
+# usan `npm run dev` ni `vite preview`: solo la web publicada.
+#
+# Content-Security-Policy (CSP): la lista de lo que la página puede cargar. Si alguien consiguiera colar código en la
+# web (inyección / XSS), el navegador no lo ejecutaría ni lo dejaría enviar datos a otro sitio.
+#   default-src 'self'          por defecto, solo cosas de nuestra propia web.
+#   script-src 'self'           solo nuestro JavaScript (el de /assets): nada escrito dentro del HTML ni de fuera.
+#   style-src 'self' 'unsafe-inline'  nuestro CSS y los estilos que React pone en atributos style (colores de cada
+#                               pieza, posiciones de las tizas…). No ejecutan código: el riesgo es mínimo.
+#   img-src 'self' data:        nuestras imágenes y los punteros de tiza y borrador de la pizarra (van en data:).
+#   font-src 'self'             las fuentes, alojadas en la propia web (Fontsource).
+#   connect-src 'self'          fetch solo a nuestra web (el formulario se envía a "/", que recoge Netlify Forms).
+#   frame-src                   solo el mapa de Google ("Dónde estamos", al pulsar "Ver mapa").
+#   form-action 'self'          los formularios solo se envían a nuestra web.
+#   frame-ancestors 'none'      nadie puede meter nuestra web dentro de la suya (engaños de clic, "clickjacking").
+#   base-uri, object-src        cierran dos trucos clásicos de inyección (cambiar la base de los enlaces, plugins).
+#   upgrade-insecure-requests   todo por https.
+# Strict-Transport-Security: el navegador recuerda un año que esta web va SIEMPRE por https.
+# X-Content-Type-Options: el navegador no "adivina" el tipo de un archivo (un .jpg no puede hacerse pasar por código).
+# Referrer-Policy: a otras webs solo se les dice de qué dominio viene la visita, no la página exacta.
+# Permissions-Policy: la web no usa cámara, micrófono, ubicación, pagos ni USB; así nadie puede pedirlos desde ella.
+# Cross-Origin-Opener-Policy: las pestañas que abrimos (WhatsApp, Maps…) no pueden tocar la nuestra.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://maps.google.com https://www.google.com; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+
+# Lo de /assets lleva una huella en el nombre (index-BkBndiGv.js): si cambia, cambia el nombre. Así se puede guardar
+# en el navegador un año sin miedo a ver una versión vieja (las visitas siguientes cargan mucho más rápido).
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

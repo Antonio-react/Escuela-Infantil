@@ -1,0 +1,1195 @@
+@import "tailwindcss";
+
+/* Variante flechas-lado: cuando hay sitio para poner las flechas del visor de fotos (VisorFotos.tsx) a los lados de la
+   foto: desde 1024 px de ancho (portátil, monitor, tablet en horizontal) o con el móvil en horizontal (tan bajo que,
+   con las flechas debajo, apenas quedaría foto). En el resto, las flechas van debajo de la foto. */
+@custom-variant flechas-lado {
+  @media (width >= 64rem), (orientation: landscape) and (height < 32rem) {
+    @slot;
+  }
+}
+
+/*
+  Tokens de diseño. Cada variable --color-X genera las clases bg-X, text-X, border-X...
+  "--color-*: initial" borra la paleta por defecto de Tailwind (red-500, sky-50...):
+  así solo existen los colores de la marca y nadie puede salirse del sistema por error.
+*/
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+
+  /* Marca. Contraste medido sobre crema (WCAG pide 4,5:1 en texto normal). */
+  --color-verde: #356943;   /* 6,1:1 → texto y botones con letra blanca */
+  --color-ciruela: #79386e; /* 7,6:1 → texto y botones con letra blanca */
+  --color-coral: #b94750;   /* 4,9:1 → texto y botones con letra blanca */
+  --color-mostaza: #deab59; /* 2,0:1 → solo fondo con texto tinta encima, o decoración */
+  --color-salvia: #9da576;  /* 2,5:1 → solo fondo con texto tinta encima, o decoración */
+  --color-azul: #7b95a9;    /* 3,0:1 → solo fondo con texto tinta encima, o decoración */
+
+  /* Colores medidos sobre el logo.
+     Morado del rótulo "Escuela infantil": texto sobre crema (9,6:1). */
+  --color-logo-morado: #6a2482;
+  /* Verde hoja: más oscuro que el verde del árbol (#94c11f, ilegible sobre crema). 3,9:1 sobre crema:
+     solo para texto GRANDE (cifras del arranque de las páginas), que pide 3:1. */
+  --color-verde-hoja: #5a8a1f;
+
+  /* Colores del árbol del logo. En el logo están al 50 % de opacidad; aquí ya van mezclados
+     con el fondo crema (colores sólidos: no cambian según lo que tengan detrás).
+     Nube: azul cielo #2daae1 al 50 %, igual que en el árbol → botón "Solicitar visita" (texto tinta 8,7:1).
+     El resto al 35 % → fondo de la página activa del menú (texto tinta 7,3-11,3:1). */
+  --color-nube: #94d1ea;
+  --color-arbol-naranja: #fbe0b1; /* la "a" de "Escuela" (#fcb436) */
+  --color-arbol-verde: #d7e5a9; /* verde de los lados del árbol (#94c11f) */
+  --color-arbol-rojo: #f3a3a5; /* nube roja bajo el pájaro (#e30613) */
+  --color-arbol-morado: #d7abcb; /* nube morada bajo el pájaro (#951b81) */
+  --color-arbol-azul: #b3dded; /* nube azul de la izquierda (#2daae1) */
+
+  /* Los mismos colores del árbol, puros (al 100 %): para el juguete de cada página en el menú de móvil. */
+  --color-arbol-naranja-intenso: #fcb436;
+  --color-arbol-verde-intenso: #94c11f;
+  --color-arbol-rojo-intenso: #e30613;
+  --color-arbol-morado-intenso: #951b81;
+  --color-arbol-azul-intenso: #2daae1;
+  /* Los colores del árbol oscurecidos para TEXTO sobre el verde del footer (#e0ece2), que pide 4,5:1: los
+     puros no llegan (naranja 1,5:1, azul 2,2:1). Títulos del footer. El morado puro sí llega (6,3:1). */
+  --color-arbol-naranja-texto: #8f5400; /* 5,0:1 */
+  --color-arbol-azul-texto: #14688f; /* 5,1:1 */
+  --color-mostaza-texto: #8a6a00; /* 5,1:1 → el "amarillo" que se lee sobre blanco (fecha del formulario) */
+  /* Azul real de la marca Facebook (no es de nuestra paleta): su icono en el footer. 3,6:1 sobre el verde. */
+  --color-facebook: #1877f2;
+
+  /* Piel de las personas dibujadas (el bebé del comparador de Instalaciones). Solo dibujo. */
+  --color-piel: #f2c9a4;
+  /* El patito (Juguetes.tsx): amarillo de patito de goma y pico naranja. Antes era mostaza y parecía sucio
+     (Antonio, 2026-11-16). Solo decoración (no texto). */
+  --color-patito: #ffcf2e;
+  --color-patito-claro: #fff1a8;
+  --color-patito-pico: #f5821f;
+
+  /* Fondos pastel */
+  --color-crema: #fbf8f3;
+  --color-verde-suave: #e0ece2;
+  --color-azul-suave: #e2e8ec;
+  --color-coral-suave: #f4e2e3;
+  --color-mostaza-suave: #f6e7d1;
+  --color-ciruela-suave: #e8e1e5;
+
+  /* Texto */
+  --color-tinta: #2b2830;
+
+  /* Pizarra del menú de móvil: fondo y tiza blanca (contraste 14,6:1). Los colores de las tizas de colores
+     salen del color intenso de cada página mezclado con blanco (ver MenuPizarra.tsx). */
+  --color-pizarra: #252826;
+  --color-tiza: #f1eee6;
+  /* Marco de madera de la pizarra de la 404 (solo decoración). */
+  --color-madera: #9a6a40;
+  --color-madera-oscura: #6b4423;
+
+  /* Tipografía (opción A). Para cambiar de fuente solo se tocan estas dos líneas y los imports de main.tsx.
+     --font-sans es la fuente por defecto de todo el texto; --font-titulo genera la clase font-titulo. */
+  --font-sans: 'Nunito Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-titulo: 'Fredoka Variable', ui-rounded, 'Nunito Variable', sans-serif;
+  /* Letra de tiza (solo en la pizarra): genera la clase font-tiza. */
+  --font-tiza: 'Patrick Hand', 'Fredoka Variable', cursive;
+
+  /* Punto de cambio del menú (genera la variante menu:): desde aquí, la barra de escritorio; por debajo, la
+     pizarra. 62rem = 992 px: la barra entera mide unos 964 px, así que cabe. Las tablets en horizontal (desde
+     1024 px) ven la barra y en vertical (744-834 px), la pizarra. Si la barra crece, hay que medirla otra vez.
+     Si cambia, cambiarlo también en MenuPizarra.tsx (matchMedia). */
+  --breakpoint-menu: 62rem;
+  /* Pantallas muy grandes (genera 3xl:, desde 1800 px): monitores de 2560 o cuadrados de 2000. El hero tenía topes
+     fijos pensados para monitores normales y se quedaba pequeño en medio de tanto espacio. */
+  --breakpoint-3xl: 112.5rem;
+
+  /* Curvas de animación (generan ease-salida y ease-movimiento). */
+  --ease-salida: cubic-bezier(0.23, 1, 0.32, 1);      /* entradas y respuesta a la interacción */
+  --ease-movimiento: cubic-bezier(0.77, 0, 0.175, 1); /* algo que se desplaza por la pantalla */
+}
+
+/* En el ordenador el crema se ve más oscuro que en el móvil: allí se usa un blanco hueso más limpio.
+   Se decide por el tipo de dispositivo (con ratón = ordenador) y no por el ancho, así da igual el tamaño
+   de la ventana o el zoom del navegador. Se redefine la variable: cambia en toda la web (fondo, header,
+   menú...). En móvil y tablet (táctiles) se queda el crema. */
+@media (hover: hover) and (pointer: fine) {
+  :root {
+    --color-crema: #fefcf9; /* antes #fdfbf7: Antonio lo seguía viendo más crema que en el móvil (2026-11-13) */
+  }
+}
+
+@layer base {
+  /* Pantallas muy anchas (monitores de 2560, cuadrados de 2000…): la web entera crece en proporción. Casi todo va
+     en rem (anchos, márgenes, letra), que depende de este tamaño base: así la columna de contenido no se queda
+     estrecha y con letra pequeña en medio de tanto espacio. Por debajo de 1800 px no cambia nada (16 px).
+     Las media queries no se ven afectadas: siempre miden con los 16 px del navegador. */
+  @media (width >= 112.5rem) {
+    html {
+      font-size: 112.5%; /* 18 px */
+    }
+  }
+  @media (width >= 150rem) {
+    html {
+      font-size: 125%; /* 20 px */
+    }
+  }
+
+  body {
+    background-color: var(--color-crema);
+    color: var(--color-tinta);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-titulo);
+    text-wrap: balance;
+  }
+
+  /* Lo que el navegador pinta por su cuenta, con los colores de la escuela (auditoría de Impeccable, 2026-11-17):
+     el texto seleccionado, en el verde del árbol con letra tinta (en vez del azul del navegador), y el cursor de
+     escribir, ciruela, como un boli sobre el cuaderno. */
+  ::selection {
+    background-color: var(--color-arbol-verde);
+    color: var(--color-tinta);
+  }
+  input,
+  textarea {
+    caret-color: var(--color-ciruela);
+  }
+
+  /* Foco visible para teclado (no aparece al hacer clic con el ratón). */
+  :focus-visible {
+    outline: 3px solid var(--color-ciruela);
+    outline-offset: 3px;
+  }
+
+  /* El main recibe el foco desde "Saltar al contenido", pero no necesita anillo. */
+  main:focus {
+    outline: none;
+  }
+}
+
+@layer components {
+  /* Enlace "Saltar al contenido": invisible hasta que se llega a él con el tabulador. */
+  .saltar-contenido {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    border-radius: 9999px;
+    background: var(--color-tinta);
+    color: var(--color-white);
+    font-weight: 700;
+    transform: translateY(-200%);
+  }
+  .saltar-contenido:focus-visible {
+    transform: translateY(0);
+  }
+
+  /* Botones: un solo sistema para toda la web. Altura mínima de 48px, cómoda para el pulgar. */
+  .boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0 1.5rem;
+    border-radius: 9999px;
+    font-family: var(--font-titulo);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    transition:
+      transform 160ms var(--ease-salida),
+      background-color 200ms ease;
+  }
+  .boton:active {
+    transform: scale(0.97); /* el botón "se hunde" al pulsar: confirma que ha recibido el toque */
+  }
+  .boton-principal {
+    background: var(--color-verde);
+    color: var(--color-white);
+  }
+  .boton-secundario {
+    background: var(--color-white);
+    color: var(--color-verde);
+    box-shadow: inset 0 0 0 2px var(--color-verde);
+  }
+  /* "Conoce la app Baby Control" (idea de Antonio, 2026-11-17): un CHARCO de agua del que asoma la rana (Asoma.tsx,
+     que dibuja también las ondas). Azul del árbol suave (no el de la nube "Solicitar visita", que sigue siendo la
+     acción principal) con letra tinta (11:1). No es una pastilla: esquinas redondeadas pero cada una distinta, como
+     la orilla de un charco. Abajo, un poco más de azul por dentro: la profundidad del agua. */
+  .boton-charco {
+    background: var(--color-arbol-azul);
+    color: var(--color-tinta);
+    border-radius: 1.4rem 1.9rem 1.6rem 2.1rem / 1.5rem 1.3rem 1.9rem 1.6rem;
+    box-shadow: inset 0 -0.3rem 0 color-mix(in oklab, var(--color-arbol-azul-intenso) 30%, transparent);
+  }
+  /* "Solicitar visita": la acción principal de la web, con la forma de nube "original" (la de las
+     pizarras: bultos también por debajo; el trazo es CONTORNO_NUBE de formas.ts) y el azul cielo del logo.
+     La nube se pinta en el ::before con una máscara SVG; el botón en sí no tiene fondo.
+     Así el anillo de foco del teclado se sigue viendo (una máscara en el propio botón lo recortaría). */
+  .boton-visita {
+    position: relative;
+    isolation: isolate; /* contexto propio: el ::before (z-index -1) queda detrás del texto */
+    min-height: 3.875rem;
+    /* El texto, algo por debajo del centro: los bultos de arriba son más altos que los de abajo, así que el
+       "cuerpo" de la nube queda bajo (centrado del todo se veía subido). Y aire a los lados. */
+    padding: 1.125rem 2.5rem 0.625rem;
+    color: var(--color-tinta);
+    --sombra-nube: color-mix(in oklab, var(--color-nube) 60%, transparent);
+  }
+  /* En móvil la sombra algo más marcada: la nube al 50 % se separa poco del fondo crema. */
+  @media (width < 48rem) {
+    .boton-visita {
+      --sombra-nube: color-mix(in oklab, var(--color-arbol-azul-intenso) 40%, transparent);
+    }
+  }
+  /* Sombra: otra nube, ya desenfocada DENTRO de su SVG (feGaussianBlur), detrás y 6 px más abajo.
+     Antes era filter: drop-shadow, que el navegador recalcula en cada fotograma y en iPhone parpadeaba
+     al hacer scroll; así es una imagen fija que se dibuja una vez.
+     El SVG tiene 12 unidades de margen alrededor para que el desenfoque no se corte: por eso el
+     ::after se sale del botón un 11,11 % arriba y abajo (12/108) y un 5,26 % a los lados (12/228). */
+  .boton-visita::after {
+    content: '';
+    position: absolute;
+    z-index: -2;
+    inset: -11.11% -5.26%;
+    translate: 0 6px;
+    background: var(--sombra-nube);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -12 252 132' preserveAspectRatio='none'%3E%3Cfilter id='b' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='4'/%3E%3C/filter%3E%3Cpath filter='url(%23b)' d='M22 66C10 52 22 36 40 42C44 24 66 16 82 28C90 6 126 0 142 22C152 10 178 12 188 32C210 28 232 46 222 64C236 76 224 98 204 92C196 104 168 106 156 96C144 106 112 106 102 96C90 104 62 104 56 92C34 98 12 84 22 66Z'/%3E%3C/svg%3E")
+      0 0 / 100% 100% no-repeat;
+  }
+  .boton-visita::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: var(--color-nube);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='8 0 228 108' preserveAspectRatio='none'%3E%3Cpath d='M22 66C10 52 22 36 40 42C44 24 66 16 82 28C90 6 126 0 142 22C152 10 178 12 188 32C210 28 232 46 222 64C236 76 224 98 204 92C196 104 168 106 156 96C144 106 112 106 102 96C90 104 62 104 56 92C34 98 12 84 22 66Z'/%3E%3C/svg%3E")
+      0 0 / 100% 100% no-repeat;
+  }
+
+  /* Folio de papel con la esquina de abajo a la derecha un poco levantada (la imagen del calendario).
+     - .folio (el botón): isolation crea su propio "contexto de apilamiento", para que la sombra del ::before
+       (z-index -1) quede detrás del papel pero no se esconda detrás del fondo de la sección.
+     - ::before: la sombra que proyecta la esquina al levantarse. Una caja invisible bajo la esquina, girada,
+       cuya sombra asoma por abajo a la derecha (el resto lo tapa el papel).
+     - .folio-papel: el papel. Esquinas rectas (2 px) menos la de abajo a la derecha, curvada en elipse (ancha y
+       baja), que es el borde que se levanta. Contorno finísimo para que el blanco no se pierda sobre el crema.
+     - .folio-papel::after: sombreado suave sobre el papel en esa esquina, que le da volumen a la curva.
+     Todo fijo: no se anima nada. */
+  .folio {
+    isolation: isolate;
+  }
+  .folio::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    right: 0.9rem;
+    bottom: 1rem;
+    width: 45%;
+    height: 18%;
+    box-shadow: 0.55rem 0.9rem 1rem rgb(43 40 48 / 0.3);
+    rotate: 4deg;
+  }
+  .folio-papel {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: var(--color-white);
+    border-radius: 2px 2px 3.5rem 2px / 2px 2px 0.9rem 2px;
+    box-shadow:
+      0 0 0 1px rgb(43 40 48 / 0.06),
+      0 0.25rem 0.75rem rgb(43 40 48 / 0.08);
+  }
+  .folio-papel::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 30%;
+    height: 14%;
+    background: radial-gradient(ellipse at 100% 100%, rgb(43 40 48 / 0.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Movimiento "en reposo" (idea de Antonio): cuando la pantalla está quieta (html[data-quieto], lo pone
+     useMarcaReposo), lo que lleva .balancea se mece un poco a los lados y vuelve; mientras se hace scroll, fijo.
+     Cada elemento dice cuánto (--balanceo, en px), cuánto tarda cada vaivén y cuántos hace. Cada movimiento dura
+     menos de 5 s y se para; empieza tras 3 s de pantalla quieta y se repite cada 8 s, hasta 3 veces (useMarcaReposo:
+     lo que se mueve solo sin parar necesitaría un botón de pausa, WCAG 2.2.2). Solo translate. Con movimiento
+     reducido, quieto. */
+  html[data-quieto] .balancea {
+    animation: balanceo var(--duracion-balanceo, 4.6s) ease-in-out var(--vaivenes, 1);
+  }
+  @keyframes balanceo {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: var(--balanceo, 6px) 0;
+    }
+  }
+
+  /* Ramas del árbol de fondo (ArbolFondo.tsx): crecen al bajar con el scroll. El JavaScript escribe --g (cuánto ha
+     crecido la rama, de 0 a 1) y --h (cuánto han brotado las hojas). La rama se estira desde donde sale del tronco
+     (abajo a la izquierda del dibujo) y cada hoja, desde su pico. Solo transform: no hay transición, sigue al dedo. */
+  .rama-cuerpo {
+    transform: scale(var(--g, 0));
+    transform-origin: 1% 92%;
+  }
+  .rama-hoja {
+    transform: scale(var(--h, 0));
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+  }
+
+  /* Hoja de cuaderno escolar (Contacto, FormularioVisita.tsx): papel blanco con cuadrícula azul muy suave (dos
+     degradados de 1 px que se repiten cada --cuadro, uno en horizontal y otro en vertical), la raya roja del margen
+     y, en el margen, los agujeros de la anilla (::before: círculos del color del fondo de la página, así "se ve a
+     través"). Esquinas rectas: es una hoja de papel, no una tarjeta. --margen: dónde va la raya roja; el padding
+     izquierdo de la hoja es mayor, para que el texto empiece después. */
+  .cuaderno {
+    --cuadro: 1.25rem;
+    --margen: 2.25rem;
+    --linea-cuadro: color-mix(in oklab, var(--color-arbol-azul-intenso) 16%, transparent);
+    background:
+      linear-gradient(
+        90deg,
+        transparent calc(var(--margen) - 1px),
+        color-mix(in oklab, var(--color-coral) 60%, transparent) calc(var(--margen) - 1px) calc(var(--margen) + 1px),
+        transparent calc(var(--margen) + 1px)
+      ),
+      linear-gradient(var(--linea-cuadro) 1px, transparent 1px) 0 0 / var(--cuadro) var(--cuadro),
+      linear-gradient(90deg, var(--linea-cuadro) 1px, transparent 1px) 0 0 / var(--cuadro) var(--cuadro),
+      var(--color-white);
+    box-shadow:
+      0 0 0 1px rgb(43 40 48 / 0.05),
+      0 1rem 2.5rem rgb(43 40 48 / 0.1);
+  }
+  @media (width >= 40rem) {
+    .cuaderno {
+      --margen: 4rem;
+    }
+  }
+  .cuaderno::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--margen);
+    background: radial-gradient(circle 0.5rem at 50% 50%, var(--color-crema) 94%, rgb(43 40 48 / 0.12) 100%, transparent 110%)
+      center 2.5rem / 1.25rem 6rem repeat-y;
+    pointer-events: none;
+  }
+
+  /* Pliegues del plano dibujado (DondeEstamos.tsx): papel doblado en tres. En cada pliegue, una franja algo más
+     oscura y, justo al lado, otra más clara (la luz en el doblez). Fijo, no se anima. */
+  .plano-pliegues {
+    background: linear-gradient(
+      90deg,
+      transparent 32.5%,
+      rgb(43 40 48 / 0.07) 33.2%,
+      rgb(255 255 255 / 0.35) 33.6%,
+      transparent 35%,
+      transparent 65.5%,
+      rgb(43 40 48 / 0.07) 66.4%,
+      rgb(255 255 255 / 0.35) 66.8%,
+      transparent 68%
+    );
+    pointer-events: none;
+  }
+
+  /* Huecos del formulario (FormularioVisita.tsx): lo que se escribe se APOYA en la raya, como en un cuaderno
+     (Antonio, 2026-11-16: centrado en el hueco quedaba flotando). La raya ya no es el borde de abajo: es una línea
+     dibujada (background) en el mismo sitio de antes (de 38 a 40 px, sobre una línea de la cuadrícula), y el campo
+     mide 6 px más por debajo (margin-bottom negativo: no empuja nada) para que quepan las letras que bajan de la
+     raya (p, g, j). padding-top baja el texto hasta apoyarlo. --linea: el color de la raya según el estado. */
+  @property --linea {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: rgb(43 40 48 / 0.3);
+  }
+  /* Luego (Antonio, mismo día): la raya, por DEBAJO de todo lo escrito, también de lo que baja (p, g, j): el texto
+     se sube lo justo para que esas letras acaben rozando la raya, sin cruzarla. Ya no hace falta el alto de más. */
+  /* Y sin líneas de la cuadrícula cruzando lo escrito: la letra de los huecos mide 20 px (text-xl): una mayúscula
+     ocupa justo un cuadro (el de abajo del hueco) y lo que baja, 6 px más, hasta la raya. La raya se pinta ENCIMA
+     de la línea de la cuadrícula del pie del hueco (de 40 a 42 px: el campo mide 2 px más, que no empujan nada). */
+  .hueco-renglon {
+    height: 2.625rem;
+    margin-bottom: -0.125rem;
+    border: 0;
+    /* Arriba, lo que falta para que la base de la letra quede a 34 px (0,86em: lo que mide la letra de su base para
+       arriba). En em: si la letra se encoge (nombres largos, useLetraQueCabe), sigue apoyada en el mismo sitio. */
+    padding: calc(2.125rem - 0.86em) 0.25rem 0;
+    background: linear-gradient(var(--linea), var(--linea)) 0 2.5rem / 100% 2px no-repeat;
+    transition: --linea 200ms var(--ease-salida);
+  }
+  /* El interlineado lo ponen las clases leading-* del componente (text-2xl trae el suyo y ganaría a este bloque).
+     El mensaje (varias líneas): cada línea mide 2 cuadros (leading-10) y el texto se baja 10 px para que cada línea de texto se
+     apoye en una línea de la cuadrícula (una sí y otra no). */
+  .hueco-mensaje {
+    border: 0;
+    border-bottom: 2px solid var(--linea);
+    padding: 0.4rem 0.25rem 0.725rem;
+    background: transparent;
+    transition: --linea 200ms var(--ease-salida);
+  }
+  /* Sin el aspecto propio del sistema (iOS dibuja los campos a su manera: esquinas, sombra interior y, en la fecha,
+     el valor centrado e ignorando el padding: en el móvil, la fecha quedaba encima de la raya; Antonio). Así todos
+     siguen las medidas de arriba. La fecha sigue abriendo el calendario del móvil al tocarla. */
+  .hueco-renglon,
+  .hueco-mensaje {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+  /* La fecha en iOS: el valor, a la izquierda (lo centra) y sin alto ni márgenes propios. */
+  .hueco-renglon::-webkit-date-and-time-value {
+    margin: 0;
+    min-height: 1em;
+    line-height: 1;
+    text-align: left;
+  }
+  /* El "dd/mm/aaaa" y el valor de la fecha (Chrome), sin relleno propio: así la fecha se apoya como el resto. */
+  .hueco-renglon::-webkit-datetime-edit {
+    padding: 0;
+    line-height: 1;
+  }
+  .hueco-renglon:hover,
+  .hueco-mensaje:hover {
+    --linea: rgb(43 40 48 / 0.5);
+  }
+  .hueco-renglon:focus,
+  .hueco-mensaje:focus {
+    --linea: currentColor;
+  }
+  /* La fecha: con el teclado, el foco va a sus trocitos (día, mes, año), que están dentro del campo, y Chrome no le
+     pone el anillo de :focus-visible; vacía, además, su raya no cambia (es del gris de "dd/mm/aaaa"). Así se ve
+     siempre dónde está el foco, como en el resto de la web (Playwright + axe, 2026-11-16). Con el tabulador, el foco
+     queda en esos trocitos y el campo no cuenta como :focus, pero sí como :focus-within ("el foco está dentro"). */
+  .hueco-renglon[type='date']:focus,
+  .hueco-renglon[type='date']:focus-within {
+    outline: 3px solid var(--color-ciruela);
+    outline-offset: 3px;
+  }
+  .hueco-renglon[aria-invalid='true'] {
+    --linea: var(--color-coral);
+  }
+
+  /* Garabatos de los títulos (Garabato.tsx): al verse el título, el garabato se descubre de izquierda a derecha
+     (clip-path). No se "desenrolla" el trazo con stroke-dasharray: con vector-effect: non-scaling-stroke, Chrome
+     calcula mal los guiones y el óvalo quedaba sin cerrar por la derecha (Antonio). */
+  .garabato {
+    clip-path: inset(-30% 100% -30% -30%);
+    transition: clip-path 700ms var(--ease-salida) 250ms;
+  }
+  .garabato[data-visto='true'] {
+    clip-path: inset(-30% -30% -30% -30%);
+  }
+
+  /* Animal que asoma por un botón (Asoma.tsx; Antonio, 2026-11-16: lenta y con los ojos, igual en ordenador y móvil).
+     En reposo se le ven los ojos. Con .asomandose (al pasar el ratón por el botón o, en pantallas táctiles, la primera
+     vez que se ve): se asoma despacio, mira a un lado y al otro (solo se mueven las pupilas, .asoma-pupila) y se vuelve
+     a agachar. Solo translate. Con movimiento reducido, quieto (bloque del final). */
+  .asomandose {
+    animation: asoma-mira 3s ease-in-out;
+  }
+  .asomandose .asoma-pupila {
+    animation: asoma-ojos 3s ease-in-out;
+  }
+  @keyframes asoma-mira {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    25%,
+    75% {
+      translate: 0 -0.6rem;
+    }
+  }
+  @keyframes asoma-ojos {
+    0%,
+    28%,
+    72%,
+    100% {
+      translate: 0 0;
+    }
+    36%,
+    46% {
+      translate: -1.6px 0;
+    }
+    56%,
+    64% {
+      translate: 1.6px 0;
+    }
+  }
+
+  /* Reseñas apiladas (Testimonios.tsx): al verse la sección (data-visto), cada tarjeta cae desde un poco más arriba
+     y aparece, una tras otra (--retraso). Solo translate y opacity (el giro de cada una, rotate, no se anima). */
+  .resena {
+    transition:
+      opacity 450ms var(--ease-salida) var(--retraso, 0ms),
+      translate 650ms var(--ease-salida) var(--retraso, 0ms);
+  }
+  .resenas[data-visto='false'] .resena {
+    opacity: 0;
+    translate: 0 -2.5rem;
+  }
+
+  /* Puzzle de "Conoce la escuela" (ResumenPaginas.tsx; Antonio, 2026-11-16: que se vea montarse). Al verse, cada
+     pieza llega desde fuera (--desde-x / --desde-y), un poco girada (--desde-giro) y algo levantada, se posa y
+     "encaja" con un pequeño apretón. Una sola vez; con movimiento reducido, ya montado. */
+  .pieza-llega[data-visto='false'] {
+    opacity: 0;
+  }
+  .pieza-llega[data-visto='true'] {
+    animation: pieza-encaja 760ms var(--ease-salida) var(--retraso, 0ms) both;
+  }
+  @keyframes pieza-encaja {
+    0% {
+      opacity: 0;
+      translate: var(--desde-x, 0) var(--desde-y, 0);
+      rotate: var(--desde-giro, 0deg);
+      scale: 1.05;
+    }
+    35% {
+      opacity: 1;
+    }
+    72% {
+      translate: 0 0;
+      rotate: 0deg;
+      scale: 1.025;
+    }
+    86% {
+      scale: 0.985;
+    }
+    100% {
+      opacity: 1;
+      translate: 0 0;
+      rotate: 0deg;
+      scale: 1;
+    }
+  }
+
+  /* Cubos de las aulas (Aulas.tsx; Antonio, 2026-11-16: que caigan como dados). Al verse, cada cubo cae desde
+     arriba, un poco torcido, rebota dos veces (cada vez menos), se aplasta un poco al tocar el suelo y se queda.
+     El aplastamiento, desde la base del cubo (transform-origin abajo). La sombra del suelo aparece con ellos. */
+  .cubo-cae {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+  }
+  .cubos-caen[data-visto='false'] .cubo-cae,
+  .cubos-caen[data-visto='false'] .cubos-sombra {
+    opacity: 0;
+  }
+  .cubos-caen[data-visto='true'] .cubo-cae {
+    animation: cubo-cae 1150ms var(--retraso, 0ms) both;
+  }
+  .cubos-sombra {
+    transition: opacity 900ms var(--ease-salida) 200ms;
+  }
+  @keyframes cubo-cae {
+    0% {
+      opacity: 0;
+      translate: 0 calc(-1 * var(--cae-alto, 120px)); /* sin llegar al título de encima (en unidades del dibujo) */
+      rotate: var(--cae-giro, -9deg);
+      animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45); /* cae, cada vez más deprisa */
+    }
+    18% {
+      opacity: 1;
+    }
+    42% {
+      translate: 0 0;
+      rotate: 0deg;
+      scale: 1.07 0.9; /* toca el suelo: se aplasta */
+      animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1); /* sube frenando */
+    }
+    60% {
+      translate: 0 -34px;
+      rotate: calc(var(--cae-giro, -9deg) * -0.3);
+      scale: 0.98 1.03;
+      animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+    }
+    75% {
+      translate: 0 0;
+      rotate: 0deg;
+      scale: 1.035 0.96;
+      animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+    }
+    86% {
+      translate: 0 -9px;
+      scale: 1;
+      animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+    }
+    94% {
+      translate: 0 0;
+      scale: 1.01 0.99;
+    }
+    100% {
+      opacity: 1;
+      translate: 0 0;
+      rotate: 0deg;
+      scale: 1;
+    }
+  }
+
+  /* "nació / nacerá" (FormularioVisita.tsx): al elegir una, se rodea con boli, como en una ficha del cole. El trazo
+     se dibuja de principio a fin (pathLength 1). */
+  .rodea-traza {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: rodea-traza 420ms var(--ease-salida) forwards;
+  }
+  @keyframes rodea-traza {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Camión de bomberos "Enviar" (CamionEnviar.tsx; idea de Antonio). Estados (data-estado en el botón):
+     - apagado: falta algo por rellenar → camión algo apagado y sirena gris, sin rayos.
+     - listo: a todo color; los rayos de la sirena parpadean 3 veces al ponerse listo (no sin parar: distraería) y
+       otra vez al pasar el ratón, y el camión da un botecito (suspensión).
+     - enviando: arranca y sale por la derecha con las ruedas girando.
+     Solo transform, opacity y filter. Con movimiento reducido, todo quieto (bloque del final). */
+  .camion svg {
+    transition: filter 300ms var(--ease-salida), opacity 300ms var(--ease-salida);
+  }
+  .camion[data-estado='apagado'] svg {
+    filter: grayscale(0.75);
+    opacity: 0.7;
+  }
+  .camion-rayos {
+    opacity: 0;
+  }
+  .camion[data-estado='listo'] .camion-rayos {
+    animation: camion-sirena 0.5s steps(1, end) 3;
+    opacity: 1;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .camion[data-estado='listo']:hover .camion-rayos {
+      animation: camion-sirena 0.5s steps(1, end) infinite;
+    }
+    .camion[data-estado='listo']:hover .camion-cuerpo {
+      animation: camion-bote 0.45s var(--ease-salida);
+    }
+  }
+  .camion[data-estado='listo']:active .camion-cuerpo {
+    translate: 0 2px;
+  }
+  @keyframes camion-sirena {
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes camion-bote {
+    40% {
+      translate: 0 -3px;
+    }
+  }
+  .camion-cuerpo {
+    transform-box: view-box;
+  }
+  .camion-rueda {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .camion[data-estado='enviando'] .camion-rueda {
+    animation: camion-rueda 0.35s linear infinite;
+  }
+  .camion[data-estado='enviando'] .camion-rayos {
+    opacity: 1;
+    animation: camion-sirena 0.3s steps(1, end) infinite;
+  }
+  .camion[data-estado='enviando'] .camion-viaje {
+    animation: camion-arranca 1s var(--ease-movimiento) forwards;
+  }
+  @keyframes camion-rueda {
+    to {
+      rotate: 360deg;
+    }
+  }
+  /* Recula un poco (coge impulso) y sale por la derecha. */
+  @keyframes camion-arranca {
+    20% {
+      translate: -8px 0;
+    }
+    to {
+      translate: 140vw 0;
+    }
+  }
+
+  /* Caminos de la adaptación (Adaptacion.tsx): el tramo crece desde la izquierda (scale en X) y el patito sale de
+     la izquierda y anda hasta su sitio (translate), contoneándose (rotate). Cada <li> da --duracion, --retraso,
+     --contoneos y --recorrido (de 0 a 1). El patito está ya en su sitio final: "backwards" lo coloca al principio
+     del camino mientras espera, y la animación lo devuelve a su sitio. 100cqw = ancho del camino (@container).
+     .caminos-pausados: en pausa hasta que el camino se ve. Con movimiento reducido, todo ya en su sitio. */
+  .camino-tramo {
+    transform-origin: left;
+    animation: tramo-crece var(--duracion) var(--ease-movimiento) var(--retraso) backwards;
+  }
+  @keyframes tramo-crece {
+    from {
+      scale: 0 1;
+    }
+  }
+  .camino-pato {
+    animation:
+      pato-anda var(--duracion) var(--ease-movimiento) var(--retraso) backwards,
+      pato-contonea 0.32s ease-in-out var(--retraso) var(--contoneos) alternate;
+  }
+  @keyframes pato-anda {
+    from {
+      translate: calc((100cqw - 2.5rem) * var(--recorrido) * -1) 0;
+    }
+  }
+  @keyframes pato-contonea {
+    from {
+      rotate: -7deg;
+    }
+    to {
+      rotate: 7deg;
+    }
+  }
+  .caminos-pausados,
+  .caminos-pausados * {
+    animation-play-state: paused !important;
+  }
+
+  /* Vale recortable (Familias, Facilidades.tsx). --matriz: ancho de la matriz (la parte del dibujo). Donde
+     termina, arriba y abajo, una muesca redonda: la máscara pinta el vale entero menos dos círculos
+     (radial-gradient: transparente dentro del círculo, negro fuera). Cada degradado cubre su mitad (arriba o
+     abajo), y así los dos se suman sin taparse. Solo dibujo: no se anima. */
+  .vale {
+    --matriz: 6.5rem;
+    --muesca: 0.8rem;
+    mask:
+      radial-gradient(circle var(--muesca) at var(--matriz) 0, transparent 98%, black) top / 100% 51% no-repeat,
+      radial-gradient(circle var(--muesca) at var(--matriz) 100%, transparent 98%, black) bottom / 100% 51% no-repeat;
+  }
+
+  /* Acordeón de preguntas (PreguntasFrecuentes.tsx). Safari aún pinta su triángulo con este pseudoelemento
+     (list-none del summary no lo quita). La respuesta, al abrirse, entra con un fundido y baja un poco: solo
+     opacity y translate (la altura no se anima). Con movimiento reducido, el bloque global la deja instantánea. */
+  .pregunta summary::-webkit-details-marker {
+    display: none;
+  }
+  .pregunta[open] .pregunta-respuesta {
+    animation: respuesta-entra 240ms var(--ease-salida);
+  }
+  @keyframes respuesta-entra {
+    from {
+      opacity: 0;
+      translate: 0 -0.375rem;
+    }
+  }
+
+  /* Visor de imágenes (el calendario ampliado, Calendario.tsx): al abrirse, la imagen aparece con un fundido y
+     crece un poco desde el 96 %, y el fondo oscuro se funde. @starting-style es el estado "de partida" de la
+     transición cuando el diálogo aparece (antes, con display: none, no había nada desde donde animar). Solo
+     opacity y scale; al cerrar desaparece sin más. Con movimiento reducido, el bloque global lo deja instantáneo. */
+  .visor[open] {
+    opacity: 1;
+    scale: 1;
+    transition:
+      opacity 200ms ease-out,
+      scale 260ms var(--ease-salida);
+  }
+  .visor[open]::backdrop {
+    opacity: 1;
+    transition: opacity 200ms ease-out;
+  }
+  @starting-style {
+    .visor[open] {
+      opacity: 0;
+      scale: 0.96;
+    }
+    .visor[open]::backdrop {
+      opacity: 0;
+    }
+  }
+  /* Con el visor abierto, la página de detrás no se desplaza (solo se desplaza la imagen, si es alta). */
+  html:has(.visor[open]) {
+    overflow: hidden;
+  }
+
+  /* Tablón de corcho de las actividades (Actividades.tsx), como los de las aulas de antes: el corcho (baldosa generada
+     con npm run imagenes), un marco fino de madera con algo de volumen y una sombra por dentro, como si el corcho
+     quedara un poco hundido en el marco. */
+  .corcho {
+    background: url('./assets/corcho.webp') 0 0 / 256px 256px #c99a63;
+    border: 0.75rem solid #a8723f;
+    border-radius: 1rem;
+    box-shadow:
+      inset 0 2px 10px rgb(70 40 10 / 0.45),
+      0 0 0 1px #8a5a2b,
+      0 10px 24px -8px rgb(70 40 10 / 0.4);
+  }
+
+  /* --- Pizarra (menú de móvil; más adelante, la 404) --- */
+
+  /* Fondo: grano de polvo de tiza (imagen pequeña que se repite, generada con npm run imagenes) y
+     manchas de borrado, más claras, hechas con degradados (no pesan nada). */
+  /* El fondo va en ::before, en su PROPIA CAPA (will-change), y no en la pizarra: Safari lo volvía a pintar (grano y
+     siete degradados a pantalla completa) en cada fotograma mientras se escribía cada palabra, porque compartía capa
+     con el texto. Medido en WebKit (2026-11-17): escritura del menú de 11 a 42 fotogramas por segundo. Se ve igual: la
+     misma caja (inset 0), las mismas capas de fondo. z-index -20: por detrás también de la decoración (-z-10).
+     position relative / isolation: para que el ::before quede dentro y detrás (el fixed del menú, que es una
+     utilidad, manda sobre este relative). */
+  .pizarra {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--color-pizarra);
+    color: var(--color-tiza);
+  }
+  .pizarra::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -20;
+    pointer-events: none;
+    border-radius: inherit;
+    will-change: transform;
+    background:
+      url('./assets/pizarra-grano.webp') 0 0 / 256px 256px,
+      radial-gradient(ellipse 90% 12% at 25% 19%, rgb(255 255 255 / 0.06), transparent 70%),
+      radial-gradient(ellipse 70% 10% at 75% 41%, rgb(255 255 255 / 0.05), transparent 70%),
+      radial-gradient(ellipse 100% 14% at 45% 62%, rgb(255 255 255 / 0.055), transparent 70%),
+      radial-gradient(ellipse 60% 25% at 90% 10%, rgb(255 255 255 / 0.04), transparent 70%),
+      radial-gradient(ellipse 80% 18% at 15% 86%, rgb(255 255 255 / 0.045), transparent 70%),
+      radial-gradient(ellipse 120% 60% at 50% 50%, transparent 55%, rgb(0 0 0 / 0.25)),
+      var(--color-pizarra);
+  }
+  /* El menú es un panel con scroll: su fondo se queda quieto con la pantalla (como antes), no se va con el contenido. */
+  #menu-movil.pizarra::before {
+    position: fixed;
+  }
+  /* Pizarra que aún no se ve (cierre de las páginas): su escritura espera en pausa hasta que aparece en
+     pantalla (Cierre.tsx quita la clase). Con movimiento reducido no se pone: todo está ya escrito. */
+  .pizarra-pausada,
+  .pizarra-pausada * {
+    animation-play-state: paused !important;
+  }
+  /* Botón dibujado a tiza (sobre la pizarra): contorno de tiza y letra de tiza. Al pulsar, se hunde. */
+  .boton-tiza {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0 1.2rem;
+    border: 2px solid currentColor;
+    border-radius: 9999px;
+    font-size: 1.3rem;
+    transition:
+      transform 160ms var(--ease-salida),
+      background-color 200ms ease;
+  }
+  .boton-tiza:active {
+    transform: scale(0.97);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .boton-tiza:hover {
+      background-color: rgb(255 255 255 / 0.08);
+    }
+  }
+
+  /* Pizarra de aula (404): marco de madera con vetas (degradados, sin imágenes) y, abajo, la bandeja. */
+  .marco-pizarra {
+    padding: clamp(0.6rem, 1.8vw, 1.1rem);
+    border-radius: 1rem;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgb(255 255 255 / 0.05) 0 2px,
+        transparent 2px 9px,
+        rgb(0 0 0 / 0.06) 9px 11px,
+        transparent 11px 23px
+      ),
+      linear-gradient(180deg, var(--color-madera), var(--color-madera-oscura));
+    box-shadow:
+      0 1.5rem 2.5rem -1.25rem rgb(43 40 48 / 0.45),
+      inset 0 2px 0 rgb(255 255 255 / 0.18),
+      inset 0 -3px 0 rgb(0 0 0 / 0.2);
+  }
+  /* Pollete: el saliente de madera bajo la pizarra donde se dejan las tizas. Un canto de luz arriba y un
+     surco oscuro donde se apoyan las tizas. */
+  .pollete {
+    border-radius: 0.25rem;
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.22) 0 2px, transparent 2px),
+      linear-gradient(180deg, transparent 0 55%, rgb(0 0 0 / 0.28) 55% 72%, transparent 72%),
+      repeating-linear-gradient(90deg, rgb(0 0 0 / 0.05) 0 2px, transparent 2px 13px),
+      linear-gradient(180deg, var(--color-madera), color-mix(in oklab, var(--color-madera) 60%, var(--color-madera-oscura)));
+    box-shadow: 0 2px 3px rgb(0 0 0 / 0.3);
+  }
+  /* Tiza en el pollete: un cilindro (luz arriba, sombra abajo) con los extremos un poco gastados. */
+  .tiza-palo {
+    border-radius: 9999px 40% 40% 9999px;
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--tiza-color) 55%, white) 0%,
+      var(--tiza-color) 40%,
+      color-mix(in oklab, var(--tiza-color) 75%, black) 100%
+    );
+    box-shadow: 0 1px 1.5px rgb(0 0 0 / 0.45);
+  }
+  /* Borrador: mango de madera con vetas arriba y, abajo, la parte que borra, del color de la pizarra y con
+     polvo de tiza (como un borrador usado). */
+  .borrador {
+    border-radius: 0.25rem 0.25rem 0.15rem 0.15rem;
+    /* Mango más oscuro que el pollete (si no, se confunde con él), con un canto de luz arriba y vetas. */
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.3) 0 1.5px, transparent 1.5px),
+      repeating-linear-gradient(90deg, rgb(255 255 255 / 0.08) 0 1px, transparent 1px 5px),
+      linear-gradient(180deg, var(--color-madera-oscura), color-mix(in oklab, var(--color-madera-oscura) 70%, black));
+    box-shadow:
+      0 3px 4px rgb(0 0 0 / 0.45),
+      inset 0 0 0 1px rgb(0 0 0 / 0.25);
+    overflow: hidden;
+  }
+  .borrador-esponja {
+    position: absolute;
+    inset: 55% 0 0;
+    background:
+      radial-gradient(ellipse 35% 60% at 35% 55%, rgb(255 255 255 / 0.28), transparent 75%),
+      radial-gradient(ellipse 25% 50% at 72% 45%, rgb(255 255 255 / 0.16), transparent 75%),
+      var(--color-pizarra);
+  }
+  /* La pizarra, metida en el marco: un poco hundida (sombra interior). */
+  .marco-pizarra > .pizarra {
+    border-radius: 0.375rem;
+    box-shadow:
+      inset 0 0 0 2px rgb(0 0 0 / 0.3),
+      inset 0 0.5rem 1.25rem rgb(0 0 0 / 0.35);
+  }
+  /* El anillo de foco ciruela casi no se ve sobre la pizarra: aquí va en blanco tiza. */
+  .pizarra :focus-visible {
+    outline-color: var(--color-tiza);
+  }
+
+  /* Aspecto de tiza: bordes irregulares y huecos (filtro SVG #filtro-tiza, en Tiza.tsx). */
+  .tiza {
+    filter: url(#filtro-tiza);
+  }
+
+  /* Escritura a tiza. Cada pieza dice cuándo empieza y cuánto dura (--retraso y --duracion, en su style).
+     --escala-tiza (en el contenedor) acelera o frena todo a la vez sin cambiar el orden: 1 = tiempos tal cual.
+     "backwards": durante el retraso ya se ve el primer fotograma (sin dibujar), y al terminar queda su
+     estado normal (dibujado), sin "fijar" nada. Con movimiento reducido el bloque global de abajo pone
+     duración y retraso a 0: todo aparece ya pintado.
+     Excepción aprobada (CLAUDE.md): además de transform y opacity, se anima stroke-dashoffset (trazos) y
+     clip-path (el texto, que se descubre de izquierda a derecha como si se escribiera). */
+  .tiza-traza {
+    stroke-dasharray: 1;
+    animation: tiza-traza calc(var(--duracion, 300ms) * var(--escala-tiza, 1)) cubic-bezier(0.4, 0.1, 0.6, 1) calc(var(--retraso, 0ms) * var(--escala-tiza, 1)) backwards;
+  }
+  /* opacity 0 en el primer fotograma: con la punta redondeada (stroke-linecap: round), un trazo "sin
+     dibujar" deja un puntito en su inicio; así no se ve nada hasta que empieza a dibujarse. */
+  @keyframes tiza-traza {
+    0% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+    1% {
+      opacity: 1;
+    }
+  }
+  .tiza-escribe {
+    animation: tiza-escribe calc(var(--duracion, 300ms) * var(--escala-tiza, 1)) cubic-bezier(0.3, 0.1, 0.7, 0.9) calc(var(--retraso, 0ms) * var(--escala-tiza, 1)) backwards;
+  }
+  @keyframes tiza-escribe {
+    from {
+      clip-path: inset(-30% 100% -30% -5%);
+    }
+    to {
+      clip-path: inset(-30% -5% -30% -5%);
+    }
+  }
+  .tiza-aparece {
+    animation: tiza-aparece calc(var(--duracion, 300ms) * var(--escala-tiza, 1)) ease-out calc(var(--retraso, 0ms) * var(--escala-tiza, 1)) backwards;
+  }
+  @keyframes tiza-aparece {
+    from {
+      opacity: 0;
+    }
+  }
+  /* Entrada del menú de pizarra: el panel (con su fondo) aparece con un fundido nada más tocar el botón. La primera vez
+     en la visita, 0,2 s, mientras se pinta la tiza; las siguientes, ya pintado, solo 0,12 s (--entrada-menu, en
+     MenuPizarra.tsx): de golpe, el paso del crema a la pizarra oscura se notaba brusco (Antonio, 2026-11-17). Solo
+     opacity. Con movimiento reducido, al instante (bloque global). */
+  .menu-entra {
+    animation: menu-entra var(--entrada-menu, 200ms) var(--ease-salida);
+  }
+  @keyframes menu-entra {
+    from {
+      opacity: 0;
+    }
+  }
+  /* La nube "Solicitar visita": se pinta a la izquierda y, al terminar, se desliza a su sitio (derecha).
+     --recorrido: lo que hay desde la izquierda del menú hasta su sitio (lo calcula MenuPizarra.tsx). */
+  .tiza-desliza {
+    animation: tiza-desliza calc(var(--duracion, 800ms) * var(--escala-tiza, 1)) var(--ease-movimiento) calc(var(--retraso, 0ms) * var(--escala-tiza, 1)) backwards;
+  }
+  /* "Alfombra mágica" de la 404: la nube con el osito cruza desde la izquierda (--desde) meciéndose (sube,
+     baja y se inclina) y aterriza en su sitio. Dos animaciones sobre propiedades distintas que se combinan:
+     translate (avanza) y transform (se mece). Una sola vez: luego queda quieta (es un botón). */
+  .tiza-vuela {
+    animation:
+      alfombra-cruza calc(var(--duracion, 1500ms) * var(--escala-tiza, 1)) cubic-bezier(0.45, 0.05, 0.25, 1)
+        calc(var(--retraso, 0ms) * var(--escala-tiza, 1)) backwards,
+      alfombra-mece calc(var(--duracion, 1500ms) * var(--escala-tiza, 1)) ease-in-out
+        calc(var(--retraso, 0ms) * var(--escala-tiza, 1)) backwards;
+  }
+  @keyframes alfombra-cruza {
+    from {
+      translate: var(--desde, 0) 0;
+    }
+  }
+  @keyframes alfombra-mece {
+    0% {
+      transform: translateY(0) rotate(-3deg);
+    }
+    20% {
+      transform: translateY(-14px) rotate(4deg);
+    }
+    45% {
+      transform: translateY(6px) rotate(-3deg);
+    }
+    70% {
+      transform: translateY(-8px) rotate(2deg);
+    }
+    88% {
+      transform: translateY(2px) rotate(-1deg);
+    }
+    100% {
+      transform: none;
+    }
+  }
+  @keyframes tiza-desliza {
+    from {
+      translate: var(--recorrido, 0) 0;
+    }
+  }
+
+  /* Tren de las aulas (Tren.tsx): llega una sola vez. Mientras no se ve, espera fuera (a la izquierda);
+     al verse, entra frenando poco a poco, con las ruedas girando y el humo saliendo, y se queda aparcado.
+     Solo translate y rotate (y opacity en el humo). Las medidas van en unidades del SVG (transform-box). */
+  .tren-cuerpo,
+  .tren-rueda,
+  .tren-humo {
+    transform-box: view-box;
+  }
+  .tren-espera .tren-cuerpo {
+    translate: -560px 0;
+  }
+  .tren-llega .tren-cuerpo {
+    animation: tren-llega 2600ms cubic-bezier(0.2, 0.6, 0.3, 1) backwards;
+  }
+  .tren-llega .tren-rueda {
+    animation: tren-rueda 2600ms cubic-bezier(0.2, 0.6, 0.3, 1) backwards;
+  }
+  .tren-llega .tren-humo {
+    animation: tren-humo 2600ms ease-out backwards;
+  }
+  @keyframes tren-llega {
+    from {
+      translate: -560px 0;
+    }
+  }
+  @keyframes tren-rueda {
+    from {
+      rotate: -1440deg;
+    }
+  }
+  @keyframes tren-humo {
+    0% {
+      opacity: 0;
+      translate: 0 12px;
+    }
+    60% {
+      opacity: 1;
+    }
+  }
+
+  /* Ficha de receta (Nuestra cocina): papel blanco con un margen rojo a la izquierda, como las fichas de
+     cartulina. Los renglones van en la lista (.ficha-receta ul): uno cada 2.5rem, el alto de cada punto. */
+  .ficha-receta {
+    background:
+      linear-gradient(90deg, transparent 0 1.1rem, color-mix(in oklab, var(--color-coral) 35%, transparent) 1.1rem calc(1.1rem + 1.5px), transparent calc(1.1rem + 1.5px)),
+      var(--color-white);
+  }
+  /* El renglón se sube 0.45rem (background-position) para que quede justo bajo las letras, no flotando. */
+  .ficha-receta ul {
+    background-position: 0 -0.45rem;
+    background-image: repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(2.5rem - 1px),
+      color-mix(in oklab, var(--color-azul) 30%, transparent) calc(2.5rem - 1px) 2.5rem
+    );
+    padding-bottom: 0.45rem; /* el último renglón también se ve */
+  }
+
+  /* Botón "Ver reseñas en Google": con el aspecto de los botones de Google (blanco, borde gris fino, sombra
+     suave y texto gris), para que se reconozca a la primera. Sus grises son los de Google (no de la paleta). */
+  .boton-google {
+    background: var(--color-white);
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    box-shadow:
+      0 1px 2px rgb(60 64 67 / 0.3),
+      0 1px 3px 1px rgb(60 64 67 / 0.15);
+    transition:
+      transform 160ms var(--ease-salida),
+      box-shadow 200ms ease;
+  }
+
+  /* El hover solo en dispositivos con ratón: en móvil el "hover" se queda pegado tras tocar. */
+  @media (hover: hover) and (pointer: fine) {
+    .boton-principal:hover {
+      background: color-mix(in oklab, var(--color-verde) 85%, black);
+    }
+    .boton-secundario:hover {
+      background: var(--color-verde-suave);
+    }
+    .boton-charco:hover {
+      background: color-mix(in oklab, var(--color-arbol-azul) 80%, var(--color-arbol-azul-intenso));
+    }
+    .boton-google:hover {
+      box-shadow:
+        0 1px 3px rgb(60 64 67 / 0.3),
+        0 4px 8px 3px rgb(60 64 67 / 0.15);
+    }
+    /* Solo se anima transform: el botón sube 2px. Al pulsar, :active lo vuelve a hundir. */
+    .boton-visita:hover {
+      transform: translateY(-2px);
+    }
+    .boton-visita:hover:active {
+      transform: translateY(0) scale(0.97);
+    }
+  }
+}
+
+/*
+  Movimiento reducido: regla sin excepciones, todo queda fijo.
+  Este bloque para lo que se anima con CSS (transiciones y keyframes, incluidas las de Tailwind).
+  Lo que se anima con JavaScript (Motion, la barra de datos) lo para el hook usePrefersReducedMotion.
+  Se usa 0.01ms y no 0 para que sigan disparándose los eventos transitionend/animationend
+  (si algún código espera a que "termine" una animación, no se queda colgado).
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* El camión "Enviar" no sale de golpe por la derecha: se queda en su sitio (el "Enviando…" ya lo dice). */
+  .camion-viaje {
+    animation: none !important;
+  }
+}
