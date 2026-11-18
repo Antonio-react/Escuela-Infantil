@@ -47,7 +47,7 @@ Escuela pequeña y familiar en la que las tres directoras son también las educa
 - Testimonios reales de familias (`src/data/testimonios.ts`), recortados con "…" y sin nombres; **no se retocan ni se inventan**.
 - Fotos reales de la escuela (`src/data/fotos.ts`). Fachada provisional, de poca calidad.
 - Datos legales y de autorización del centro en `src/data/site.ts`.
-- **Faltan:** fotos de las directoras (solo con su consentimiento) y una fachada buena. El proyecto educativo depende del texto de la hermana, sin decidir.
+- **Falta:** una fachada buena. (La foto del equipo ya está; el proyecto educativo no va en la web.)
 
 ## Product Principles
 

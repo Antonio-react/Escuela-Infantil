@@ -21,6 +21,15 @@ export const site = {
     googleFicha: 'https://share.google/ti3i8cFbNmFIzzJRi',
   },
   babyControl: 'https://www.babycontrol.com/',
+  // Dirección de la propia web, sin barra al final. De aquí salen og:url, og:image, canonical, robots.txt, el sitemap
+  // y los datos para Google (src/data/seo.ts). Cambiando esta línea, cambia en todos esos sitios.
+  // TODO: poner el dominio definitivo cuando lo tenga la escuela (ahora, la web de pruebas en la cuenta de Antonio).
+  web: {
+    url: 'https://escuelainfantil.netlify.app',
+    // false mientras se revisa la web: todas las páginas llevan "noindex" y Google no las guarda. Al publicar con el
+    // dominio definitivo, se pone a true (Antonio, 2026-11-18).
+    indexar: false,
+  },
   // Años que lleva abierta la escuela. Las dueñas no saben el año exacto de apertura: "más de 20" (2026-11-13).
   // Por eso es un mínimo y no un año (si fuera un año, se calcularía solo).
   aniosAbiertaMinimo: 20,
@@ -30,6 +39,8 @@ export const site = {
     { nombre: 'Aula 2-3', edades: '2-3 años', excursiones: true }, // excursiones extraescolares: solo 2-3 años
   ],
   horario: {
+    // De lunes a viernes (Antonio, 2026-11-18). Lo usan los datos para Google (seo.ts).
+    dias: ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'],
     apertura: '7:00',
     cierre: '17:00',
     general: { desde: '9:00', hasta: '15:00', incluyeComida: true },

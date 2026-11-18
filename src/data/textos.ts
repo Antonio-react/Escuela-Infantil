@@ -23,8 +23,6 @@ export const textos = {
     soltarBorrador: 'Soltar el borrador',
     colores: { morada: 'morada', blanca: 'blanca', verde: 'verde', naranja: 'naranja', azul: 'azul' },
   },
-  // Lo escriben o aprueban las dueñas. Mientras sea 'TODO', la sección no se pinta (tieneValor, en todo.ts).
-  proyectoEducativo: 'TODO',
   // Aprobado (CLAUDE.md).
   instalaciones:
     'Aulas climatizadas todo el año, para que los peques estén siempre a gusto, haga frío o calor.',
@@ -119,10 +117,6 @@ export const textos = {
       botonAGusto: 'Ver la ventana del aula mitad invierno, mitad verano',
       botonVerano: 'Ver la ventana del aula en verano',
     },
-    // La escuela: solo se pinta cuando textos.proyectoEducativo deje de ser 'TODO'.
-    proyecto: {
-      titulo: 'Nuestro proyecto educativo',
-    },
     // La escuela: la frase grande es textos.cocina (aprobada). Los puntos de la ficha son datos aprobados
     // en el CLAUDE.md (el menú no va en la web: solo se dice que se da a las familias).
     cocina: {
@@ -138,7 +132,7 @@ export const textos = {
     },
     // La escuela: las personas salen de equipo.ts. Entradilla: BORRADOR (la verán las dueñas).
     equipo: {
-      titulo: 'Las que dirigen la escuela están en las *aulas*',
+      titulo: 'Nuestro *equipo*',
       entradilla: 'Las personas que cuidan de vuestros peques cada día.',
     },
     horario: {

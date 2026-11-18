@@ -151,6 +151,16 @@ export const fotosActividades: readonly Foto[] = [
   },
 ]
 
+// El equipo (La escuela, "Nuestro equipo"), con el árbol pintado de la pared detrás. Enviada por las dueñas
+// (2026-11-18). Los nombres van debajo, en texto, colocados con enLaFoto de equipo.ts. Con null, no se pinta.
+export const fotoEquipo: Foto | null = {
+  ...archivos('equipo'),
+  titulo: 'Nuestro equipo',
+  alt: 'Lorena, Olga, Cristina y Beatriz sonriendo delante de un árbol pintado en la pared, con camiseta lila y delantales con su nombre bordado',
+  ancho: 1400,
+  alto: 1335,
+}
+
 // La escuela desde fuera: en Inicio (junto a "Quiénes somos") y en Contacto, mientras carga el mapa de Google.
 // PROVISIONAL (mejorada con un programa: poca calidad y el cartel con letras inventadas): cuando llegue la nueva, se
 // cambia y sale sola en los dos sitios.

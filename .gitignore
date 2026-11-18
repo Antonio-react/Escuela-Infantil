@@ -30,3 +30,6 @@ desktop.ini
 # Playwright
 tests/informe/
 tests/resultados/
+
+# Originales de las fotos: solo están aquí mientras se convierten (npm run imagenes) y luego se borran
+docs/referencias/fotos/

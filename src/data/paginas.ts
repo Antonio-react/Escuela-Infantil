@@ -1,4 +1,4 @@
-import { site } from './site'
+import { site } from './site.ts'
 
 export type Pagina = {
   ruta: string
@@ -16,6 +16,8 @@ export type Pagina = {
   // Color del h1 de la página (CabeceraPagina): el de la página, en su versión que se lee sobre crema (Antonio,
   // 2026-11-17: todos los títulos eran verdes). Sin él, verde. Inicio no lo usa: su título es el logo del hero.
   colorTitulo?: 'text-verde' | 'text-arbol-azul-texto' | 'text-coral' | 'text-ciruela'
+  // false: Google no la guarda ("noindex") y no va en el sitemap. Sin él, se indexa (si site.web.indexar lo permite).
+  indexar?: false
 }
 
 const marca = site.nombre
@@ -53,7 +55,7 @@ export const paginas = {
     ruta: '/la-escuela',
     nombre: 'La escuela',
     titulo: `La escuela · ${marca}`,
-    descripcion: 'Conoced por dentro la escuela donde vuestro peque pasará el día: un aula para cada edad, aulas climatizadas todo el año, la comida que cocinamos nosotras y quiénes estamos con ellos.',
+    descripcion: 'Conoced por dentro la escuela donde vuestro peque pasará el día: un aula para cada edad, aulas climatizadas todo el año, nuestra comida casera y quiénes estamos con ellos.',
     enMenu: true,
     colorActivo: 'bg-arbol-verde', // verde: el árbol, crecer
     juguete: 'bloque',
@@ -117,6 +119,8 @@ export const paginas = {
     descripcion: 'Esta página no existe o ha cambiado de sitio. Desde aquí podéis volver al inicio y seguir.',
     enMenu: false,
     colorActivo: 'bg-arbol-verde',
+    // Netlify sirve la web en cualquier dirección (_redirects): sin esto, Google guardaría "/loquesea" como página.
+    indexar: false,
   },
 } as const satisfies Record<string, Pagina>
 

@@ -7,24 +7,13 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <!-- Copia de paginas.inicio (src/data/paginas.ts): la leen los que no ejecutan JavaScript, como las vistas previas de WhatsApp. Si cambia allí, cambiar aquí. -->
-    <title>Escuela Infantil Árbol de Nubes · Carranque (Toledo)</title>
-    <meta name="description" content="Escuela infantil de 0 a 3 años en Carranque (Toledo), pequeña y familiar: un aula para cada edad, comida casera hecha cada día y abierta de 7:00 a 17:00. Matrícula abierta todo el año." />
     <meta name="theme-color" content="#fbf8f3" />
-    <!-- Vista previa al compartir el enlace (WhatsApp, Facebook, etc.): el hero sin el menú ni el sello. -->
-    <!-- og:image con la dirección COMPLETA: WhatsApp y Facebook no aceptan rutas relativas. Ahora apunta a la web de
-         pruebas en la cuenta de Antonio; al pasar a la cuenta de la escuela (o con dominio propio), cambiarla. -->
-    <meta property="og:url" content="https://escuelainfantil.netlify.app/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_ES" />
-    <meta property="og:site_name" content="Escuela Infantil Árbol de Nubes" />
-    <meta property="og:title" content="Escuela Infantil Árbol de Nubes · Carranque (Toledo)" />
-    <meta property="og:description" content="Escuela infantil de 0 a 3 años en Carranque (Toledo), pequeña y familiar: un aula para cada edad, comida casera hecha cada día y abierta de 7:00 a 17:00. Matrícula abierta todo el año." />
-    <meta property="og:image" content="https://escuelainfantil.netlify.app/imagen-compartir.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Logo de la Escuela Infantil Árbol de Nubes: un árbol de colores entre nubes" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <!-- El árbol del logo es lo más grande del hero (LCP) y la sombra del árbol de fondo de todas las páginas. Sin
+         esto, el navegador no lo descubre hasta que React ha descargado y ejecutado su JavaScript (2026-11-18:
+         empezaba a pedirse a los 4,7 s con un móvil lento simulado). Vite cambia la ruta por la del archivo final. -->
+    <link rel="preload" as="image" href="/src/assets/logo-arbol.webp" fetchpriority="high" />
+    <!-- El título, la descripción, las etiquetas para compartir (og:*), el canonical y los datos para Google los
+         añade vite.config.ts (seoDesdeLosDatos) con los datos de src/data/: aquí no se escribe ninguno a mano. -->
   </head>
   <body>
     <div id="root"></div>

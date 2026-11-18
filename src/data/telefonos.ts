@@ -1,4 +1,4 @@
-import { site } from './site'
+import { site } from './site.ts'
 
 // Tipo de un elemento del array de teléfonos, sacado de los propios datos.
 type Telefono = (typeof site.telefonos)[number]

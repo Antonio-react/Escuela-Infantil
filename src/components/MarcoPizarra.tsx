@@ -13,9 +13,9 @@ import { tizas } from './utilidadesTiza'
 //   (Antonio: que el borrador se coja y se borre a mano, no que borre todo de golpe).
 // - Ordenador: dentro de la pizarra el puntero es lo que se tiene en la mano (la tiza blanca si no hay nada) y se
 //   pinta arrastrando con el ratón.
-// - Móvil: sin nada en la mano, arrastrar de lado o en diagonal pinta con tiza blanca (Antonio: la gente no sabrá
-//   que hay que coger una tiza) y en vertical hace scroll (touch-action: pan-y). Con algo en la mano, el dedo pinta o
-//   borra en cualquier dirección (touch-action: none). Bajo el dedo se ve la tiza o el borrador.
+// - Móvil: el dedo pinta SIEMPRE, como el ratón (con la blanca si no hay nada en la mano), y la pizarra no hace
+//   scroll (touch-action: none); para bajar la página se toca fuera de ella (el marco, el pollete). Bajo el dedo se ve
+//   la tiza o el borrador.
 // - Lo pintado queda DEBAJO de lo escrito (el canvas va detrás) y tocar un enlace o un botón no pinta.
 // - Una pista a tiza en una esquina: cómo pintar, hasta que se pinta; y, con algo en la mano, cómo soltarlo.
 

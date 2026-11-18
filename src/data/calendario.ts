@@ -1,6 +1,6 @@
 import imagenCalendario from '../assets/calendario-escolar.webp'
 
-// Datos sacados de docs/referencias/calendario (curso 2026-2027).
+// Datos sacados del PDF del calendario, public/calendario-escolar.pdf (curso 2026-2027).
 // Fechas en formato ISO (año-mes-día): se ordenan bien y el componente las formatea en español.
 // Imágenes sacadas del PDF (renderizado a 2000 px de ancho):
 //  - imagen: WebP de 1000 × 1415 para la web (al pulsarla se abre el visor con el JPG).

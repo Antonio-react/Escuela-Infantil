@@ -33,7 +33,7 @@ guarderia-infantil-app/
 ├─ CLAUDE.md
 ├─ README.md            ← técnico, pensado para reclutadores
 ├─ docs/
-│  └─ referencias/      ← SOLO consulta (logo/, raices/, calendario/). No se importa ni se despliega
+│  └─ referencias/      ← solo logo/ (los PNG que usa `npm run imagenes`) y, de paso, fotos/ (ignorada por git). No se importa ni se despliega
 ├─ public/              ← lo que se publica tal cual (_redirects, PDF del calendario, imágenes)
 └─ src/
    ├─ assets/           ← logo final y SVG que sí se usan
@@ -85,7 +85,7 @@ Elementos de diseño:
 - **Colores por página** (fondo de la página activa en los menús), con significado: Inicio naranja (bienvenida, el sol), La escuela verde (el árbol, crecer), Horario y calendario azul (el día y el paso del tiempo), Familias rojo (el corazón, el cariño), Contacto morado (cercanía; nunca azul, que va junto a la nube). Viven en `colorActivo` de `paginas.ts`.
 - **Títulos (2026-11-17, antes casi todos verdes y el de la página igual que los de sección):** el h1 de cada página va en el color de su página, en su versión para texto (La escuela verde, Horario azul `arbol-azul-texto`, Familias coral, Contacto ciruela; `colorTitulo` en `paginas.ts`) y un escalón más grande que los de sección (`text-5xl sm:text-6xl`). Los de sección se turnan los colores (verde, ciruela, coral, azul, naranja oscuro): distinto del anterior, del h1 de su página y de su palabra destacada. La regla completa, en `DESIGN.md`.
 - **`PRODUCT.md` y `DESIGN.md`** (raíz, 2026-11-17): la ficha del producto y el sistema visual para Impeccable ("El aula de juguete"). Si cambia algo del diseño, actualizar `DESIGN.md`.
-- Logo: archivos en `docs/referencias/logo/`. El rótulo "Árbol de nubes" va **por debajo del árbol** (como en el del Instagram), no encima del tronco. Las raíces del footer se deciden viendo el logo real y las referencias de `docs/referencias/raices/`.
+- Logo: archivos en `docs/referencias/logo/`. El rótulo "Árbol de nubes" va **por debajo del árbol** (como en el del Instagram), no encima del tronco. (Las referencias de raíces, el logo de Instagram y el PDF original del calendario se borraron el 2026-11-18: ya no se usaban; la copia del PDF está en `public/`.)
 
 ## 7. Animación y movimiento reducido
 
@@ -122,7 +122,7 @@ Elementos de diseño:
 ### Contenido de la escuela
 - **Aulas:** bebés (0-1), 1-2 años y 2-3 años. Excursiones extraescolares solo para 2-3 años (se muestran en esa aula). Son **cubos de letras de juguete dibujados en SVG** (`CuboSvg.tsx`, rediseño 2026-11-16 con referencias de Antonio: cara de delante de frente, lado a la derecha y arriba lisos, cantos redondeados, sombras con degradados, cuadrado crema con edad, "años" y nombre del aula): **en fila creciendo con la edad desde 640 px** y **en pila** (Bebés arriba) por debajo. "Excursiones extraescolares" va en pequeño en el borde de abajo del cubo de 2-3.
 - **Tren de las aulas:** separador en la sección de aulas, un tren con **3 vagones = 3 aulas** que **cruza una sola vez** al llegar (no en bucle: sin botón de pausa). Tiza o estilo normal: se decide viendo las dos versiones cuando se vaya a poner.
-- **Proyecto educativo:** sección en La escuela, `TODO` hasta que lo escriban o aprueben las dueñas (no se pinta mientras sea `TODO`).
+- **Proyecto educativo:** NO va en la web (2026-11-18). La LOE (art. 121.3) solo pide que se haga público para la comunidad educativa, no en la web; la presentación de la escuela ya está en "Quiénes somos" (Inicio). Sección y `TODO` borrados.
 - **Instalaciones:** aulas **climatizadas todo el año** (acondicionadas para frío y calor). Texto aprobado, en `src/data/`: "Aulas climatizadas todo el año, para que los peques estén siempre a gusto, haga frío o calor." Sin compararse con otras escuelas.
 - **Horario:** abierto de 7:00 a 17:00. Jornada general de 9:00 a 15:00 **con comida incluida**. De 7:00 a 9:00 (acogida temprana) y de 15:00 a 17:00 (tarde) son **ampliaciones**. Las ampliaciones **se pagan aparte** (en la web solo eso: Antonio quitó el desayuno y la merienda, 2026-11-16). Se puede ampliar horas o cambiar de horario en cualquier momento.
 - **Curso:** de septiembre a junio; julio opcional y abierto. Matrícula en cualquier momento, si hay plazas.
@@ -138,7 +138,7 @@ Elementos de diseño:
   - **El componente solo muestra los testimonios con `permiso: true`.** La escuela avisa a las familias y de momento están todos en `true`; si alguna familia se opone, se pone `false` y desaparece de la web.
   - **No escribir cifras fijas de Google** (como "97 reseñas" o "5,0"): se quedan desfasadas. Usar formulaciones siempre ciertas, como "Más de 90 reseñas de familias en Google".
   - **Opcional más adelante:** Google Places API. Devuelve máximo 5 reseñas (las elige Google por relevancia), requiere clave de API con facturación activada, atribución a Google, presupuesto con alerta y una función de Netlify que haga de intermediaria (la clave **no puede ir en el código del navegador**). Con plan B obligatorio: si falla, solo el botón. Antes de cachear respuestas, revisar las condiciones de Google sobre almacenar datos.
-- **Equipo educativo:** datos en `src/data/equipo.ts` (Cristina, Beatriz y Olga: directoras y educadoras infantiles, tutoras de aula; Lorena: maestra y apoyo de aula). Sin fotos de momento: **avatar ilustrado**. Si más adelante hay fotos, solo con consentimiento de cada persona.
+- **Equipo educativo:** datos en `src/data/equipo.ts` (Cristina, Beatriz y Olga: directoras y educadoras infantiles, tutoras de aula; Lorena: maestra y apoyo de aula). Sección **"Nuestro equipo"** (2026-11-18, `Equipo.tsx`): la **foto de grupo original** (`fotoEquipo`, delante del árbol pintado de la pared; el montaje con el fondo de la entrada se probó y quedaba falso) y debajo **solo los nombres**, cada uno bajo su persona (`enLaFoto` en `equipo.ts`, en % del ancho de la foto) y en un color del árbol (naranja, verde, coral, azul). Sin cargos (siguen en los datos: Presentacion los usa) y sin panel de color.
 - **"Un día en la escuela":** en suspenso, no construir hasta que se decida.
 
 ### Contacto
@@ -157,7 +157,7 @@ Elementos de diseño:
 - **Casilla de consentimiento sin marcar**, enlazada a la política de privacidad, y texto de información básica debajo. El botón no se activa sin ella.
 
 ### Páginas y footer (confirmado)
-- **Inicio** (hero, foto de la fachada, quiénes somos, resumen con enlaces a las páginas, testimonios), **La escuela** (proyecto educativo, aulas, instalaciones, cocina, equipo y galería "Así es la escuela"), **Horario y calendario** (jornada, ampliaciones, desayuno y merienda, curso de septiembre a junio con julio opcional, matrícula todo el año y calendario escolar), **Familias** (adaptación, Baby Control, actividades en el corcho, descuentos y cheque guardería, FAQ), **Contacto** (datos, formulario y mapa), Aviso legal, Política de privacidad y 404. Todo en `src/data/paginas.ts`.
+- **Inicio** (hero, foto de la fachada, quiénes somos, resumen con enlaces a las páginas, testimonios), **La escuela** (aulas, instalaciones, galería "Así es la escuela", cocina y equipo), **Horario y calendario** (jornada, ampliaciones, desayuno y merienda, curso de septiembre a junio con julio opcional, matrícula todo el año y calendario escolar), **Familias** (adaptación, Baby Control, actividades en el corcho, descuentos y cheque guardería, FAQ), **Contacto** (datos, formulario y mapa), Aviso legal, Política de privacidad y 404. Todo en `src/data/paginas.ts`.
 - **"Matrícula abierta todo el año"** se destaca en la descripción de Inicio, y con el sello junto al formulario de Contacto.
 - Footer: títulos de colores del árbol (Páginas naranja, Contacto morado, Horario azul, Síguenos verde; Información legal en tinta, sin color; versiones oscuras `arbol-*-texto` para el contraste) e iconos de contacto todos del mismo color. Contenido: logo y dirección, contacto, horario, redes, enlaces legales, línea "Centro autorizado por la Consejería… · código de centro", © y razón social, y raíces del árbol.
 
@@ -194,7 +194,7 @@ Elementos de diseño:
 - **"Algunas actividades"** (Familias, `Actividades.tsx`): 5 fotos impresas con borde blanco, giradas, con chincheta de color y la franja blanca de abajo **sin título** (2026-11-17; el título sale en el visor), **pinchadas en un corcho** (`.corcho`, textura generada por el script). El corcho solo aquí.
 - **Visor de fotos** (`VisorFotos.tsx`, compartido): `<dialog>` con las fotos en una tira con scroll-snap (en móvil se pasan con el dedo), flechas del teclado y **lápices de colores con el `<` `>` pintado** (`LapizFlecha.tsx`, reutilizable): a los lados donde caben (variante `flechas-lado:` de `index.css`: desde 1024 px o móvil en horizontal) y, si no, debajo, junto al título. Sin bucle.
 - **Fachada PROVISIONAL** (poca calidad, cartel con letras inventadas por el programa con el que se mejoró): en Inicio, en grande bajo el hero, y en Contacto **mientras carga el mapa** de Google. Cuando llegue la nueva, se cambia en `fotos.ts` y sale sola en los dos sitios.
-- **Faltan:** las de las directoras (Equipo; solo con el consentimiento de cada una) y la fachada nueva.
+- **Falta:** la fachada nueva.
 
 ### Página 404
 Una **pizarra de aula "de las de antes"**: marco de madera (degradados, sin imágenes) y bandeja con tizas y borrador. Escrito a tiza con las piezas del menú (`Tiza.tsx`): "404", el título "Esta página no está en la pizarra" y el texto se escriben **palabra a palabra** (`TextoTiza`: así, aunque el texto ocupe varias líneas, va de arriba abajo y de izquierda a derecha).
@@ -229,6 +229,8 @@ Una **pizarra de aula "de las de antes"**: marco de madera (degradados, sin imá
 - Botones fáciles de pulsar con el pulgar, **foco visible**, estructura semántica, decoración con `aria-hidden`, enlace **"Saltar al contenido"**.
 - Tests automáticos con **Playwright + axe**.
 - **Metadatos** (título y descripción) en todas las páginas, favicon e imagen para compartir.
+- **SEO desde los datos (2026-11-18):** la dirección de la web (`site.web.url`, con `TODO` hasta el dominio definitivo) y el interruptor `site.web.indexar` viven en `site.ts`. `src/data/seo.ts` construye robots.txt, sitemap.xml (sin la 404) y los datos estructurados JSON-LD (`ChildCare` + `Preschool`: dirección, teléfono, horario de lunes a viernes, redes); el plugin `seoDesdeLosDatos` de `vite.config.ts` los genera al compilar y mete en `index.html` el título, la descripción, el canonical, las `og:*` y el JSON-LD (**en `index.html` no se escribe ningún dato a mano**). `useMetadatos.ts` pone el canonical de cada página; la 404 (`indexar: false` en `paginas.ts`) va sin canonical y con `noindex`. **Mientras `indexar` esté en `false`, todas las páginas llevan `noindex`**. Al publicar con el dominio: cambiar `web.url`, poner `indexar: true`, pasar la Prueba de resultados enriquecidos de Google y dar de alta el sitemap en Search Console.
+- **Precarga del árbol del logo** (`<link rel="preload" … fetchpriority="high">` en `index.html`): es el LCP del hero y la sombra del árbol de fondo; sin ella, el navegador no lo pedía hasta que React había arrancado (LCP en móvil lento simulado: 8,4 → 5,7 s).
 - Cualquier página **empieza siempre arriba del todo** al navegar, y no da error al refrescar o abrir directamente.
 - Enlaces externos con `target="_blank"` y `rel="noopener noreferrer"`.
 

@@ -1,11 +1,40 @@
 import { useEffect } from 'react'
 import type { Pagina } from '../data/paginas'
+import { seIndexa, urlPagina } from '../data/seo'
 
-// Cambia el título de la pestaña y la descripción al entrar en cada página.
-// Se modifican las etiquetas que ya existen en index.html (no se añaden nuevas), así nunca hay duplicados.
+// Devuelve la etiqueta del <head> que cumple el selector; si no existe, la crea con crear() y la añade.
+function etiquetaDelHead(selector: string, crear: () => HTMLElement): HTMLElement {
+  const existente = document.head.querySelector<HTMLElement>(selector)
+  if (existente) return existente
+  const nueva = crear()
+  document.head.append(nueva)
+  return nueva
+}
+
+// Al entrar en cada página: título de la pestaña, descripción, canonical y si Google puede guardarla.
+// Las etiquetas salen de index.html (vite.config.ts) y aquí se modifican; solo se crean si faltan (canonical y
+// robots, que la 404 quita), así nunca hay duplicados.
 export function useMetadatos(pagina: Pagina): void {
   useEffect(() => {
     document.title = pagina.titulo
     document.querySelector('meta[name="description"]')?.setAttribute('content', pagina.descripcion)
+
+    const indexable = seIndexa(pagina)
+
+    // canonical: la dirección "oficial" de la página. La 404 no tiene (su ruta "*" no es una dirección).
+    if (pagina.indexar !== false) {
+      etiquetaDelHead('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }))
+        .setAttribute('href', urlPagina(pagina.ruta))
+    } else {
+      document.head.querySelector('link[rel="canonical"]')?.remove()
+    }
+
+    // robots "noindex": en las páginas que no se guardan en Google. En las demás se quita (por si se viene de la 404).
+    if (indexable) {
+      document.head.querySelector('meta[name="robots"]')?.remove()
+    } else {
+      etiquetaDelHead('meta[name="robots"]', () => Object.assign(document.createElement('meta'), { name: 'robots' }))
+        .setAttribute('content', 'noindex')
+    }
   }, [pagina])
 }
