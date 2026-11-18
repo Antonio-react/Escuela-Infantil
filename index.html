@@ -12,6 +12,12 @@
          esto, el navegador no lo descubre hasta que React ha descargado y ejecutado su JavaScript (2026-11-18:
          empezaba a pedirse a los 4,7 s con un móvil lento simulado). Vite cambia la ruta por la del archivo final. -->
     <link rel="preload" as="image" href="/src/assets/logo-arbol.webp" fetchpriority="high" />
+    <!-- Las dos fuentes que se ven nada más entrar (títulos y texto). Sin esto, el navegador no las pide hasta leer el
+         CSS; llegaban tarde, el texto cambiaba de tamaño y empujaba la página (CLS de 0,16 a 0,26 en Lighthouse,
+         2026-11-18). crossorigin es obligatorio en las fuentes, aunque sean de la propia web. La tiza (Patrick Hand)
+         no se precarga: va abajo, en el cierre, y en el menú. -->
+    <link rel="preload" as="font" type="font/woff2" href="/node_modules/@fontsource-variable/fredoka/files/fredoka-latin-wght-normal.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/node_modules/@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2" crossorigin />
     <!-- El título, la descripción, las etiquetas para compartir (og:*), el canonical y los datos para Google los
          añade vite.config.ts (seoDesdeLosDatos) con los datos de src/data/: aquí no se escribe ninguno a mano. -->
   </head>
