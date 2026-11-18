@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState, type ComponentType, type CSSProperties, type SVGProps } from 'react'
 import { Link, NavLink } from 'react-router'
-import rotuloNubes from '../assets/logo-rotulo-nubes.webp'
+import rotuloNubes from '../assets/logo-rotulo-nubes-700.webp' // aquí se ve a ~150 px: la de 700 basta incluso a ×3
 import { paginas, paginasMenu, rutaSolicitarVisita, type Pagina } from '../data/paginas'
 import { textos } from '../data/textos'
 import { IconoMenu } from './Iconos'

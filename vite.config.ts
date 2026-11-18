@@ -3,13 +3,13 @@ import react from '@vitejs/plugin-react'
 import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
 import { paginas } from './src/data/paginas.ts'
 import { site } from './src/data/site.ts'
-import { datosEstructurados, robotsTxt, sitemapXml, urlPagina } from './src/data/seo.ts'
+import { datosEstructurados, llmsTxt, robotsTxt, sitemapXml, urlPagina } from './src/data/seo.ts'
 
 // SEO desde los datos (2026-11-18): así index.html no lleva ningún dato copiado a mano.
 // - Mete en el <head> de index.html el título, la descripción, las etiquetas para compartir (og:*), el canonical y
 //   los datos estructurados de la escuela. Van en el HTML (no los pone React) porque WhatsApp, Facebook y los
 //   buscadores los leen sin ejecutar JavaScript. Al cambiar de página, useMetadatos.ts actualiza los que cambian.
-// - Al compilar, crea robots.txt y sitemap.xml en dist/.
+// - Al compilar, crea robots.txt, sitemap.xml y llms.txt en dist/.
 function seoDesdeLosDatos(): Plugin {
   const inicio = paginas.inicio
   const meta = (attrs: Record<string, string>): HtmlTagDescriptor => ({ tag: 'meta', attrs, injectTo: 'head' })
@@ -49,6 +49,7 @@ function seoDesdeLosDatos(): Plugin {
     generateBundle() {
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt() })
       this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemapXml() })
+      this.emitFile({ type: 'asset', fileName: 'llms.txt', source: llmsTxt() }) // para los asistentes de IA (seo.ts)
     },
   }
 }

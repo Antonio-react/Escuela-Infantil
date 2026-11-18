@@ -4,7 +4,7 @@
 // Los imports llevan ".ts" porque este archivo también lo lee vite.config.ts, que se comprueba con las reglas de Node.
 import { paginas, type Pagina } from './paginas.ts'
 import { site } from './site.ts'
-import { enlaceTel, telefonoLlamadas } from './telefonos.ts'
+import { enlaceTel, formatoPantalla, telefonoLlamadas, telefonoWhatsApp } from './telefonos.ts'
 
 const { url } = site.web
 
@@ -85,4 +85,46 @@ export function datosEstructurados(): Record<string, unknown> {
     },
     sameAs: [redes.instagram, redes.facebook],
   }
+}
+
+// llms.txt (https://llmstxt.org): la ficha de la escuela en texto sencillo para los asistentes de IA (ChatGPT,
+// Claude, Perplexity…), que lo leen para responder a preguntas como «escuelas infantiles en Carranque». Lo crea
+// vite.config.ts al compilar. Las preguntas frecuentes no van aquí (faqs.ts depende de imágenes, que vite.config.ts no
+// puede cargar): se enlaza la página de Familias, donde están.
+export function llmsTxt(): string {
+  const { direccion, horario, curso, redes, autorizacion } = site
+  const dias = `de ${horario.dias[0]} a ${horario.dias.at(-1)}`
+  const reducidos = horario.reducidos.map((r) => `de ${r.desde} a ${r.hasta}`).join(' o ')
+  const telefonos = site.telefonos.map((t) => formatoPantalla(t.numero)).join(', ')
+  const aulas = site.aulas
+    .map((a) => `${a.nombre} (${a.edades}${'excursiones' in a && a.excursiones ? ', con excursiones extraescolares' : ''})`)
+    .join('; ')
+  const enlace = (p: Pagina) => `- [${p.nombre}](${urlPagina(p.ruta)}): ${p.descripcion}`
+
+  return [
+    `# ${site.nombre}`,
+    '',
+    `> ${paginas.inicio.descripcion}`,
+    '',
+    '## Datos de la escuela',
+    '',
+    `- Dirección: ${direccion.calle}, ${direccion.codigoPostal} ${direccion.municipio} (${direccion.provincia}), España`,
+    `- Teléfonos: ${telefonos} (WhatsApp: ${formatoPantalla(telefonoWhatsApp.numero)})`,
+    `- Email: ${site.email}`,
+    `- Horario: ${dias}, de ${horario.apertura} a ${horario.cierre}. Jornada general de ${horario.general.desde} a ${horario.general.hasta}${horario.general.incluyeComida ? ', con comida incluida' : ''}; horario reducido ${reducidos}.`,
+    `- Aulas: ${aulas}`,
+    `- Curso: de ${curso.inicio} a ${curso.fin}${curso.julioOpcional ? ', con julio opcional' : ''}. Matrícula abierta todo el año.`,
+    `- Centro autorizado por la ${autorizacion.organismo} (código de centro ${autorizacion.numero})`,
+    `- Instagram: ${redes.instagram}`,
+    `- Facebook: ${redes.facebook}`,
+    '',
+    '## Páginas',
+    '',
+    ...[paginas.inicio, paginas.laEscuela, paginas.horarioCalendario, paginas.familias, paginas.contacto].map(enlace),
+    '',
+    '## Optional',
+    '',
+    ...[paginas.avisoLegal, paginas.privacidad].map(enlace),
+    '',
+  ].join('\n')
 }

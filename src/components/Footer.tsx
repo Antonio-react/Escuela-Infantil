@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import rotuloNubes from '../assets/logo-rotulo-nubes.webp'
+import rotuloNubes from '../assets/logo-rotulo-nubes-700.webp' // aquí se ve a ~165 px: la de 700 basta incluso a ×3
 import { paginas, paginasLegales, paginasMenu } from '../data/paginas'
 import { direccionCompleta, enlaceMapa } from '../data/mapa'
 import { site } from '../data/site'

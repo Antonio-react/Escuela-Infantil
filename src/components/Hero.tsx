@@ -2,7 +2,9 @@ import { motion, useScroll } from 'motion/react'
 import { useRef } from 'react'
 import { Link } from 'react-router'
 import rotuloEscuela from '../assets/logo-rotulo-escuela.webp'
+import rotuloEscuela700 from '../assets/logo-rotulo-escuela-700.webp'
 import rotuloNubes from '../assets/logo-rotulo-nubes.webp'
+import rotuloNubes700 from '../assets/logo-rotulo-nubes-700.webp'
 import { rutaSolicitarVisita } from '../data/paginas'
 import { site } from '../data/site'
 import { textos } from '../data/textos'
@@ -49,12 +51,14 @@ export function Hero() {
       <div className="relative flex flex-col items-center">
           <h1 className="flex flex-col items-center">
             <span className="sr-only">{site.nombre}</span>
-            <img src={rotuloEscuela} alt="" width={1100} height={315} className="h-auto w-[min(84vw,26rem)] md:w-[min(84vw,calc((100svh-4.5rem)*0.62),30rem)] lg:w-[min(84vw,calc((100svh-4.5rem)*0.62),34rem)] 2xl:w-[min(84vw,calc((100svh-4.5rem)*0.62),40rem)] 3xl:w-[min(84vw,calc((100svh-4.5rem)*0.62),54rem)]" />
+            {/* srcSet + sizes (2026-11-18): el navegador elige la de 700 o la de 1100 según el ancho al que se ve (los
+                tamaños de sizes son los topes de las clases de abajo) y la densidad de la pantalla. */}
+            <img src={rotuloEscuela} srcSet={`${rotuloEscuela700} 700w, ${rotuloEscuela} 1100w`} sizes="(min-width: 112.5rem) 54rem, (min-width: 96rem) 40rem, (min-width: 64rem) 34rem, (min-width: 48rem) 30rem, min(84vw, 26rem)" alt="" width={1100} height={315} className="h-auto w-[min(84vw,26rem)] md:w-[min(84vw,calc((100svh-4.5rem)*0.62),30rem)] lg:w-[min(84vw,calc((100svh-4.5rem)*0.62),34rem)] 2xl:w-[min(84vw,calc((100svh-4.5rem)*0.62),40rem)] 3xl:w-[min(84vw,calc((100svh-4.5rem)*0.62),54rem)]" />
             <ArbolHero
               progreso={scrollYProgress}
               className="mt-[-2%] w-[min(56vw,calc((100svh-26rem)*0.745),16.5rem)] md:w-[min(56vw,calc((100svh-4.5rem)*0.39),19rem)] lg:w-[min(56vw,calc((100svh-4.5rem)*0.39),21.5rem)] 2xl:w-[min(56vw,calc((100svh-4.5rem)*0.39),25rem)] 3xl:w-[min(56vw,calc((100svh-4.5rem)*0.39),34rem)]"
             />
-            <img src={rotuloNubes} alt="" width={1100} height={269} className="mt-[-6%] h-auto w-[min(82vw,25rem)] md:w-[min(82vw,calc((100svh-4.5rem)*0.6),29rem)] lg:w-[min(82vw,calc((100svh-4.5rem)*0.6),33rem)] 2xl:w-[min(82vw,calc((100svh-4.5rem)*0.6),39rem)] 3xl:w-[min(82vw,calc((100svh-4.5rem)*0.6),53rem)]" />
+            <img src={rotuloNubes} srcSet={`${rotuloNubes700} 700w, ${rotuloNubes} 1100w`} sizes="(min-width: 112.5rem) 53rem, (min-width: 96rem) 39rem, (min-width: 64rem) 33rem, (min-width: 48rem) 29rem, min(82vw, 25rem)" alt="" width={1100} height={269} className="mt-[-6%] h-auto w-[min(82vw,25rem)] md:w-[min(82vw,calc((100svh-4.5rem)*0.6),29rem)] lg:w-[min(82vw,calc((100svh-4.5rem)*0.6),33rem)] 2xl:w-[min(82vw,calc((100svh-4.5rem)*0.6),39rem)] 3xl:w-[min(82vw,calc((100svh-4.5rem)*0.6),53rem)]" />
           </h1>
 
           {/* md:contents: desde tablet este div "desaparece" y el sello se coloca respecto al logo. */}

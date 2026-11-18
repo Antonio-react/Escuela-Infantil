@@ -30,7 +30,16 @@ async function rotuloEscuela() {
     .composite([{ input: tapa, left: 1250 - recorte.left, top: 700, blend: 'dest-out' }]) // dest-out = "borra donde pinto"
     .png()
     .toBuffer()
+  await rotuloPequeno(sinCopa, 'logo-rotulo-escuela')
   return sharp(sinCopa).resize({ width: 1100 }).webp({ quality: 84, effort: 6 }).toFile(`${DESTINO}/logo-rotulo-escuela.webp`)
+}
+
+// Versión de 700 px de un rótulo (2026-11-18): en el móvil el rótulo se ve a unos 350 px de ancho y bastaba con
+// esta, pero se descargaba la de 1100 (unos 40 KB de más cada uno, según PageSpeed). Con srcset (Hero.tsx) el
+// navegador elige: 700 px cubren 350 px de pantalla a ×2; el iPhone (×3) y las pantallas grandes siguen con la de 1100.
+const ROTULO_PEQUENO = 700
+function rotuloPequeno(imagen, nombre) {
+  return sharp(imagen).resize({ width: ROTULO_PEQUENO }).webp({ quality: 84, effort: 6 }).toFile(`${DESTINO}/${nombre}-${ROTULO_PEQUENO}.webp`)
 }
 
 // Rótulo "Árbol de nubes". En el logo original lo cruzan el tronco (negro) y las raíces (gris):
@@ -46,7 +55,9 @@ async function rotuloNubes() {
     const saturacion = Math.max(data[i], data[i + 1], data[i + 2]) - Math.min(data[i], data[i + 1], data[i + 2])
     if (saturacion < 40) data[i + 3] = 0
   }
-  return sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } })
+  const limpio = await sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } }).png().toBuffer()
+  await rotuloPequeno(limpio, 'logo-rotulo-nubes')
+  return sharp(limpio)
     .webp({ quality: 84, effort: 6 })
     .toFile(`${DESTINO}/logo-rotulo-nubes.webp`)
 }
