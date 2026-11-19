@@ -61,11 +61,22 @@ function mesesDelCurso(): MesCurso[] {
 }
 export const mesesCurso = mesesDelCurso()
 
-// Los horarios reducidos de la jornada general (site.ts), en una frase: "de 9:00 a 12:00 o de 9:00 a 13:00" (la "o"
-// la pone el navegador en español, Intl.ListFormat de tipo "disyunción"). Lo usan Horario y la pregunta del horario.
+// Los horarios reducidos de la jornada general (site.ts), en una frase, con la comida de cada uno: "de 9:00 a 12:00
+// (sin comida) o de 9:00 a 13:00 (con comida)" (la "o" la pone el navegador en español, Intl.ListFormat de tipo
+// "disyunción"). Lo usa la pregunta del horario (faqs.ts).
 // Con espacios que no se parten (el carácter 160, "espacio duro"): cada horario, entero en una línea ("de 9:00 a
 // 12:00", nunca "de / 9:00…").
 const ESPACIO_DURO = String.fromCharCode(160)
+// Los horarios con la comida incluida (la jornada general y los reducidos que la llevan), en una frase: "de 9:00 a
+// 15:00 y de 9:00 a 13:00". Lo usa la ficha de la cocina (textos.ts).
+export const horariosConComida = new Intl.ListFormat('es', { type: 'conjunction' }).format(
+  [site.horario.general, ...site.horario.reducidos.filter((r) => r.incluyeComida)].map(
+    ({ desde, hasta }) => ['de', desde, 'a', hasta].join(ESPACIO_DURO),
+  ),
+)
 export const horariosReducidos = new Intl.ListFormat('es', { type: 'disjunction' }).format(
-  site.horario.reducidos.map(({ desde, hasta }) => ['de', desde, 'a', hasta].join(ESPACIO_DURO)),
+  site.horario.reducidos.map(
+    ({ desde, hasta, incluyeComida }) =>
+      `${['de', desde, 'a', hasta].join(ESPACIO_DURO)} (${incluyeComida ? 'con' : 'sin'} comida)`,
+  ),
 )

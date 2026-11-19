@@ -34,7 +34,8 @@ function InicialEnPizarra({ letra, color }: { letra: string; color: string }) {
 // por debajo, bajo las cifras, en todos los tamaños (Antonio, 2026-11-17: en móvil no salía nada). Sin lazy: está
 // arriba, se ve al entrar.
 // descripcion: si se pasa, se pinta en lugar de pagina.descripcion (por ejemplo, con palabras de colores, como en
-// Contacto); la de Google sigue siendo pagina.descripcion (useMetadatos).
+// Contacto); la de Google sigue siendo pagina.descripcion (useMetadatos). Con false, no se pinta ninguna (Horario y
+// calendario, Antonio, 2026-11-19); Google sigue teniendo la suya.
 export function CabeceraPagina({
   pagina,
   cifras,
@@ -45,7 +46,7 @@ export function CabeceraPagina({
   pagina: Pagina
   cifras?: readonly Cifra[]
   foto?: Foto | null
-  descripcion?: ReactNode
+  descripcion?: ReactNode | false
   children?: ReactNode
 }) {
   useMetadatos(pagina)
@@ -68,7 +69,7 @@ export function CabeceraPagina({
               pagina.nombre
             )}
           </h1>
-          <p className="mt-4 max-w-2xl text-lg text-tinta/80">{descripcion ?? pagina.descripcion}</p>
+          {descripcion !== false && <p className="mt-4 max-w-2xl text-lg text-tinta/80">{descripcion ?? pagina.descripcion}</p>}
           {/* Móvil: de dos en dos. Desde sm: en fila, cada cifra con su ancho natural (en 4 columnas iguales la
               hora no cabía). */}
           {cifras && (

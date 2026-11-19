@@ -34,7 +34,7 @@ function coloresJuguete(color: string): EstiloConVariables {
   }
 }
 
-const piezas = [paginas.laEscuela, paginas.horarioCalendario, paginas.familias, paginas.contacto] as const
+const piezas: readonly Pagina[] = [paginas.laEscuela, paginas.horarioCalendario, paginas.familias, paginas.contacto]
 
 // Encajes en 2 × 2 (orden: arriba izquierda, arriba derecha, abajo izquierda, abajo derecha). Cada lado que da a una
 // vecina tiene un saliente (+1) y la vecina, en ese lado, su entrante (-1), en el mismo sitio.
@@ -167,7 +167,7 @@ export function ResumenPaginas() {
                       />
                     )}
                   </div>
-                  <p className="mt-3 max-w-md text-tinta/80">{pagina.descripcion}</p>
+                  <p className="mt-3 max-w-md text-tinta/80">{pagina.resumen ?? pagina.descripcion}</p>
                   <span className="mt-auto inline-flex items-center gap-2 pt-6 font-titulo font-semibold text-tinta">
                     {t.verMas}
                     {/* Flecha decorativa: el texto del enlace ya es el nombre de la página. */}

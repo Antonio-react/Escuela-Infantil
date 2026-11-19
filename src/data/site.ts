@@ -47,8 +47,9 @@ export const site = {
     // Dentro de la jornada general, dos horarios reducidos (Antonio, 2026-11-16, de su hermana). Salen debajo de
     // "Jornada general" en Horario y en la pregunta del horario de Familias.
     reducidos: [
-      { desde: '9:00', hasta: '12:00' },
-      { desde: '9:00', hasta: '13:00' },
+      // incluyeComida: el de 9:00 a 13:00 sí lleva comida; el de 9:00 a 12:00, no (Antonio, 2026-11-19).
+      { desde: '9:00', hasta: '12:00', incluyeComida: false },
+      { desde: '9:00', hasta: '13:00', incluyeComida: true },
     ],
     // Sin desayuno ni merienda (Antonio, 2026-11-16: no estaban confirmadas; las ampliaciones solo dicen "se paga
     // aparte").

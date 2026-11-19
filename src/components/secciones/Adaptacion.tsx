@@ -40,7 +40,7 @@ export function Adaptacion() {
   // reducido no se pone la pausa: el bloque global deja todo ya en su sitio.
   const pausa = !reducido && !visto ? 'caminos-pausados' : ''
   return (
-    <Seccion titulo={t.titulo} resalte={{ forma: 'subrayado', color: 'verde' }} entradilla={textos.adaptacion} colorTitulo="text-ciruela">
+    <Seccion titulo={t.titulo} resalte={{ forma: 'subrayado', color: 'verde' }} colorTitulo="text-ciruela">
       <div className="grid items-center gap-12 lg:grid-cols-[1.35fr_1fr] lg:gap-16">
         <ol ref={ref} className={`flex flex-col gap-9 ${pausa}`}>
           {t.pasos.map((paso, i) => {

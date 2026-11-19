@@ -112,10 +112,11 @@ export function Horario() {
                   <p className="max-w-60 font-semibold text-balance">
                     {t.reducido.antes}{' '}
                     {t.reducido.tramos.map((tramo, j) => (
-                      <Fragment key={tramo}>
+                      <Fragment key={tramo.horas}>
                         {j > 0 && ` ${t.reducido.o} `}
                         {t.reducido.de}{' '}
-                        <span className="rounded-[0.3em_0.5em_0.4em_0.6em] bg-arbol-azul box-decoration-clone px-1 whitespace-nowrap">{tramo}</span>
+                        <span className="rounded-[0.3em_0.5em_0.4em_0.6em] bg-arbol-azul box-decoration-clone px-1 whitespace-nowrap">{tramo.horas}</span>{' '}
+                        <span className="whitespace-nowrap">{tramo.comida}</span>
                       </Fragment>
                     ))}
                   </p>

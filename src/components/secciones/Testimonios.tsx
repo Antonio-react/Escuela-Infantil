@@ -58,7 +58,7 @@ export function Testimonios() {
                 className={`resena relative ${i > 0 ? '-mt-3' : ''} ${lado === 'izquierda' ? 'mr-3 sm:mr-12' : 'ml-3 sm:ml-12'}`}
                 style={estilo}
               >
-                <Cita texto={testimonio.texto} autor={testimonio.autor} indice={i} />
+                <Cita texto={testimonio.texto} textoMovil={testimonio.textoMovil} autor={testimonio.autor} indice={i} />
               </li>
             )
           })}

@@ -89,7 +89,10 @@ test.describe('Metadatos', () => {
     await page.goto('/')
     for (const sel of ['link[rel="icon"]', 'link[rel="apple-touch-icon"]', 'meta[property="og:image"]']) {
       const url = (await page.locator(sel).first().getAttribute(sel.startsWith('meta') ? 'content' : 'href')) ?? ''
-      expect((await request.get(url)).ok(), `${sel} → ${url}`).toBe(true)
+      // Solo la ruta, pedida a la web que se prueba: og:image es una dirección absoluta (con el dominio) y, si el
+      // dominio aún no está conectado, saldría a internet y fallaría aunque el archivo exista.
+      const ruta = new URL(url, 'http://localhost').pathname
+      expect((await request.get(ruta)).ok(), `${sel} → ${url}`).toBe(true)
     }
   })
 })

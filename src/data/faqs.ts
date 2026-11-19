@@ -1,6 +1,5 @@
 import { horariosReducidos } from './horario'
 import { site } from './site'
-import { textos } from './textos'
 
 export type Faq = {
   pregunta: string
@@ -21,7 +20,9 @@ export const faqs: readonly Faq[] = [
   },
   {
     pregunta: '¿Cómo es la comida? ¿Adaptáis el menú a alergias e intolerancias?',
-    respuesta: `Sí. ${textos.cocina} La comida es casera, hecha a diario en la escuela, en puré o en sólido según el momento de cada niño, y cada mes os facilitamos el menú.`,
+    // Antonio, 2026-11-19: sin "Cocinamos nosotras mismas" ni "hecha a diario en la escuela".
+    respuesta:
+      'Sí. Comida casera cada día, adaptando el menú a las alergias y las intolerancias, en puré o en sólido según el momento de cada niño.',
   },
   {
     pregunta: '¿Cómo puedo solicitar plaza o una visita?',
@@ -36,7 +37,7 @@ export const faqs: readonly Faq[] = [
   {
     pregunta: '¿Cómo me informáis de su día a día?',
     respuesta:
-      'Usamos la app Baby Control, una agenda digital en la que cada día compartimos con las familias fotos y novedades de su peque. Y para cualquier cosa, podéis llamarnos o escribirnos.',
+      'Usamos la app Baby Control, una agenda digital en la que cada día compartimos con las familias fotos y novedades de su peque.',
   },
   {
     pregunta: '¿Tenéis descuentos? ¿Aceptáis cheque guardería?',

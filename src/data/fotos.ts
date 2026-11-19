@@ -162,12 +162,13 @@ export const fotoEquipo: Foto | null = {
 }
 
 // La escuela desde fuera: en Inicio (junto a "Quiénes somos") y en Contacto, mientras carga el mapa de Google.
-// PROVISIONAL (mejorada con un programa: poca calidad y el cartel con letras inventadas): cuando llegue la nueva, se
-// cambia y sale sola en los dos sitios.
+// La definitiva (2026-11-19): de frente, 4:3. Retocada a mano (2026-11-19, con el visto bueno de Antonio): suelo,
+// murete de la izquierda y jardineras blancas de la derecha sin las manchas oscuras; el resto de la fachada, sin tocar. El original ya no existe: si se
+// rehace, partir de este archivo.
 export const fotoFachada: Foto | null = {
   ...archivos('fachada'),
   titulo: 'La escuela',
   alt: 'Fachada de la Escuela Infantil Árbol de Nubes: edificio amarillo y rojo con el cartel de la escuela y dibujos en las ventanas',
   ancho: 1400,
-  alto: 658,
+  alto: 1050,
 }

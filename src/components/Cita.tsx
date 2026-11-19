@@ -29,13 +29,14 @@ const fondosTarjeta = [
 
 type CitaProps = {
   texto: string
+  textoMovil?: string // si lo hay, en móvil (por debajo de 640 px) sale este en lugar del entero
   autor: string
   indice?: number
   className?: string
   style?: CSSProperties
 }
 
-export function Cita({ texto, autor, indice = 0, className = '', style }: CitaProps) {
+export function Cita({ texto, textoMovil, autor, indice = 0, className = '', style }: CitaProps) {
   const { Juguete, fondo } = avatares[indice % avatares.length]
   return (
     <figure
@@ -57,7 +58,15 @@ export function Cita({ texto, autor, indice = 0, className = '', style }: CitaPr
         </span>
       </figcaption>
       <blockquote className="mt-4 text-lg leading-relaxed text-tinta/90">
-        <p>{texto}</p>
+        {/* Con display: none (hidden), el lector de pantalla tampoco lee el que no se ve: nunca se oyen los dos. */}
+        {textoMovil ? (
+          <p>
+            <span className="sm:hidden">{textoMovil}</span>
+            <span className="hidden sm:inline">{texto}</span>
+          </p>
+        ) : (
+          <p>{texto}</p>
+        )}
       </blockquote>
     </figure>
   )

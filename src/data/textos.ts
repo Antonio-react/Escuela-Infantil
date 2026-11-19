@@ -1,4 +1,5 @@
 import { calendario } from './calendario'
+import { horariosConComida } from './horario'
 import { site } from './site'
 
 // "Matrícula abierta todo el año" en dos partes: el sello del hero pinta cada una de un color.
@@ -23,15 +24,6 @@ export const textos = {
     soltarBorrador: 'Soltar el borrador',
     colores: { morada: 'morada', blanca: 'blanca', verde: 'verde', naranja: 'naranja', azul: 'azul' },
   },
-  // Aprobado (CLAUDE.md).
-  instalaciones:
-    'Aulas climatizadas todo el año, para que los peques estén siempre a gusto, haga frío o calor.',
-  // Aprobado (CLAUDE.md). Si algún día contratan cocinera, se cambia aquí.
-  cocina:
-    'Cocinamos nosotras mismas cada día, con cariño y adaptando el menú a las alergias, las intolerancias y el ritmo de cada peque.',
-  // Aprobado por Antonio (fase 1).
-  adaptacion:
-    'Empezamos poco a poco: estancias cortas de aproximadamente una hora que vamos alargando al ritmo de cada peque, para que la adaptación sea tranquila y respetuosa.',
   // Textos de las secciones de contenido (títulos sin punto final).
   secciones: {
     // Inicio: presentación de la escuela. BORRADOR (Antonio, 2026-11-12): se mejorará y lo verán las dueñas.
@@ -51,7 +43,7 @@ export const textos = {
     // Familias: fotos de actividades pinchadas en un corcho. BORRADOR.
     actividades: {
       titulo: 'Algunas *actividades*',
-      entradilla: 'Rincones que preparamos para jugar, explorar y celebrar.',
+      entradilla: 'Aprendemos y descubrimos cosas nuevas a través del juego, la creatividad y la experimentación.',
     },
     // Visor de fotos a pantalla completa (VisorFotos.tsx): galería de La escuela y actividades de Familias.
     visorFotos: {
@@ -117,23 +109,22 @@ export const textos = {
       botonAGusto: 'Ver la ventana del aula mitad invierno, mitad verano',
       botonVerano: 'Ver la ventana del aula en verano',
     },
-    // La escuela: la frase grande es textos.cocina (aprobada). Los puntos de la ficha son datos aprobados
+    // La escuela: solo la ficha con los puntos, sin título ni frase al lado (Antonio, 2026-11-19). Datos aprobados
     // en el CLAUDE.md (el menú no va en la web: solo se dice que se da a las familias).
     cocina: {
-      // No empieza como textos.cocina ("Cocinamos nosotras mismas…"), que va justo debajo.
       titulo: 'Comida *casera*, hecha en la escuela',
-      ficha: 'Así es nuestra cocina',
       puntos: [
-        `Incluida en la jornada de ${site.horario.general.desde} a ${site.horario.general.hasta}`,
+        // La jornada general y los horarios reducidos con comida (site.ts): "de 9:00 a 15:00 y de 9:00 a 13:00".
+        `Incluida en la jornada ${horariosConComida}`,
         'Adaptada a alergias e intolerancias',
         'En puré o en sólido, según el momento de cada peque',
-        'Cada mes os damos el menú',
+        'Os damos el menú de cada mes',
       ],
     },
     // La escuela: las personas salen de equipo.ts. Entradilla: BORRADOR (la verán las dueñas).
     equipo: {
       titulo: 'Nuestro *equipo*',
-      entradilla: 'Las personas que cuidan de vuestros peques cada día.',
+      entradilla: 'Las profes que cuidan de vuestros peques cada día.',
     },
     horario: {
       titulo: `Abierto de *${site.horario.apertura} a ${site.horario.cierre}*`,
@@ -146,7 +137,11 @@ export const textos = {
         antes: 'También con horario reducido:',
         de: 'de',
         o: 'o',
-        tramos: site.horario.reducidos.map(({ desde, hasta }) => `${desde} a ${hasta}`),
+        // Detrás de cada horario, si lleva comida o no (incluyeComida en site.ts; Antonio, 2026-11-19).
+        tramos: site.horario.reducidos.map(({ desde, hasta, incluyeComida }) => ({
+          horas: `${desde} a ${hasta}`,
+          comida: incluyeComida ? '(con comida)' : '(sin comida)',
+        })),
       },
       flexible: 'Podéis ampliar horas o cambiar de horario en cualquier momento.',
       // "De septiembre a junio, con julio opcional", por partes: septiembre va en el color del otoño y junio y julio en
@@ -259,19 +254,19 @@ export const textos = {
     },
 
     // --- Familias. Todo BORRADOR (2026-11-13): lo verán Antonio y las dueñas. ---
-    // Adaptación: la entradilla es textos.adaptacion (aprobada). Los tres pasos solo dicen lo aprobado
-    // (estancias de una hora que se alargan poco a poco), sin inventar días ni horas.
+    // Adaptación: sin entradilla (Antonio, 2026-11-19). Los tres pasos solo dicen lo aprobado (estancias de una hora
+    // que se alargan poco a poco), sin inventar días ni horas.
     adaptacion: {
       titulo: 'Adaptación a su *ritmo*',
       pasos: [
-        { cuando: 'Los primeros días', como: 'Más o menos una hora' },
+        { cuando: 'Los primeros días', como: 'Alrededor de una hora' },
         { cuando: 'Después', como: 'Cada día, un rato más' },
         { cuando: 'Cuando está a gusto', como: 'Su jornada completa' },
       ],
     },
     babyControl: {
       titulo: 'Su día a día, en *Baby Control*',
-      texto: 'Baby Control es la agenda digital de la escuela. Cada día os compartimos fotos y novedades de vuestro peque, y las veis en el móvil en tiempo real.',
+      texto: 'Baby Control es la agenda digital de la escuela. Cada día os compartimos fotos y el parte diario (qué ha comido, cómo ha dormido, los cambios de pañal…), y lo veis en el móvil en tiempo real.',
       boton: 'Conoce la app Baby Control',
       botonAria: 'Conoce la app Baby Control, se abre en otra pestaña',
       // Lo que se lee en el móvil dibujado (decorativo, aria-hidden: ya lo dice el texto).

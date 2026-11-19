@@ -101,7 +101,6 @@ export function Instalaciones() {
         <div className="mx-auto w-full max-w-[max(20rem,calc((100svh-18rem)*1.55+3.25rem))]">
           <Termostato />
         </div>
-        <p className="mx-auto mt-6 max-w-xl text-center text-lg text-tinta/80 sm:text-xl">{textos.instalaciones}</p>
       </div>
     </Seccion>
   )

@@ -7,7 +7,7 @@ import { paginas } from '../data/paginas'
 export function HorarioCalendario() {
   return (
     <>
-      <CabeceraPagina pagina={paginas.horarioCalendario} />
+      <CabeceraPagina pagina={paginas.horarioCalendario} descripcion={false} />
       <Horario />
       <Calendario />
       <Cierre />

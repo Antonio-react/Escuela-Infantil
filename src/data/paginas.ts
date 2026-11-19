@@ -5,6 +5,9 @@ export type Pagina = {
   nombre: string // texto del menú y del h1
   titulo: string // <title> de la pestaña
   descripcion: string // <meta name="description">
+  // Texto de su pieza de puzzle en Inicio (ResumenPaginas), si tiene que ser más corto que la descripción. Sin él,
+  // la pieza usa la descripción.
+  resumen?: string
   enMenu: boolean
   // Fondo del enlace del menú cuando es la página activa: un color del árbol del logo (index.css).
   // La clase va escrita entera (no se construye con variables) para que Tailwind la encuentre.
@@ -55,7 +58,7 @@ export const paginas = {
     ruta: '/la-escuela',
     nombre: 'La escuela',
     titulo: `La escuela · ${marca}`,
-    descripcion: 'Conoced por dentro la escuela donde vuestro peque pasará el día: un aula para cada edad, aulas climatizadas todo el año, nuestra comida casera y quiénes estamos con ellos.',
+    descripcion: 'Conoced por dentro la escuela donde vuestro peque pasará el día.',
     enMenu: true,
     colorActivo: 'bg-arbol-verde', // verde: el árbol, crecer
     juguete: 'bloque',
@@ -66,7 +69,7 @@ export const paginas = {
     ruta: '/horario-y-calendario',
     nombre: 'Horario y calendario',
     titulo: `Horario y calendario · ${marca}`,
-    descripcion: `Abrimos de ${site.horario.apertura} a ${site.horario.cierre} y podéis ampliar o cambiar de horario cuando lo necesitéis. Aquí tenéis cómo es la jornada, el curso de ${site.curso.inicio} a ${site.curso.fin} (con julio opcional) y el calendario escolar para guardarlo en el móvil.`,
+    descripcion: `Abrimos de ${site.horario.apertura} a ${site.horario.cierre} y podéis ampliar o cambiar de horario cuando lo necesitéis.`,
     enMenu: true,
     colorActivo: 'bg-arbol-azul', // azul cielo: el día y el paso del tiempo
     juguete: 'reloj',
@@ -78,7 +81,7 @@ export const paginas = {
     nombre: 'Familias',
     titulo: `Familias · ${marca}`,
     // BORRADOR (2026-11-13): explica un poco, no solo enumera (Antonio). Es también la descripción para Google.
-    descripcion: 'Todo lo que necesitáis para empezar con tranquilidad: cómo acompañamos a vuestro peque en sus primeros días, cómo os contamos su día a día, las ayudas para pagar la escuela y las respuestas a lo que más nos preguntáis.',
+    descripcion: 'Todo lo que necesitáis para empezar con tranquilidad.',
     enMenu: true,
     colorActivo: 'bg-arbol-rojo', // rojo: el corazón, el cariño y el vínculo con las familias
     juguete: 'patito',
@@ -90,6 +93,9 @@ export const paginas = {
     nombre: 'Contacto',
     titulo: `Contacto · ${marca}`,
     descripcion: `${pd.antes} ${pd.email}, ${pd.telefono} o ${pd.whatsapp}${pd.medio} ${pd.direccion}.`,
+    // En la pieza de Inicio, en 2 líneas y con la dirección completa (Antonio, 2026-11-19: la descripción ocupaba 6).
+    // "C/" en vez de "Calle" para que quepa (la calle sale de site.ts).
+    resumen: `Os esperamos en ${site.direccion.calle.replace(/^Calle /, 'C/ ')}, ${site.direccion.municipio}. Solicitad vuestra visita.`,
     enMenu: true,
     colorActivo: 'bg-arbol-morado', // morado: cercanía, el color del rótulo "Escuela" (y no azul junto a la nube)
     juguete: 'telefono',

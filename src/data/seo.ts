@@ -94,7 +94,9 @@ export function datosEstructurados(): Record<string, unknown> {
 export function llmsTxt(): string {
   const { direccion, horario, curso, redes, autorizacion } = site
   const dias = `de ${horario.dias[0]} a ${horario.dias.at(-1)}`
-  const reducidos = horario.reducidos.map((r) => `de ${r.desde} a ${r.hasta}`).join(' o ')
+  const reducidos = horario.reducidos
+    .map((r) => `de ${r.desde} a ${r.hasta} (${r.incluyeComida ? 'con' : 'sin'} comida)`)
+    .join(' o ')
   const telefonos = site.telefonos.map((t) => formatoPantalla(t.numero)).join(', ')
   const aulas = site.aulas
     .map((a) => `${a.nombre} (${a.edades}${'excursiones' in a && a.excursiones ? ', con excursiones extraescolares' : ''})`)
