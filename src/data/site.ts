@@ -23,9 +23,10 @@ export const site = {
   babyControl: 'https://www.babycontrol.com/',
   // Dirección de la propia web, sin barra al final. De aquí salen og:url, og:image, canonical, robots.txt, el sitemap
   // y los datos para Google (src/data/seo.ts). Cambiando esta línea, cambia en todos esos sitios.
-  // TODO: poner el dominio definitivo cuando lo tenga la escuela (ahora, la web de pruebas en la cuenta de Antonio).
+  // El dominio de la escuela (2026-11-19): eiarboldenubes.es ("e" de escuela, "i" de infantil). Antes, la web de
+  // pruebas, escuelainfantil.netlify.app.
   web: {
-    url: 'https://escuelainfantil.netlify.app',
+    url: 'https://eiarboldenubes.es',
     // false mientras se revisa la web: todas las páginas llevan "noindex" y Google no las guarda. Al publicar con el
     // dominio definitivo, se pone a true (Antonio, 2026-11-18).
     indexar: false,

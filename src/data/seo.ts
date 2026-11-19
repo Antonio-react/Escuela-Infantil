@@ -8,7 +8,7 @@ import { enlaceTel, formatoPantalla, telefonoLlamadas, telefonoWhatsApp } from '
 
 const { url } = site.web
 
-// "/contacto" -> "https://escuelainfantil.netlify.app/contacto". Inicio ("/") queda con su barra.
+// "/contacto" -> "https://eiarboldenubes.es/contacto". Inicio ("/") queda con su barra.
 export function urlPagina(ruta: string): string {
   return `${url}${ruta}`
 }
