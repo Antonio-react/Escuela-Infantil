@@ -1,10 +1,10 @@
 # Escuela Infantil Árbol de Nubes
 
-Web de una escuela infantil real de 0 a 3 años en Carranque (Toledo). Es un encargo para sus tres directoras: lo que se ve es lo que usan las familias para conocer la escuela y pedir una visita.
+Web real de una escuela infantil de 0 a 3 años en Carranque (Toledo), hecha para sus tres directoras: lo que se ve es lo que usan las familias para conocer la escuela y pedir una visita.
 
 - **Web:** [eiarboldenubes.es](https://eiarboldenubes.es)
-- **Cliente:** real, en producción.
-- **Mi papel:** requisitos con las clientas, diseño y dirección del desarrollo con IA (Claude Code), pruebas en dispositivos reales.
+- **Proyecto:** real, en producción.
+- **Mi papel:** requisitos con las directoras, diseño y dirección del desarrollo con IA (Claude Code), pruebas en dispositivos reales.
 - **Stack:** React 19 · TypeScript · Vite · Tailwind CSS v4 · Playwright + axe · Netlify.
 - **Lo más destacable:** accesibilidad, rendimiento en iPhone e interacciones propias (menú que se escribe a tiza, pizarra en la que se dibuja).
 
@@ -30,7 +30,7 @@ El código lo ha escrito **Claude Code** (IA de Anthropic) siguiendo mis instruc
 
 Mi parte del trabajo:
 
-- **Requisitos con las clientas.** Hablar con las directoras, recoger los datos, los textos, las fotos y los permisos, y traducir lo que necesitaban a funcionalidades concretas.
+- **Requisitos con las directoras.** Hablar con ellas, recoger los datos, los textos, las fotos y los permisos, y traducir lo que necesitaban a funcionalidades concretas.
 - **Ideas y dirección de diseño.** La identidad de la web es mía: el menú del móvil como una pizarra que se escribe a tiza, el árbol del logo que tiembla al hacer scroll y suelta pájaros, el formulario como una carta en una hoja de cuaderno con un camión de bomberos para enviar, la pizarra en la que se puede dibujar con tizas de colores y borrar, la página 404 con un osito volando sobre una nube…
 - **Especificación y reglas.** Un archivo de especificación vivo ([CLAUDE.md](CLAUDE.md)) con las reglas del proyecto: todos los datos en un único sitio, TypeScript estricto, accesibilidad, movimiento reducido, qué se descarta y por qué. Más el sistema visual en [DESIGN.md](DESIGN.md).
 - **Revisión y pruebas en dispositivos reales.** Revisar cada cambio en el navegador y en mi iPhone, pedir correcciones y decidir entre alternativas. Por ejemplo, detecté que el menú tardaba en abrirse en el iPhone y que el inicio temblaba al volver arriba; se midió la causa y elegí la solución probando las variantes en el propio móvil.
