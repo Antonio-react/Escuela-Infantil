@@ -2,7 +2,7 @@
 
 Web de una escuela infantil real de 0 a 3 años en Carranque (Toledo). Es un encargo para sus tres directoras: lo que se ve es lo que usan las familias para conocer la escuela y pedir una visita.
 
-- **Web:** TODO (dirección definitiva cuando se publique)
+- **Web:** [eiarboldenubes.es](https://eiarboldenubes.es)
 - **Cliente:** real, en producción.
 - **Mi papel:** requisitos con las clientas, diseño y dirección del desarrollo con IA (Claude Code), pruebas en dispositivos reales.
 - **Stack:** React 19 · TypeScript · Vite · Tailwind CSS v4 · Playwright + axe · Netlify.
@@ -19,8 +19,10 @@ Medido con [PageSpeed Insights](https://pagespeed.web.dev/) sobre la web publica
 
 | | Rendimiento | Accesibilidad | Buenas prácticas | SEO |
 | --- | --- | --- | --- | --- |
-| Móvil | TODO | TODO | TODO | TODO |
-| Escritorio | TODO | TODO | TODO | TODO |
+| Móvil | 95 | 100 | 92\* | 100 |
+| Escritorio | 100 | 100 | 92\* | 100 |
+
+\* Los 8 puntos que faltan en buenas prácticas no son de la web: en el plan gratuito, Netlify añade su propio script (el distintivo «Powered by Netlify»), la política de seguridad de la web lo bloquea y ese bloqueo queda anotado en la consola.
 
 ## Mi papel: desarrollo dirigido con IA
 
@@ -33,8 +35,6 @@ Mi parte del trabajo:
 - **Especificación y reglas.** Un archivo de especificación vivo ([CLAUDE.md](CLAUDE.md)) con las reglas del proyecto: todos los datos en un único sitio, TypeScript estricto, accesibilidad, movimiento reducido, qué se descarta y por qué. Más el sistema visual en [DESIGN.md](DESIGN.md).
 - **Revisión y pruebas en dispositivos reales.** Revisar cada cambio en el navegador y en mi iPhone, pedir correcciones y decidir entre alternativas. Por ejemplo, detecté que el menú tardaba en abrirse en el iPhone y que el inicio temblaba al volver arriba; se midió la causa y elegí la solución probando las variantes en el propio móvil.
 - **Entender lo que se entrega.** Cada cambio venía explicado (qué archivo, qué línea y por qué), y tengo una guía del proyecto para mantenerlo.
-
-Si quieres ver código escrito por mí a mano: TODO (enlace al repositorio del gimnasio).
 
 ## Qué tiene la web
 
@@ -65,7 +65,8 @@ Si quieres ver código escrito por mí a mano: TODO (enlace al repositorio del g
 
 - Cada página se descarga solo al visitarla, y se adelanta al pasar el ratón o el dedo por su enlace.
 - En Inicio, lo que hay debajo de la primera pantalla se monta justo después del primer dibujado.
-- Las fotos tienen dos tamaños (`srcset`) y medidas reales, para que la página no salte al cargar.
+- Las fotos tienen dos tamaños (`srcset`; la de la fachada, la más grande, cuatro) y medidas reales, para que la página no salte al cargar.
+- El CSS va dentro del HTML al compilar, así que la primera pantalla no espera a descargar una hoja de estilos aparte, y el árbol del logo (la imagen principal de Inicio) se precarga.
 - Fuentes alojadas en la propia web (Fontsource), sin peticiones a Google.
 - Lo que se ejecuta en cada fotograma del scroll está reducido al mínimo. Medido con el móvil simulado 4 veces más lento, el JavaScript durante el scroll de Inicio bajó de ~8,7 s a ~2,9 s.
 - La textura de tiza pasó de un filtro SVG a una máscara de imagen: en Safari del iPhone el filtro se calculaba con el procesador y el menú se paraba 177 ms al abrirse; ahora, 46 ms.
@@ -81,6 +82,7 @@ Si quieres ver código escrito por mí a mano: TODO (enlace al repositorio del g
 **Datos y mantenimiento**
 
 - Todos los datos de la escuela (teléfonos, horarios, textos, preguntas frecuentes, fotos) viven en `src/data/`; los componentes solo los leen. Cambiar un teléfono es cambiar una línea, y se actualiza en toda la web.
+- El SEO también sale de esos datos: al compilar, un plugin de Vite genera `robots.txt`, `sitemap.xml`, `llms.txt` y los datos estructurados para Google (JSON-LD de `ChildCare`/`Preschool`), y escribe en `index.html` el título, la descripción, el canonical y las etiquetas para compartir. En el HTML no se escribe ningún dato a mano.
 
 **Seguridad y privacidad**
 
@@ -118,6 +120,6 @@ npm run test:e2e     # tests de Playwright + axe
 
 ## Autor
 
-Antonio · [GitHub](https://github.com/Antonio-react) · TODO (enlace a LinkedIn)
+Antonio · [GitHub](https://github.com/Antonio-react)
 
 Web hecha para la Escuela Infantil Árbol de Nubes (Tres Pequeños Mundos, S.L.). Textos, fotos y logo son de la escuela.
