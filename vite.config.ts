@@ -54,11 +54,37 @@ function seoDesdeLosDatos(): Plugin {
   }
 }
 
+// CSS dentro del HTML (2026-11-19, PageSpeed móvil: "solicitudes que bloquean el renderizado", ~310 ms). Al compilar,
+// el <link> al CSS se cambia por un <style> con el mismo CSS: el navegador no tiene que pedir otro archivo antes de
+// pintar ni de ejecutar el JavaScript. Se ve igual (son los mismos estilos, en el mismo sitio del <head>). Se puede
+// porque: la CSP permite estilos en el HTML (style-src 'unsafe-inline', public/_headers), las rutas de dentro del CSS
+// son absolutas (/assets/…: las fuentes siguen cargando) y ningún JavaScript pide el archivo CSS. El archivo ya no
+// hace falta y no se publica. Solo al compilar: en `npm run dev`, Vite pone los estilos a su manera.
+function cssDentroDelHtml(): Plugin {
+  return {
+    name: 'css-dentro-del-html',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, { bundle }) {
+        if (!bundle) return html
+        return html.replace(/<link rel="stylesheet"[^>]*href="\/([^"]+\.css)"[^>]*>/g, (etiqueta, archivo: string) => {
+          const css = bundle[archivo]
+          if (!css || css.type !== 'asset') return etiqueta // si no lo encuentra, se queda el <link>: nada se rompe
+          delete bundle[archivo]
+          return `<style>${String(css.source)}</style>`
+        })
+      },
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
     seoDesdeLosDatos(),
+    cssDentroDelHtml(),
   ],
 })

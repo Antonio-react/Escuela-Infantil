@@ -27,9 +27,9 @@ export const site = {
   // pruebas, escuelainfantil.netlify.app.
   web: {
     url: 'https://eiarboldenubes.es',
-    // false mientras se revisa la web: todas las páginas llevan "noindex" y Google no las guarda. Al publicar con el
-    // dominio definitivo, se pone a true (Antonio, 2026-11-18).
-    indexar: false,
+    // Con false, todas las páginas llevan "noindex" y Google no las guarda (así estuvo mientras se revisaba la web).
+    // A true desde que se publica con el dominio definitivo (2026-11-22).
+    indexar: true,
   },
   // Años que lleva abierta la escuela. Las dueñas no saben el año exacto de apertura: "más de 20" (2026-11-13).
   // Por eso es un mínimo y no un año (si fuera un año, se calcularía solo).

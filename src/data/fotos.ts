@@ -21,9 +21,20 @@ function archivos(nombre: string) {
   return { src, srcPequena }
 }
 
+// Un tamaño intermedio de una foto ('fachada-680'…), con el mismo aviso si falta.
+function archivo(nombre: string) {
+  const src = carpeta[`../assets/fotos/${nombre}.webp`]
+  if (!src) throw new Error(`Falta la foto "${nombre}" en src/assets/fotos`)
+  return src
+}
+
 // srcset de una foto: las dos versiones con su ancho real. Con el atributo sizes (cuánto ocupa en pantalla, lo pone
 // cada componente), el navegador elige la justa para esa pantalla y su densidad de píxeles.
-export const srcSet = (foto: Foto) => `${foto.srcPequena} 800w, ${foto.src} ${foto.ancho}w`
+export const srcSet = (foto: Foto) =>
+  [...(foto.tamanosExtra ?? []), { src: foto.srcPequena, ancho: 800 }, { src: foto.src, ancho: foto.ancho }]
+    .sort((a, b) => a.ancho - b.ancho)
+    .map(({ src, ancho }) => `${src} ${ancho}w`)
+    .join(', ')
 
 export type Foto = {
   // La foto a 1400 px (visor, foto grande, móvil a pantalla completa)…
@@ -39,6 +50,9 @@ export type Foto = {
   // Están elegidos para que en escritorio (3 columnas) y en tablet (2) no quede ningún hueco: si se añade o se
   // quita una foto, revisar el encaje de las demás.
   encaje?: 'grande' | 'alta' | 'ancha'
+  // Tamaños intermedios (opcional), para que el navegador baje el justo y no uno de más (PageSpeed, 2026-11-19).
+  // Ninguno es más pequeño de lo que pide la pantalla: se ve igual de nítida.
+  tamanosExtra?: readonly { src: string; ancho: number }[]
 }
 
 // La entrada: solo arriba de La escuela (fotoCabeceraEscuela). Ya no va en la galería (Antonio, 2026-11-17: se veía
@@ -162,13 +176,18 @@ export const fotoEquipo: Foto | null = {
 }
 
 // La escuela desde fuera: en Inicio (junto a "Quiénes somos") y en Contacto, mientras carga el mapa de Google.
-// La definitiva (2026-11-19): de frente, 4:3. Retocada a mano (2026-11-19, con el visto bueno de Antonio): suelo,
-// murete de la izquierda y jardineras blancas de la derecha sin las manchas oscuras; el resto de la fachada, sin tocar. El original ya no existe: si se
-// rehace, partir de este archivo.
+// La definitiva (2026-11-20): de frente, 4:3, la versión mejorada que trajo Antonio (cielo y suelo limpios), con el
+// mismo encuadre que la anterior. El original ya no existe: si se rehace, partir de este archivo.
 export const fotoFachada: Foto | null = {
   ...archivos('fachada'),
   titulo: 'La escuela',
   alt: 'Fachada de la Escuela Infantil Árbol de Nubes: edificio amarillo y rojo con el cartel de la escuela y dibujos en las ventanas',
   ancho: 1400,
   alto: 1050,
+  // Sale grande: 680 px es lo justo para un móvil normal (PageSpeed: 665 px) y 1120 px para el escritorio (la foto
+  // mide 1104 px de ancho como mucho). Sacadas de la misma foto retocada, igual que la de 800 y la de 1400.
+  tamanosExtra: [
+    { src: archivo('fachada-680'), ancho: 680 },
+    { src: archivo('fachada-1120'), ancho: 1120 },
+  ],
 }
