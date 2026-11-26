@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import type { Pagina } from '../data/paginas'
-import { seIndexa, urlPagina } from '../data/seo'
+import { contenidoRobots, urlPagina } from '../data/seo'
 
 // Devuelve la etiqueta del <head> que cumple el selector; si no existe, la crea con crear() y la añade.
 function etiquetaDelHead(selector: string, crear: () => HTMLElement): HTMLElement {
@@ -19,8 +19,6 @@ export function useMetadatos(pagina: Pagina): void {
     document.title = pagina.titulo
     document.querySelector('meta[name="description"]')?.setAttribute('content', pagina.descripcion)
 
-    const indexable = seIndexa(pagina)
-
     // canonical: la dirección "oficial" de la página. La 404 no tiene (su ruta "*" no es una dirección).
     if (pagina.indexar !== false) {
       etiquetaDelHead('link[rel="canonical"]', () => Object.assign(document.createElement('link'), { rel: 'canonical' }))
@@ -29,12 +27,9 @@ export function useMetadatos(pagina: Pagina): void {
       document.head.querySelector('link[rel="canonical"]')?.remove()
     }
 
-    // robots "noindex": en las páginas que no se guardan en Google. En las demás se quita (por si se viene de la 404).
-    if (indexable) {
-      document.head.querySelector('meta[name="robots"]')?.remove()
-    } else {
-      etiquetaDelHead('meta[name="robots"]', () => Object.assign(document.createElement('meta'), { name: 'robots' }))
-        .setAttribute('content', 'noindex')
-    }
+    // robots: "noindex" en las páginas que no se guardan en Google y "max-image-preview:large" en las demás (seo.ts).
+    // Se cambia la misma etiqueta del HTML, así al venir de la 404 vuelve a la de siempre.
+    etiquetaDelHead('meta[name="robots"]', () => Object.assign(document.createElement('meta'), { name: 'robots' }))
+      .setAttribute('content', contenidoRobots(pagina))
   }, [pagina])
 }

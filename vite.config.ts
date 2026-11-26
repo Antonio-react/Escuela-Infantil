@@ -1,9 +1,43 @@
+import { readFile, writeFile } from 'node:fs/promises'
+import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig, type HtmlTagDescriptor, type Plugin } from 'vite'
-import { paginas } from './src/data/paginas.ts'
+import { paginas, type Pagina } from './src/data/paginas.ts'
 import { site } from './src/data/site.ts'
-import { datosEstructurados, llmsTxt, robotsTxt, sitemapXml, urlPagina } from './src/data/seo.ts'
+import { contenidoRobots, datosEstructurados, llmsTxt, robotsTxt, sitemapXml, urlPagina } from './src/data/seo.ts'
+
+// Páginas con su propio HTML (opción A): todas menos Inicio (es el propio index.html) y la 404 (su ruta "*" no es
+// una dirección; la sirve index.html por _redirects).
+const todasLasPaginas: readonly Pagina[] = Object.values(paginas)
+const paginasConArchivo = todasLasPaginas.filter((p) => p.ruta !== paginas.inicio.ruta && p.indexar !== false)
+
+// Para meter un texto dentro de un atributo o del <title> sin romper el HTML.
+const escaparHtml = (texto: string) =>
+  texto.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+
+// Copia del index.html ya compilado con el título, la descripción, el canonical, los og:* y el robots de otra página.
+// Si no encuentra alguna etiqueta, el build falla: mejor eso que publicar páginas con los datos de Inicio.
+function cabeceraDe(html: string, pagina: Pagina): string {
+  const url = urlPagina(pagina.ruta)
+  const titulo = escaparHtml(pagina.titulo)
+  const descripcion = escaparHtml(pagina.descripcion)
+  // Cada patrón guarda lo de antes y lo de después del valor (los dos paréntesis) y se cambia solo lo de en medio.
+  const cambios: [RegExp, string][] = [
+    [/(<title>)[^<]*(<\/title>)/, titulo],
+    [/(<meta name="description" content=")[^"]*(")/, descripcion],
+    [/(<link rel="canonical" href=")[^"]*(")/, url],
+    [/(<meta property="og:url" content=")[^"]*(")/, url],
+    [/(<meta property="og:title" content=")[^"]*(")/, titulo],
+    [/(<meta property="og:description" content=")[^"]*(")/, descripcion],
+    [/(<meta name="robots" content=")[^"]*(")/, contenidoRobots(pagina)],
+  ]
+  return cambios.reduce((resultado, [patron, valor]) => {
+    if (!patron.test(resultado)) throw new Error(`opción A: no encuentro ${patron} en index.html para ${pagina.ruta}`)
+    // Con una función, y no con "$1…$2", para que un "$" de los datos no se lea como una referencia.
+    return resultado.replace(patron, (_, antes: string, despues: string) => `${antes}${valor}${despues}`)
+  }, html)
+}
 
 // SEO desde los datos (2026-11-18): así index.html no lleva ningún dato copiado a mano.
 // - Mete en el <head> de index.html el título, la descripción, las etiquetas para compartir (og:*), el canonical y
@@ -13,9 +47,13 @@ import { datosEstructurados, llmsTxt, robotsTxt, sitemapXml, urlPagina } from '.
 function seoDesdeLosDatos(): Plugin {
   const inicio = paginas.inicio
   const meta = (attrs: Record<string, string>): HtmlTagDescriptor => ({ tag: 'meta', attrs, injectTo: 'head' })
+  let outDir = 'dist'
 
   return {
     name: 'seo-desde-los-datos',
+    configResolved(config) {
+      outDir = path.resolve(config.root, config.build.outDir)
+    },
     transformIndexHtml() {
       const etiquetas: HtmlTagDescriptor[] = [
         { tag: 'title', children: inicio.titulo, injectTo: 'head' },
@@ -41,10 +79,25 @@ function seoDesdeLosDatos(): Plugin {
           injectTo: 'head',
         },
       ]
-      // Mientras la web se revisa (site.web.indexar en false), ninguna página se guarda en Google. Va en el HTML
-      // y no lo pone React, porque si Google lo ve al llegar ya no ejecuta el JavaScript de la página.
-      if (!site.web.indexar) etiquetas.push(meta({ name: 'robots', content: 'noindex' }))
+      // robots (seo.ts): "noindex" mientras la web se revisa (site.web.indexar en false) y, si no, permiso para
+      // enseñar las fotos en grande. Va en el HTML y no lo pone React, porque si Google ve un "noindex" al llegar ya
+      // no ejecuta el JavaScript de la página.
+      etiquetas.push(meta({ name: 'robots', content: contenidoRobots(inicio) }))
       return etiquetas
+    },
+    // Opción A (2026-11-26, como en la carpintería): al terminar el build, una copia de index.html por página
+    // (dist/contacto.html…) con su título, descripción, canonical y og:*. Netlify sirve esos archivos antes que la
+    // regla de _redirects (no lleva "!"), así Google, WhatsApp y Facebook ven los de cada página sin ejecutar
+    // JavaScript. La web es la misma: React arranca igual y useMetadatos cambia las mismas etiquetas al navegar.
+    async closeBundle() {
+      if (this.meta.watchMode) return
+      const html = await readFile(path.join(outDir, 'index.html'), 'utf8').catch(() => '')
+      if (!html) return // en `npm run dev` no hay dist/index.html
+      for (const pagina of paginasConArchivo) {
+        // Archivo suelto (contacto.html) y no carpeta (contacto/index.html): Netlify sirve /contacto con
+        // contacto.html sin redirigir; con la carpeta redirigiría a /contacto/ y ya no coincidiría con el canonical.
+        await writeFile(path.join(outDir, `${pagina.ruta.slice(1)}.html`), cabeceraDe(html, pagina))
+      }
     },
     generateBundle() {
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt() })

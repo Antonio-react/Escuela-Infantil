@@ -19,6 +19,13 @@ export function seIndexa(pagina: Pagina): boolean {
   return site.web.indexar && pagina.indexar !== false
 }
 
+// Contenido de <meta name="robots"> de cada página. En las que se indexan, permiso para que Google enseñe las fotos
+// en grande en los resultados (sin él, puede limitarlas a una miniatura); en las demás, "noindex". Lo usan
+// vite.config.ts (en el HTML) y useMetadatos.ts (al navegar), así no se contradicen.
+export function contenidoRobots(pagina: Pagina): string {
+  return seIndexa(pagina) ? 'max-image-preview:large' : 'noindex'
+}
+
 // Páginas que van en el sitemap: todas menos las que no se indexan (la 404, cuya ruta "*" no es una dirección).
 const todasLasPaginas: readonly Pagina[] = Object.values(paginas)
 const paginasSitemap = todasLasPaginas.filter((p) => p.indexar !== false)
