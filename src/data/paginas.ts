@@ -125,7 +125,8 @@ export const paginas = {
     descripcion: 'Esta página no existe o ha cambiado de sitio. Desde aquí podéis volver al inicio y seguir.',
     enMenu: false,
     colorActivo: 'bg-arbol-verde',
-    // Netlify sirve la web en cualquier dirección (_redirects): sin esto, Google guardaría "/loquesea" como página.
+    // Netlify la sirve (404.html, con código 404) en cualquier dirección que no exista (_redirects): sin canonical,
+    // no va en el sitemap y lleva "noindex".
     indexar: false,
   },
 } as const satisfies Record<string, Pagina>

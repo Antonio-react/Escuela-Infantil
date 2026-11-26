@@ -82,7 +82,7 @@ Mi parte del trabajo:
 **Datos y mantenimiento**
 
 - Todos los datos de la escuela (teléfonos, horarios, textos, preguntas frecuentes, fotos) viven en `src/data/`; los componentes solo los leen. Cambiar un teléfono es cambiar una línea, y se actualiza en toda la web.
-- El SEO también sale de esos datos: al compilar, un plugin de Vite genera `robots.txt`, `sitemap.xml`, `llms.txt` y los datos estructurados para Google (JSON-LD de `ChildCare`/`Preschool`), y escribe en `index.html` el título, la descripción, el canonical y las etiquetas para compartir. En el HTML no se escribe ningún dato a mano.
+- El SEO también sale de esos datos: al compilar, un plugin de Vite genera `robots.txt`, `sitemap.xml`, `llms.txt` y los datos estructurados para Google (JSON-LD de `ChildCare`/`Preschool`), y escribe en `index.html` el título, la descripción, el canonical y las etiquetas para compartir. Después crea un HTML por página con los suyos, para que Google, WhatsApp y Facebook los lean sin ejecutar JavaScript, y un `404.html` que Netlify sirve con su código 404 de verdad en las direcciones que no existen. En el HTML no se escribe ningún dato a mano.
 
 **Seguridad y privacidad**
 

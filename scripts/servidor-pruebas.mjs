@@ -1,5 +1,6 @@
 // Servidor de la web COMPILADA (dist/) para las pruebas de Playwright, que imita a Netlify:
-// - Sirve los archivos de dist/ y, en cualquier otra ruta, index.html (como public/_redirects: /* /index.html 200).
+// - Sirve los archivos de dist/ ("/contacto" con contacto.html, como Netlify) y, en cualquier otra ruta, 404.html con
+//   el código 404 (como public/_redirects: /* /404.html 404).
 // - Envía las cabeceras de seguridad de dist/_headers (CSP...): así las pruebas comprueban también que la CSP no
 //   bloquea nada de la web. `vite preview` no las lee y, además, en Windows a veces se quedaba colgado.
 // Uso: node scripts/servidor-pruebas.mjs [puerto]   (lo arranca playwright.config.ts).
@@ -61,6 +62,7 @@ function leerCarpeta(carpeta) {
 }
 leerCarpeta(DIST)
 const INDEX = '/index.html'
+const NO_ENCONTRADA = '/404.html'
 
 createServer((peticion, respuesta) => {
   if (peticion.method !== 'GET' && peticion.method !== 'HEAD') {
@@ -69,8 +71,9 @@ createServer((peticion, respuesta) => {
     return
   }
   const ruta = decodeURIComponent(new URL(peticion.url ?? '/', 'http://x').pathname)
-  // Solo se sirve lo que hay en el mapa (nada de "../" para leer otros archivos); el resto, index.html.
-  const clave = archivos.has(ruta) ? ruta : INDEX
-  respuesta.writeHead(200, { 'Content-Type': tipos[extname(clave)] ?? 'application/octet-stream', ...cabecerasDe(ruta) })
+  // Solo se sirve lo que hay en el mapa (nada de "../" para leer otros archivos); el resto, 404.html con código 404.
+  const encontrada = [ruta === '/' ? INDEX : ruta, `${ruta}.html`].find((c) => archivos.has(c))
+  const clave = encontrada ?? NO_ENCONTRADA
+  respuesta.writeHead(encontrada ? 200 : 404, { 'Content-Type': tipos[extname(clave)] ?? 'application/octet-stream', ...cabecerasDe(ruta) })
   respuesta.end(peticion.method === 'HEAD' ? undefined : archivos.get(clave))
 }).listen(PUERTO, () => console.log(`Servidor de pruebas en http://localhost:${PUERTO} (${archivos.size} archivos en memoria)`))

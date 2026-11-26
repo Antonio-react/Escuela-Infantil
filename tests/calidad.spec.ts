@@ -45,14 +45,16 @@ test.describe('Foco visible', () => {
 })
 
 test.describe('Rutas al refrescar o abrir directamente', () => {
-  test('Netlify sirve index.html en cualquier ruta (public/_redirects)', () => {
-    expect(readFileSync('public/_redirects', 'utf8')).toMatch(/^\/\*\s+\/index\.html\s+200/m)
+  test('Netlify sirve 404.html con código 404 en las rutas que no existen (public/_redirects)', () => {
+    expect(readFileSync('public/_redirects', 'utf8')).toMatch(/^\/\*\s+\/404\.html\s+404/m)
   })
   for (const { nombre, ruta } of rutas) {
     test(`${nombre}: se abre directamente y se puede refrescar`, async ({ page }) => {
       const errores: string[] = []
       page.on('pageerror', (e) => errores.push(e.message))
-      await page.goto(ruta)
+      const respuesta = await page.goto(ruta)
+      // Código de verdad: 200 en las páginas y 404 en la que no existe (si no, Google la toma por un "soft 404").
+      expect(respuesta?.status()).toBe(nombre === 'Página no encontrada' ? 404 : 200)
       await expect(page.locator('h1')).toBeVisible()
       await page.reload()
       await expect(page.locator('h1')).toBeVisible()

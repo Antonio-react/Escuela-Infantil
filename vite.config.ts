@@ -7,8 +7,8 @@ import { paginas, type Pagina } from './src/data/paginas.ts'
 import { site } from './src/data/site.ts'
 import { contenidoRobots, datosEstructurados, llmsTxt, robotsTxt, sitemapXml, urlPagina } from './src/data/seo.ts'
 
-// Páginas con su propio HTML (opción A): todas menos Inicio (es el propio index.html) y la 404 (su ruta "*" no es
-// una dirección; la sirve index.html por _redirects).
+// Páginas con su propio HTML (opción A): todas menos Inicio (es el propio index.html) y la 404, que va aparte en
+// 404.html (su ruta "*" no es una dirección).
 const todasLasPaginas: readonly Pagina[] = Object.values(paginas)
 const paginasConArchivo = todasLasPaginas.filter((p) => p.ruta !== paginas.inicio.ruta && p.indexar !== false)
 
@@ -22,18 +22,22 @@ function cabeceraDe(html: string, pagina: Pagina): string {
   const url = urlPagina(pagina.ruta)
   const titulo = escaparHtml(pagina.titulo)
   const descripcion = escaparHtml(pagina.descripcion)
+  // La 404 no tiene dirección propia: sin canonical ni og:url (null = se quita la etiqueta entera).
+  const conDireccion = pagina.indexar !== false
   // Cada patrón guarda lo de antes y lo de después del valor (los dos paréntesis) y se cambia solo lo de en medio.
-  const cambios: [RegExp, string][] = [
+  const cambios: [RegExp, string | null][] = [
     [/(<title>)[^<]*(<\/title>)/, titulo],
     [/(<meta name="description" content=")[^"]*(")/, descripcion],
-    [/(<link rel="canonical" href=")[^"]*(")/, url],
-    [/(<meta property="og:url" content=")[^"]*(")/, url],
+    [/(<link rel="canonical" href=")[^"]*(")/, conDireccion ? url : null],
+    [/(<meta property="og:url" content=")[^"]*(")/, conDireccion ? url : null],
     [/(<meta property="og:title" content=")[^"]*(")/, titulo],
     [/(<meta property="og:description" content=")[^"]*(")/, descripcion],
     [/(<meta name="robots" content=")[^"]*(")/, contenidoRobots(pagina)],
   ]
   return cambios.reduce((resultado, [patron, valor]) => {
     if (!patron.test(resultado)) throw new Error(`opción A: no encuentro ${patron} en index.html para ${pagina.ruta}`)
+    // Quitar: desde el patrón hasta el ">" que cierra la etiqueta, con el salto de línea de detrás.
+    if (valor === null) return resultado.replace(new RegExp(`${patron.source}[^>]*>\\s*`), '')
     // Con una función, y no con "$1…$2", para que un "$" de los datos no se lea como una referencia.
     return resultado.replace(patron, (_, antes: string, despues: string) => `${antes}${valor}${despues}`)
   }, html)
@@ -98,6 +102,9 @@ function seoDesdeLosDatos(): Plugin {
         // contacto.html sin redirigir; con la carpeta redirigiría a /contacto/ y ya no coincidiría con el canonical.
         await writeFile(path.join(outDir, `${pagina.ruta.slice(1)}.html`), cabeceraDe(html, pagina))
       }
+      // 404 de verdad (2026-11-26): _redirects sirve este archivo con el código 404 en cualquier dirección que no
+      // exista. Antes respondía 200 con index.html y Google podía tomarlo por un "soft 404". React pinta la 404 igual.
+      await writeFile(path.join(outDir, '404.html'), cabeceraDe(html, paginas.noEncontrada))
     },
     generateBundle() {
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt() })
